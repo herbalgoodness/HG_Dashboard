@@ -1,0 +1,9 @@
+{
+  "name": "herbal-goodness-command-center",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static host for the Herbal Goodness Command Center dashboard",
+  "scripts": {
+    "start": "npx --yes serve -s . -l ${PORT:-3000}"
+  }
+}

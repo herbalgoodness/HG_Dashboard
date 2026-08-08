@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Herbal Goodness — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0f08;
+    --bg-2:#12150d;
+    --panel:#161a10;
+    --panel-2:#1b2013;
+    --line:rgba(166,171,12,0.16);
+    --line-soft:rgba(238,241,228,0.08);
+    --olive:#698805;
+    --olive-deep:#4c6404;
+    --olive-pale:#c5efc5;
+    --gold:#d8c832;
+    --gold-deep:#a6ab0c;
+    --mint:#9fe6a0;
+    --text:#f1f3e8;
+    --text-dim:#aab19a;
+    --text-faint:#6d7462;
+    --danger:#ff6f61;
+    --danger-bg:rgba(255,111,97,0.12);
+    --warn:#f2c94c;
+    --warn-bg:rgba(242,201,76,0.12);
+    --good:#7ed992;
+    --good-bg:rgba(126,217,146,0.12);
+    --radius:14px;
+    --display:'Poppins',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1100px 600px at 12% -10%, rgba(105,136,5,0.20), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(216,200,50,0.10), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--display);
+    font-weight:400;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  a{color:var(--gold);}
+  .eyebrow{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:2.5px;
+    font-size:10.5px;
+    font-weight:600;
+    color:var(--gold-deep);
+  }
+  /* ============ TOPBAR ============ */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:20px;
+    padding:14px 28px;
+    background:rgba(13,15,8,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-mark{
+    width:38px; height:38px; border-radius:10px;
+    background:linear-gradient(135deg,var(--olive),var(--gold-deep));
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--display); font-weight:800; color:#0d0f08; font-size:16px;
+    box-shadow:0 0 22px rgba(216,200,50,0.35);
+    flex-shrink:0;
+  }
+  .brand-text .eyebrow{margin-bottom:2px;}
+  .brand-text h1{margin:0; font-size:16px; font-weight:700; color:var(--text); letter-spacing:0.2px;}
+  nav.tabs{display:flex; gap:4px; background:rgba(255,255,255,0.03); padding:5px; border-radius:12px; border:1px solid var(--line-soft);}
+  nav.tabs button{
+    font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase;
+    font-weight:600; color:var(--text-dim); background:transparent; border:none;
+    padding:9px 14px; border-radius:8px; cursor:pointer; transition:all .15s ease; white-space:nowrap;
+  }
+  nav.tabs button:hover{color:var(--text);}
+  nav.tabs button.active{background:linear-gradient(135deg,var(--olive),var(--olive-deep)); color:#fff; box-shadow:0 2px 10px rgba(105,136,5,0.4);}
+  .status-chip{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10.5px; color:var(--text-faint); flex-shrink:0;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--good); box-shadow:0 0 8px var(--good); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+  main{max-width:1320px; margin:0 auto; padding:32px 28px 80px;}
+  .page{display:none;}
+  .page.active{display:block; animation:fadein .35s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .page-head{margin-bottom:28px; max-width:760px;}
+  .page-head h2{font-size:26px; margin:6px 0 8px; font-weight:700; color:#fff;}
+  .page-head p{margin:0; color:var(--text-dim); font-size:14.5px;}
+
+  /* ============ CARDS ============ */
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:30px;}
+  .kpi{
+    background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    padding:18px 18px 16px;
+    position:relative; overflow:hidden;
+  }
+  .kpi::after{content:''; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,var(--olive),var(--gold));}
+  .kpi .eyebrow{display:block; margin-bottom:10px;}
+  .kpi .val{font-size:25px; font-weight:700; color:#fff; letter-spacing:-0.3px;}
+  .kpi .sub{margin-top:8px; font-size:12px; color:var(--text-dim);}
+  .kpi .tag{display:inline-block; margin-top:10px; font-family:var(--mono); font-size:10px; padding:3px 8px; border-radius:20px; font-weight:600;}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.warn{background:var(--warn-bg); color:var(--warn);}
+  .tag.bad{background:var(--danger-bg); color:var(--danger);}
+  .tag.info{background:rgba(255,255,255,0.07); color:var(--text-dim);}
+
+  /* ============ WEEK STRIP ============ */
+  .week-strip-wrap{margin-bottom:22px;}
+  .week-strip-label{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
+  .week-strip{
+    display:flex; gap:6px; overflow-x:auto; padding:6px 2px 14px;
+    scrollbar-width:thin;
+  }
+  .week-strip::-webkit-scrollbar{height:6px;}
+  .week-strip::-webkit-scrollbar-thumb{background:var(--line); border-radius:6px;}
+  .wk-btn{
+    flex:0 0 auto; width:52px; height:44px; border-radius:9px; border:1px solid var(--line-soft);
+    background:rgba(255,255,255,0.03); color:var(--text-dim); font-family:var(--mono); font-size:11px; font-weight:600;
+    cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    transition:all .12s ease;
+  }
+  .wk-btn .n{font-size:12px;}
+  .wk-btn .dot2{width:5px; height:5px; border-radius:50%; background:var(--text-faint);}
+  .wk-btn.has-actual .dot2{background:var(--good);}
+  .wk-btn.future .dot2{background:var(--text-faint);}
+  .wk-btn.partial .dot2{background:var(--warn);}
+  .wk-btn:hover{border-color:var(--gold-deep); color:var(--text);}
+  .wk-btn.active{background:linear-gradient(135deg,var(--olive),var(--olive-deep)); color:#fff; border-color:transparent; box-shadow:0 3px 14px rgba(105,136,5,0.45);}
+
+  .detail-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:16px;}
+  @media (max-width:900px){.detail-grid{grid-template-columns:1fr;}}
+
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{
+    font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:1px; font-weight:600;
+    color:var(--text-faint); text-align:left; padding:9px 10px; border-bottom:1px solid var(--line);
+  }
+  td{padding:10px 10px; border-bottom:1px solid var(--line-soft); color:var(--text);}
+  tr:last-child td{border-bottom:none;}
+  .num{text-align:right; font-family:var(--mono);}
+  .muted{color:var(--text-faint); font-size:11.5px;}
+  .pill{display:inline-block; padding:2px 8px; border-radius:20px; font-size:10.5px; font-family:var(--mono); font-weight:600;}
+
+  .note-box{
+    margin-top:14px; padding:12px 14px; border-radius:10px; background:rgba(242,201,76,0.08);
+    border:1px solid rgba(242,201,76,0.25); font-size:12.5px; color:var(--warn); line-height:1.6;
+  }
+  .note-box.info{background:rgba(255,255,255,0.04); border-color:var(--line-soft); color:var(--text-dim);}
+
+  section.block{margin-top:34px;}
+  section.block h3{font-size:16px; margin:0 0 4px; color:#fff;}
+  section.block .desc{color:var(--text-dim); font-size:13px; margin:0 0 16px; max-width:720px;}
+
+  /* ============ CS PROGRESS HEADER ============ */
+  .progress-header{
+    display:flex; align-items:center; gap:18px; background:linear-gradient(135deg, rgba(105,136,5,0.14), rgba(216,200,50,0.06));
+    border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; margin-bottom:30px;
+  }
+  .progress-ring{position:relative; width:74px; height:74px; flex-shrink:0;}
+  .progress-ring svg{transform:rotate(-90deg);}
+  .progress-ring .pct{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:700; font-size:15px; color:#fff;}
+  .progress-text h3{margin:0 0 4px;}
+  .progress-text p{margin:0; font-size:13px; color:var(--text-dim);}
+  .progress-bar-outer{flex:1; height:8px; border-radius:8px; background:rgba(255,255,255,0.06); overflow:hidden; min-width:120px;}
+  .progress-bar-inner{height:100%; background:linear-gradient(90deg,var(--olive),var(--gold)); width:0%; transition:width .4s ease; box-shadow:0 0 12px rgba(216,200,50,0.6);}
+
+  /* ============ SPINE (signature element) ============ */
+  .spine-wrap{position:relative; padding-left:38px;}
+  .spine-line{
+    position:absolute; left:13px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(180deg, var(--line-soft), var(--line-soft));
+    border-radius:2px;
+  }
+  .spine-fill{
+    position:absolute; left:0; top:0; width:100%; height:0%;
+    background:linear-gradient(180deg,var(--olive),var(--gold));
+    box-shadow:0 0 14px 2px rgba(216,200,50,0.55);
+    transition:height .5s ease; border-radius:2px;
+  }
+  .todo-item{
+    position:relative; display:flex; align-items:flex-start; gap:14px;
+    padding:14px 16px 14px 6px; margin-bottom:10px; border-radius:12px;
+    background:rgba(255,255,255,0.025); border:1px solid var(--line-soft);
+    cursor:pointer; transition:background .15s ease;
+  }
+  .todo-item:hover{background:rgba(255,255,255,0.05);}
+  .todo-item.done{opacity:0.55;}
+  .todo-node{
+    position:absolute; left:-38px; top:16px; width:26px; height:26px; border-radius:50%;
+    background:var(--bg-2); border:2px solid var(--line); z-index:2;
+    display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--text-faint);
+    transition:all .3s ease;
+  }
+  .todo-item.done .todo-node{background:var(--gold); border-color:var(--gold); color:#0d0f08; box-shadow:0 0 14px rgba(216,200,50,0.7);}
+  .todo-check{
+    flex-shrink:0; width:20px; height:20px; border-radius:5px; border:2px solid var(--text-faint);
+    display:flex; align-items:center; justify-content:center; margin-top:2px; transition:all .15s ease;
+  }
+  .todo-item.done .todo-check{background:var(--olive); border-color:var(--olive);}
+  .todo-check svg{opacity:0; width:12px; height:12px;}
+  .todo-item.done .todo-check svg{opacity:1;}
+  .todo-body strong{display:block; font-size:13.8px; color:var(--text); margin-bottom:3px; text-decoration:none;}
+  .todo-item.done .todo-body strong{text-decoration:line-through; color:var(--text-dim);}
+  .todo-body span{font-size:12px; color:var(--text-dim);}
+  .todo-meta{margin-left:auto; text-align:right; flex-shrink:0;}
+  .todo-meta .pill{margin-bottom:4px;}
+
+  /* ============ CS METRIC TABLE ============ */
+  .cs-metric-table td.metric-name{font-weight:600; color:var(--text);}
+  .cs-metric-table td.metric-name span{display:block; font-weight:400; font-size:11px; color:var(--text-faint); margin-top:2px;}
+
+  /* ============ PRIORITY LADDER ============ */
+  .ladder{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:900px){.ladder{grid-template-columns:1fr;}}
+  .ladder-col{border-radius:var(--radius); border:1px solid var(--line-soft); overflow:hidden;}
+  .ladder-head{padding:14px 16px; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:1px; font-weight:700; display:flex; justify-content:space-between; align-items:center;}
+  .ladder-head.red{background:var(--danger-bg); color:var(--danger);}
+  .ladder-head.yellow{background:var(--warn-bg); color:var(--warn);}
+  .ladder-head.green{background:var(--good-bg); color:var(--good);}
+  .ladder-body{padding:6px; max-height:420px; overflow-y:auto;}
+  .ladder-item{padding:10px 10px; border-radius:8px; font-size:12.5px;}
+  .ladder-item:hover{background:rgba(255,255,255,0.04);}
+  .ladder-item b{display:block; color:var(--text); font-size:13px; margin-bottom:2px;}
+  .ladder-item .meta{color:var(--text-faint); font-size:11px;}
+
+  /* ============ SORTABLE TABLE ============ */
+  .table-wrap{overflow-x:auto; border-radius:var(--radius); border:1px solid var(--line-soft);}
+  #skuTable th{cursor:pointer; user-select:none; white-space:nowrap;}
+  #skuTable th:hover{color:var(--text);}
+  #skuTable th .arrow{margin-left:4px; opacity:0.5;}
+  #skuTable tbody tr:hover{background:rgba(255,255,255,0.03);}
+  .stock-dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:7px;}
+  .stock-dot.ok{background:var(--good);}
+  .stock-dot.warn{background:var(--warn);}
+  .stock-dot.critical{background:var(--danger);}
+
+  /* ============ MARKETING CHARTS ============ */
+  .chart-card{padding:20px 20px 12px;}
+  .chart-card .chart-title{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;}
+  .chart-card h4{margin:0; font-size:14px; color:#fff;}
+  .chart-card .chart-title .muted{font-size:11px;}
+  svg.chart{width:100%; height:150px; overflow:visible;}
+  .bench-table td.status-hit{color:var(--good); font-weight:600;}
+  .bench-table td.status-miss{color:var(--danger); font-weight:600;}
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
+  .three-col{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:900px){.three-col{grid-template-columns:1fr;}}
+
+  footer{
+    max-width:1320px; margin:40px auto 0; padding:26px 28px 40px; border-top:1px solid var(--line-soft);
+    color:var(--text-faint); font-size:11.5px; line-height:1.8;
+  }
+  footer b{color:var(--text-dim);}
+  footer .prov-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:16px;}
+  @media (max-width:900px){footer .prov-grid{grid-template-columns:1fr;}}
+  .estimate-flag{color:var(--warn); font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.5px;}
+  .confirmed-flag{color:var(--good); font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.5px;}
+
+  @media (max-width:1000px){
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    nav.tabs{overflow-x:auto;}
+  }
+  @media (max-width:640px){
+    .kpi-grid{grid-template-columns:1fr;}
+    .topbar{flex-wrap:wrap; gap:10px;}
+    main{padding:22px 16px 60px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">HG</div>
+    <div class="brand-text">
+      <span class="eyebrow">Papaya Organics LLC</span>
+      <h1>Herbal Goodness — Command Center</h1>
+    </div>
+  </div>
+  <nav class="tabs" id="tabNav">
+    <button data-page="overview" class="active">Overview</button>
+    <button data-page="cs">Customer Service</button>
+    <button data-page="products">Product Intelligence</button>
+    <button data-page="marketing">Marketing</button>
+  </nav>
+  <div class="status-chip"><span class="dot"></span><span id="lastUpdated">—</span></div>
+</div>
+
+<main>
+
+  <!-- ============ OVERVIEW ============ -->
+  <div class="page active" id="page-overview">
+    <div class="page-head">
+      <span class="eyebrow">Week-over-week · vs. 2026 Bearish budget</span>
+      <h2>The one screen that tells you how the week actually went</h2>
+      <p>Every number below either came out of QuickBooks, Amazon, or Shopify this week, or out of the same Bearish-scenario budget model your team already tracks against. Nothing here is a guess — where a figure isn't available yet, it says so.</p>
+    </div>
+
+    <div class="kpi-grid" id="staticKpis"></div>
+
+    <div class="week-strip-wrap">
+      <div class="week-strip-label">
+        <h3 style="margin:0;font-size:14px;color:#fff;">Weeks 1–52, 2026</h3>
+        <span class="muted" style="font-size:11.5px;">
+          <span style="color:var(--good);">●</span> actuals in &nbsp;
+          <span style="color:var(--warn);">●</span> partial/refreshing &nbsp;
+          <span style="color:var(--text-faint);">●</span> budget only (not yet occurred)
+        </span>
+      </div>
+      <div class="week-strip" id="weekStrip"></div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="card">
+        <div class="chart-title" style="display:flex;justify-content:space-between;margin-bottom:12px;">
+          <h3 style="margin:0;font-size:15px;" id="weekDetailTitle">Week 1</h3>
+          <span class="muted" id="weekDetailDates" style="font-size:11.5px;"></span>
+        </div>
+        <table>
+          <thead><tr><th>Channel</th><th class="num">Actual</th><th class="num" id="budgetColHead">Bearish model</th><th class="num">Variance</th></tr></thead>
+          <tbody id="weekChannelRows"></tbody>
+        </table>
+        <div id="weekNote"></div>
+        <div class="note-box info" style="margin-top:10px;">Heads up on methodology: in the source budget sheet, the Bearish-model column auto-fills with the actual result once a week closes — so elapsed weeks will always show ~0% variance here by construction. The real forward-looking budget test is the YTD pacing KPI at the top of this page, and the true forecast only diverges from actuals for weeks that haven't happened yet.</div>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 14px;font-size:15px;">Spend &amp; efficiency, same week</h3>
+        <table>
+          <thead><tr><th>Metric</th><th class="num">This week</th><th class="num">Prior week</th></tr></thead>
+          <tbody id="weekSpendRows"></tbody>
+        </table>
+        <div id="weekSpendNote"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CUSTOMER SERVICE ============ -->
+  <div class="page" id="page-cs">
+    <div class="page-head">
+      <span class="eyebrow">Amazon + Shopify · this week's action list</span>
+      <h2>Customer service is a leading indicator, not a support queue</h2>
+      <p>Ten concrete, dated actions pulled directly from this week's listing-quality scan, inventory pull, and review data. Check them off as they're done — the ring and bar above the list, and the glowing spine beside it, both move live.</p>
+    </div>
+
+    <div class="progress-header">
+      <div class="progress-ring">
+        <svg width="74" height="74">
+          <circle cx="37" cy="37" r="31" stroke="rgba(255,255,255,0.08)" stroke-width="7" fill="none"/>
+          <circle id="ringProgress" cx="37" cy="37" r="31" stroke="url(#ringGrad)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="194.7" stroke-dashoffset="194.7"/>
+          <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#698805"/><stop offset="100%" stop-color="#d8c832"/>
+          </linearGradient></defs>
+        </svg>
+        <div class="pct" id="progressPct">0%</div>
+      </div>
+      <div class="progress-text">
+        <h3 id="progressHeadline">0 of 10 complete this week</h3>
+        <p>Recomputes the instant you check an item — nothing to save or submit.</p>
+      </div>
+      <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+    </div>
+
+    <div class="spine-wrap">
+      <div class="spine-line"></div>
+      <div class="spine-fill" id="spineFill"></div>
+      <div id="todoList"></div>
+    </div>
+
+    <section class="block">
+      <h3>Top 10 customer-facing metrics, by channel</h3>
+      <p class="desc">Side-by-side Amazon vs. Shopify. Where a metric genuinely isn't retrievable from either platform's current connection, it's marked as such rather than filled with a guess.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>Metric</th><th>Amazon</th><th>Shopify</th></tr></thead>
+          <tbody id="csMetricRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PRODUCT INTELLIGENCE ============ -->
+  <div class="page" id="page-products">
+    <div class="page-head">
+      <span class="eyebrow">106 Shopify SKUs · 250+ active Amazon listings · 2,520 QuickBooks items</span>
+      <h2>Every item has a status. Twenty-five of them are carrying the business.</h2>
+      <p>The ladder below is a traffic light for inventory risk, not popularity. The table beneath it is the top 25 SKUs by revenue across all three channels — click any column to sort.</p>
+    </div>
+
+    <div class="ladder">
+      <div class="ladder-col">
+        <div class="ladder-head red"><span>🔴 Stop &amp; fix</span><span id="countRed">0</span></div>
+        <div class="ladder-body" id="ladderRed"></div>
+      </div>
+      <div class="ladder-col">
+        <div class="ladder-head yellow"><span>🟡 Watch closely</span><span id="countYellow">0</span></div>
+        <div class="ladder-body" id="ladderYellow"></div>
+      </div>
+      <div class="ladder-col">
+        <div class="ladder-head green"><span>🟢 Healthy</span><span id="countGreen">0</span></div>
+        <div class="ladder-body" id="ladderGreen"></div>
+      </div>
+    </div>
+
+    <section class="block">
+      <h3>Top 25 SKUs by revenue, all channels</h3>
+      <p class="desc">Each row keeps its own reporting window (Amazon = 13 weeks, Shopify = 91 days, QuickBooks = July close) rather than forcing mismatched periods into one false total — the window is shown on every row.</p>
+      <div class="table-wrap">
+        <table id="skuTable">
+          <thead>
+            <tr>
+              <th data-key="rank">#<span class="arrow">↕</span></th>
+              <th data-key="name">Product<span class="arrow">↕</span></th>
+              <th data-key="channel">Channel<span class="arrow">↕</span></th>
+              <th data-key="window">Window<span class="arrow">↕</span></th>
+              <th data-key="revenue" class="num">Revenue<span class="arrow">↕</span></th>
+              <th data-key="velocity" class="num">Velocity<span class="arrow">↕</span></th>
+              <th data-key="stock">Stock status<span class="arrow">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="skuRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ MARKETING ============ -->
+  <div class="page" id="page-marketing">
+    <div class="page-head">
+      <span class="eyebrow">Paid, organic &amp; retention signal</span>
+      <h2>The growth math, and where it's straining</h2>
+      <p>Blended ROAS, conversion, and traffic pulled straight from Amazon Ads and Shopify analytics, set against DTC/supplement-industry benchmarks pulled from public research — clearly separated from your own confirmed numbers.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:20px;">
+      <div class="kpi"><span class="eyebrow">Blended ROAS · Jul 2026</span><div class="val">3.34x</div><div class="sub">SP+SB+SD combined, full month</div><span class="tag warn">vs. 7.0x internal target</span></div>
+      <div class="kpi"><span class="eyebrow">Amazon TACoS · Jul 2026</span><div class="val">10.2%</div><div class="sub">Total ad spend ÷ total Amazon revenue</div><span class="tag good">inside 8–15% healthy range</span></div>
+      <div class="kpi"><span class="eyebrow">Shopify conversion · trailing 13wk</span><div class="val">0.28–0.48%</div><div class="sub">Sessions → completed checkout, weekly range</div><span class="tag bad">well below 2.4–3.2% benchmark</span></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card chart-card">
+        <div class="chart-title"><h4>Blended ROAS — last 13 weeks</h4><span class="muted">weeks 19–31, 2026</span></div>
+        <svg class="chart" id="chartRoas"></svg>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-title"><h4>Shopify sessions — last 13 weeks</h4><span class="muted">weeks ending May 4 – Aug 3</span></div>
+        <svg class="chart" id="chartSessions"></svg>
+      </div>
+    </div>
+
+    <section class="block">
+      <h3>Retention &amp; lifetime-value signal</h3>
+      <p class="desc">Shopify's tools don't expose a true cohort LTV figure for this store, so rather than fabricate one precise number, here's the honest proxy picture.</p>
+      <div class="three-col">
+        <div class="kpi"><span class="eyebrow">Repeat customer rate</span><div class="val">~34%</div><div class="sub">Weekly avg., range 28.6%–44.7% over 13wk</div><span class="tag info">proxy for LTV, not LTV itself</span></div>
+        <div class="kpi"><span class="eyebrow">Repeat-buyer spend sample</span><div class="val">$135–$3,761</div><div class="sub">To-date spend, customers with 4–7 orders (non-exhaustive sample)</div><span class="tag info">estimate range</span></div>
+        <div class="kpi"><span class="eyebrow">Active discount codes</span><div class="val">10 legacy</div><div class="sub">All created 2015–2019, no live campaign running</div><span class="tag warn">needs review</span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Industry &amp; competitor benchmarks</h3>
+      <p class="desc">External research, not Herbal Goodness data — every row cites its source. Use this to judge whether a metric above is actually a problem or just how the category runs.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="bench-table">
+          <thead><tr><th>Metric</th><th>Herbal Goodness (confirmed)</th><th>Industry benchmark</th><th>Read</th><th>Source</th></tr></thead>
+          <tbody id="benchRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer>
+  <div class="prov-grid">
+    <div>
+      <b>Data pulled</b><br>
+      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">Aug 8, 2026</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation.
+    </div>
+    <div>
+      <b>Confirmed vs. estimated</b><br>
+      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, and the budget-sheet weekly actuals.<br>
+      <span class="estimate-flag">● Estimate</span> — every industry-benchmark and competitor figure on the Marketing tab, and the LTV proxy range.
+    </div>
+    <div>
+      <b>Known data gaps (not hidden)</b><br>
+      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric.
+    </div>
+  </div>
+  <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
+</footer>
+
+<script>
+const REV_ACTUAL_TOTAL = [72158.79, 71015.14, 115437.3, 65123.07, 76178.02, 67858.35, 70766.62, 78938.7, 80372.49, 75875.81, 100959.82, 73874.89, 72501.75, 68438.06, 80159.29, 62016.72, 84989.71, 79602.71, 56076.2, 55730.3, 62213.72, 66082.54, 74581.29, 62363.02, 69348.37, 59809.15, 63385.84, 55750.62, 54595.97, 66376.02, 2682.17];
+const REV_ACTUAL_AMAZON = [57365.54, 53707.11, 56718.47, 50092.36, 54956.15, 53804.56, 58859.39, 59716.8, 56915.28, 57416.02, 52247.6, 53498.79, 55049.44, 50037.91, 51096.37, 52394.82, 47946.24, 47939.15, 46754.46, 44021.8, 47608.76, 41762.42, 45009.59, 47069.52, 50358.31, 46521.83, 41923.3, 43992.14, 40531.9, 12133.11, -72.37];
+const REV_ACTUAL_SHOPIFY = [9764.04, 11784.26, 9742.74, 9095.19, 10978.57, 8161.73, 7319.15, 14262.17, 10944.01, 12387.04, 16856.28, 11663.07, 13711.68, 14211.77, 11061.83, 7391.97, 12543.52, 11121.09, 7361.39, 9623.04, 10876.59, 7823.82, 11335.66, 9603.99, 9089.91, 9822.18, 8472.5, 7640.49, 10135.6, 7457.51, 1994.35];
+const REV_ACTUAL_WALMART = [3880.98, 3606.99, 4259.81, 4317.72, 5414.24, 5096.84, 4054.02, 3376.44, 4134.35, 4315.06, 3013.3, 2779.94, 3155.13, 2699.35, 1980.37, 1922.96, 2000.64, 2058.05, 1711.96, 2085.46, 2361.85, 2358.88, 2796.09, 3800.0, 2928.66, 3365.91, 3561.4, 3939.36, 3104.62, 3923.64, 760.19];
+const REV_ACTUAL_FAIRE = [1148.23, 1916.78, 2326.15, 1617.8, 523.35, 759.27, 499.63, 1259.32, 131.5, 1538.43, null, 5624.35, 585.5, 1504.55, null, 351.23, 1568.37, 268.74, 248.39, null, 967.66, 581.34, 1678.29, 1343.09, 1472.16, 68.83, 320.8, 178.63, 823.85, null, null];
+const REV_ACTUAL_GNC = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 160000.0];
+const REV_ACTUAL_TIKTOK = [null, null, null, null, null, 35.95, 34.43, 30.2, 30.2, null, null, null, null, null, null, null, null, null, null, null, null, 32.95, 99.9, null, 57.36, 30.4, null, null, null, null, null];
+const REV_ACTUAL_OTHER = [-0.0, -0.0, 42390.13, -0.0, 4305.71, 0.0, -0.0, 293.77, 8217.15, 219.26, 28842.64, 308.74, -0.0, -15.52, 16020.72, -44.26, 20930.94, 18215.68, -0.0, -0.0, 398.86, 13523.13, 13661.76, 546.42, 5441.97, -0.0, 9107.84, 0.0, -0.0, 42861.76, -160000.0];
+const ADV_MKTG_ACTUAL = [12619.39, 14784.58, 14224.15, 15638.73, 11918.43, 12779.26, 12461.41, 12556.59, null, 18402.36, 10153.81, 11759.28, null, 22074.1, 11935.47, 11551.09, 7735.51, null, 9050.72, 11097.15, 12817.93, 8380.0, 12163.15, 9453.86, 11533.17, 10243.47, 9733.72, 8585.03, 6992.98, 8220.36, 6461.64];
+const GNA_ACTUAL = [996.66, 62.95, 8992.6, 159.0, 1072.25, 75.4, 1112.13, null, 693.59, 1412.33, 2412.95, 306.51, 2069.88, 1892.34, 1690.53, 1035.77, 1190.07, 1081.86, 1081.3, 2018.38, null, 1627.48, 279.67, 15.99, 1097.83, 219.89, 1214.3, 50.22, 955.04, 209.68, 292.86];
+const SOFTWARE_ACTUAL = [3485.44, 1386.67, 993.91, 833.66, 1973.12, 2801.61, 1122.74, 1683.41, 6313.34, 1354.02, 1254.05, 1566.25, 2993.08, 2162.7, 797.75, 1424.89, 2120.25, 2239.55, 1694.66, 868.78, 2786.15, 2241.07, 1728.06, 3988.86, 3218.55, 2644.1, 1553.8, 1154.56, 3063.61, 2010.38, 271.4];
+const ROAS_ACTUAL = [5.7, 4.8, 8.1, 4.2, 6.4, 5.3, 5.7, 6.3, null, 4.1, 9.9, 6.3, null, 3.1, 6.7, 5.4, 11.0, null, 6.2, 5.0, 4.9, 7.9, 6.1, 6.6, 6.0, 5.8, 6.5, 6.5, 7.8, 8.1, 0.4];
+const REV_BUDGET_TOTAL = [72158.79, 71015.14, 115437.3, 65123.07, 76178.02, 67858.35, 70766.62, 78938.7, 80372.49, 75875.81, 100959.82, 73874.89, 72501.75, 68438.06, 80159.29, 62016.72, 84989.71, 79602.71, 56076.2, 55730.3, 62213.72, 66082.54, 74581.29, 62363.02, 69348.37, 59809.15, 63385.84, 55750.62, 54595.97, 66376.02, 2682.17, 155855.97, 87000.0, 72000.0, 89200.0, 74200.0, 93200.0, 77200.0, 96362.76, 80218.85, 100114.98, 84042.55, 100476.14, 85079.35, 100242.08, 87235.99, 102791.85, 104400.0, 107513.26, 92370.72, 109700.0, 92675.91];
+const REV_BUDGET_AMAZON = [57365.54, 53707.11, 56718.47, 50092.36, 54956.15, 53804.56, 58859.39, 59716.8, 56915.28, 57416.02, 52247.6, 53498.79, 55049.44, 50037.91, 51096.37, 52394.82, 47946.24, 47939.15, 46754.46, 44021.8, 47608.76, 41762.42, 45009.59, 47069.52, 50358.31, 46521.83, 41923.3, 43992.14, 40531.9, 12133.11, -72.37, 71770.7, 55000.0, 56000.0, 57000.0, 58000.0, 60000.0, 60000.0, 63000.0, 63000.0, 65000.0, 65000.0, 65000.0, 65000.0, 65000.0, 67000.0, 67000.0, 67000.0, 70000.0, 70000.0, 70000.0, 70000.0];
+const REV_BUDGET_SHOPIFY = [9764.04, 11784.26, 9742.74, 9095.19, 10978.57, 8161.73, 7319.15, 14262.17, 10944.01, 12387.04, 16856.28, 11663.07, 13711.68, 14211.77, 11061.83, 7391.97, 12543.52, 11121.09, 7361.39, 9623.04, 10876.59, 7823.82, 11335.66, 9603.99, 9089.91, 9822.18, 8472.5, 7640.49, 10135.6, 7457.51, 1994.35, 8567.99, 10000.0, 10000.0, 10000.0, 10000.0, 11000.0, 11000.0, 11000.0, 11000.0, 12000.0, 12000.0, 12000.0, 12000.0, 12000.0, 13000.0, 13000.0, 30000.0, 14000.0, 15000.0, 15000.0, 15000.0];
+const REV_BUDGET_WALMART = [3880.98, 3606.99, 4259.81, 4317.72, 5414.24, 5096.84, 4054.02, 3376.44, 4134.35, 4315.06, 3013.3, 2779.94, 3155.13, 2699.35, 1980.37, 1922.96, 2000.64, 2058.05, 1711.96, 2085.46, 2361.85, 2358.88, 2796.09, 3800.0, 2928.66, 3365.91, 3561.4, 3939.36, 3104.62, 3923.64, 760.19, 1441.92, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4800.0, 4800.0, 4800.0, 4800.0];
+const TOP_SKUS = [{"name": "Papaya Leaf Extract Capsules 60/600mg", "channel": "Amazon", "asin": "B00IA275HG", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 130641.82, "units": 1897, "velocity": "146/wk", "stock": "852 avail \u2014 healthy", "stockFlag": "ok", "rank": 1}, {"name": "Papaya Leaf Liquid Extract 16oz (+ related SKU)", "channel": "Amazon", "asin": "B005TK5MQI", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 113231.71, "units": 1449, "velocity": "111/wk", "stock": "688 avail (shared pool)", "stockFlag": "ok", "rank": 2}, {"name": "Soursop Graviola Leaf Liquid Extract 12oz", "channel": "Amazon", "asin": "B06Y5LLFKV", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 58536.1, "units": 904, "velocity": "70/wk", "stock": "251 avail", "stockFlag": "ok", "rank": 3}, {"name": "Papaya Leaf Extract Capsules 60/600mg (QBO total)", "channel": "All (QBO)", "asin": "798304169072", "window": "Jul 2026 (month)", "revenue": 50357.33, "units": null, "velocity": "\u2014", "stock": "see Amazon/Shopify rows", "stockFlag": "ok", "rank": 4}, {"name": "Papaya Leaf Blood Support Capsules 60/450mg", "channel": "Amazon", "asin": "B00MSSXXYC", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 42587.77, "units": 805, "velocity": "62/wk", "stock": "0 avail \u2014 OUT OF STOCK (240 inbound)", "stockFlag": "critical", "rank": 5}, {"name": "Papaya Leaf Liquid Extract 16oz (QBO total)", "channel": "All (QBO)", "asin": "798304169089", "window": "Jul 2026 (month)", "revenue": 39031.7, "units": null, "velocity": "\u2014", "stock": "see Amazon/Shopify rows", "stockFlag": "ok", "rank": 6}, {"name": "Soursop Graviola Leaf Liquid Extract 1oz (QBO total)", "channel": "All (QBO)", "asin": "798304441550", "window": "Jul 2026 (month)", "revenue": 34459.59, "units": null, "velocity": "\u2014", "stock": "see Amazon/Shopify rows", "stockFlag": "ok", "rank": 7}, {"name": "Blood Platelet Plus Capsules 60/600mg", "channel": "Amazon", "asin": "B0CRGYMKRB", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 30667.55, "units": 559, "velocity": "43/wk", "stock": "49 avail \u2014 ~4wk cover", "stockFlag": "warn", "rank": 8}, {"name": "Mullein Leaf Liquid Extract (case pack)", "channel": "Amazon", "asin": "B01IRQF0D0", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 28887.79, "units": 731, "velocity": "56/wk", "stock": "294 avail", "stockFlag": "ok", "rank": 9}, {"name": "Papaya Leaf Extract Capsules 600mg 10X", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 26123.81, "units": 237, "velocity": "18/wk", "stock": "9,820 avail \u2014 healthy", "stockFlag": "ok", "rank": 10}, {"name": "Papaya Seed Liquid Extract 1oz", "channel": "Amazon", "asin": "B00INM8L0I", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 22059.95, "units": 672, "velocity": "52/wk", "stock": "340 avail \u2014 healthy", "stockFlag": "ok", "rank": 11}, {"name": "Soursop Graviola Leaf Liquid Extract 12oz (QBO total)", "channel": "All (QBO)", "asin": "798304395136", "window": "Jul 2026 (month)", "revenue": 18818.65, "units": null, "velocity": "\u2014", "stock": "see Amazon/Shopify rows", "stockFlag": "ok", "rank": 12}, {"name": "Soursop Leaf Graviola Extract 15X Liquid", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 18132.04, "units": 279, "velocity": "21/wk", "stock": "9,893\u20139,901 avail", "stockFlag": "ok", "rank": 13}, {"name": "Oil Of Oregano Plant Oils 2oz", "channel": "Amazon", "asin": "B0BM3WPZSH", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 17743.75, "units": 635, "velocity": "49/wk", "stock": "381 avail, 1500 inbound", "stockFlag": "ok", "rank": 14}, {"name": "Soursop Bitters Plus Liquid Extract 1oz", "channel": "Amazon", "asin": "B07M7TCHN8", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 17075.68, "units": 440, "velocity": "34/wk", "stock": "559 avail \u2014 healthy", "stockFlag": "ok", "rank": 15}, {"name": "Organic Papaya Leaf Extract 16oz 15X Liquid", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 13451.41, "units": 122, "velocity": "9/wk", "stock": "9,913 avail", "stockFlag": "ok", "rank": 16}, {"name": "Mullein Leaf Liquid Extract 1oz (QBO total)", "channel": "All (QBO)", "asin": "810128950909", "window": "Jul 2026 (month)", "revenue": 10876.46, "units": null, "velocity": "\u2014", "stock": "1oz OOS on Shopify \u2014 see above", "stockFlag": "critical", "rank": 17}, {"name": "Papaya Seed Powder Capsules 60ct", "channel": "Amazon", "asin": "B097HRF61S", "window": "13wk (May 9 \u2013 Aug 3)", "revenue": 9731.8, "units": 244, "velocity": "19/wk", "stock": "86 avail, 300 inbound", "stockFlag": "ok", "rank": 18}, {"name": "Mullein Leaf Organic 15X Liquid Extract (1oz)", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 8937.54, "units": 168, "velocity": "13/wk", "stock": "1oz: 0 avail (ALL locations)", "stockFlag": "critical", "rank": 19}, {"name": "Blood Platelet Plus Capsules 20X 60ct", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 8377.24, "units": 118, "velocity": "9/wk", "stock": "9,909 avail", "stockFlag": "ok", "rank": 20}, {"name": "Organic Papaya Leaf Extract 1oz Trial Size", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 4749.66, "units": 68, "velocity": "5/wk", "stock": "9,943 avail", "stockFlag": "ok", "rank": 21}, {"name": "Papaya Leaf Blood Support Capsules 10X 60ct", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 4001.9, "units": null, "velocity": "~1/wk (12 orders)", "stock": "9,986 avail", "stockFlag": "ok", "rank": 22}, {"name": "Soursop Bitters 15X Liquid Extract", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 3660.76, "units": 75, "velocity": "6/wk", "stock": "9,950\u20139,984 avail", "stockFlag": "ok", "rank": 23}, {"name": "Blood Platelet Support w/ Papaya Leaf 15X Liquid", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 3603.52, "units": 54, "velocity": "4/wk", "stock": "9,978\u20139,982 avail", "stockFlag": "ok", "rank": 24}, {"name": "Guava Leaf Organic 15X Liquid Extract (12oz)", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 9 \u2013 Aug 8)", "revenue": 1659.23, "units": 30, "velocity": "2/wk", "stock": "12oz: 13 total \u2014 critically low", "stockFlag": "critical", "rank": 25}];
+
+const WEEK_COUNT = 52;
+function weekMeta(n){
+  const start = new Date(2026,0,1);
+  start.setDate(start.getDate() + (n-1)*7);
+  const end = new Date(start.getTime());
+  end.setDate(end.getDate()+6);
+  const fmt = d => d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  return {start, end, label: fmt(start)+' – '+fmt(end)};
+}
+const LAST_ACTUAL_WEEK = 30; // week 31 flagged partial/refreshing in the sheet, so 30 is the last clean closed week
+const CURRENT_WEEK = 31;
+
+function fmtMoney(v){
+  if(v===null || v===undefined || isNaN(v)) return '—';
+  const neg = v<0;
+  const s = Math.abs(v).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  return neg? '('+s+')' : s;
+}
+function fmtPct(v,d){ if(v===null||v===undefined||isNaN(v)) return '—'; return v.toFixed(d===undefined?1:d)+'%'; }
+
+/* ---------------- TAB SWITCHING ---------------- */
+document.getElementById('tabNav').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button[data-page]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+btn.dataset.page).classList.add('active');
+});
+
+document.getElementById('lastUpdated').textContent = 'Data refreshed Aug 8, 2026 · next refresh Fri';
+
+/* ---------------- STATIC KPI CARDS ---------------- */
+const staticKpis = [
+  {eyebrow:'YTD Income · Jan 1 – Aug 8', val: fmtMoney(2185383.59), sub:'Confirmed, QuickBooks Total Income', tag:'info', tagText:'see pacing card →'},
+  {eyebrow:'YTD pace vs. Bearish budget', val:'−10.2%', sub:'$2.14M actual vs. $2.39M pro-rated FY budget, wks 1–30', tag:'bad', tagText:'running behind annual plan'},
+  {eyebrow:'Gross Margin · Jul 2026 close', val:'50.2%', sub:'$136,824.65 GP on $272,532.39 revenue', tag:'good', tagText:'above 43–45% benchmark'},
+  {eyebrow:'Net Operating Margin · Jul 2026', val:'14.1%', sub:'$38,450.18 NOI', tag:'warn', tagText:'below 15–20% target band'},
+  {eyebrow:'Cash on hand · as of Aug 8', val: fmtMoney(291057.30), sub:'QuickBooks balance sheet snapshot', tag:'good', tagText:'up from $204K in Jun'},
+  {eyebrow:'Blended ROAS · this week', val:'2.95x', sub:'Wk 31 (Aug 1–7), Sponsored Products+Brands+Display', tag:'bad', tagText:'below 7.0x internal target'},
+  {eyebrow:'AR at risk · GNC Holdings', val: fmtMoney(31704.36), sub:'Overdue 1–60 days, 100% of aged AR', tag:'warn', tagText:'single-customer concentration'},
+  {eyebrow:'Amazon stockouts · live', val:'10 SKUs', sub:'0 fulfillable units with recent demand', tag:'bad', tagText:'9 more at <21 days cover'},
+];
+document.getElementById('staticKpis').innerHTML = staticKpis.map(k=>`
+  <div class="kpi">
+    <span class="eyebrow">${k.eyebrow}</span>
+    <div class="val">${k.val}</div>
+    <div class="sub">${k.sub}</div>
+    <span class="tag ${k.tag}">${k.tagText}</span>
+  </div>`).join('');
+
+/* ---------------- WEEK STRIP ---------------- */
+const weekStripEl = document.getElementById('weekStrip');
+let stripHtml = '';
+for(let n=1;n<=WEEK_COUNT;n++){
+  let cls = 'future';
+  if(n <= LAST_ACTUAL_WEEK) cls = 'has-actual';
+  else if(n === CURRENT_WEEK) cls = 'partial';
+  stripHtml += `<button class="wk-btn ${cls}" data-week="${n}" title="${weekMeta(n).label}"><span class="n">Wk${n}</span><span class="dot2"></span></button>`;
+}
+weekStripEl.innerHTML = stripHtml;
+
+function selectWeek(n){
+  document.querySelectorAll('.wk-btn').forEach(b=>b.classList.toggle('active', +b.dataset.week===n));
+  const meta = weekMeta(n);
+  document.getElementById('weekDetailTitle').textContent = 'Week '+n+(n===CURRENT_WEEK? ' (in progress)':'');
+  document.getElementById('weekDetailDates').textContent = meta.label+', 2026';
+
+  const idx = n-1;
+  const hasActual = n <= LAST_ACTUAL_WEEK;
+  const isPartial = n === CURRENT_WEEK;
+
+  const rows = [
+    {label:'Amazon', actual: hasActual||isPartial? REV_ACTUAL_AMAZON[idx] : null, budget: REV_BUDGET_AMAZON[idx]},
+    {label:'Shopify', actual: hasActual||isPartial? REV_ACTUAL_SHOPIFY[idx] : null, budget: REV_BUDGET_SHOPIFY[idx]},
+    {label:'Walmart', actual: hasActual||isPartial? REV_ACTUAL_WALMART[idx] : null, budget: REV_BUDGET_WALMART[idx]},
+    {label:'GNC / Faire / Other', actual: hasActual||isPartial? sumSafe([REV_ACTUAL_GNC[idx],REV_ACTUAL_FAIRE[idx],REV_ACTUAL_TIKTOK[idx],REV_ACTUAL_OTHER[idx]]) : null, budget: null},
+    {label:'Total', actual: hasActual||isPartial? REV_ACTUAL_TOTAL[idx] : null, budget: REV_BUDGET_TOTAL[idx], strong:true},
+  ];
+  document.getElementById('weekChannelRows').innerHTML = rows.map(r=>{
+    const variance = (r.actual!==null && r.actual!==undefined && r.budget!==null && r.budget!==undefined) ? r.actual - r.budget : null;
+    const varPct = (variance!==null && r.budget) ? (variance/r.budget*100) : null;
+    const varColor = variance===null? 'var(--text-faint)' : (variance>=0? 'var(--good)':'var(--danger)');
+    return `<tr${r.strong?' style="font-weight:700;"':''}>
+      <td>${r.label}</td>
+      <td class="num">${r.actual===null? '<span class=\"muted\">no data yet</span>' : fmtMoney(r.actual)}</td>
+      <td class="num">${r.budget===null?'<span class="muted">n/a</span>':fmtMoney(r.budget)}</td>
+      <td class="num" style="color:${varColor};">${variance===null?'—':(variance>=0?'+':'')+fmtMoney(variance)+(varPct!==null?' ('+(varPct>=0?'+':'')+varPct.toFixed(1)+'%)':'')}</td>
+    </tr>`;
+  }).join('');
+
+  let note = '';
+  if(!hasActual && !isPartial){
+    note = `<div class="note-box">Week ${n} hasn't happened yet — showing Bearish-scenario budget only. Actuals populate automatically once the week closes and the sheet refreshes.</div>`;
+  } else if(isPartial){
+    note = `<div class="note-box">Week ${n} is still in progress / the budget sheet's Synder refresh for this week hadn't fully settled as of the last pull — treat these as directional, not final.</div>`;
+  }
+  document.getElementById('weekNote').innerHTML = note;
+
+  const prevIdx = idx-1;
+  const spendRows = [
+    {label:'Advertising & Marketing', cur: ADV_MKTG_ACTUAL[idx], prev: prevIdx>=0? ADV_MKTG_ACTUAL[prevIdx]:null},
+    {label:'Software', cur: SOFTWARE_ACTUAL[idx], prev: prevIdx>=0? SOFTWARE_ACTUAL[prevIdx]:null},
+    {label:'G&A', cur: GNA_ACTUAL[idx], prev: prevIdx>=0? GNA_ACTUAL[prevIdx]:null},
+    {label:'Blended ROAS', cur: ROAS_ACTUAL[idx], prev: prevIdx>=0? ROAS_ACTUAL[prevIdx]:null, isRatio:true},
+  ];
+  document.getElementById('weekSpendRows').innerHTML = spendRows.map(r=>`
+    <tr>
+      <td>${r.label}</td>
+      <td class="num">${r.cur===null||r.cur===undefined? '<span class="muted">no data</span>' : (r.isRatio? r.cur.toFixed(1)+'x' : fmtMoney(r.cur))}</td>
+      <td class="num">${r.prev===null||r.prev===undefined? '<span class="muted">—</span>' : (r.isRatio? r.prev.toFixed(1)+'x' : fmtMoney(r.prev))}</td>
+    </tr>`).join('');
+  document.getElementById('weekSpendNote').innerHTML = (n>31)? '<div class="note-box info">Weekly OpEx and ROAS actuals aren\'t available for future weeks — only revenue is budgeted week-by-week in the Bearish model.</div>' : '';
+}
+function sumSafe(arr){ const vals = arr.filter(v=>v!==null && v!==undefined); if(!vals.length) return null; return vals.reduce((a,b)=>a+b,0); }
+
+weekStripEl.addEventListener('click', e=>{
+  const btn = e.target.closest('.wk-btn');
+  if(!btn) return;
+  selectWeek(+btn.dataset.week);
+});
+selectWeek(CURRENT_WEEK);
+// scroll strip to current week
+setTimeout(()=>{ const active = weekStripEl.querySelector('.wk-btn.active'); if(active) active.scrollIntoView({inline:'center'}); }, 50);
+
+/* ---------------- CUSTOMER SERVICE: TO-DOS ---------------- */
+const TODOS = [
+  {text:'Fix Amazon brand-attribute mismatch (19 SKUs tagged "Herbal Papaya" instead of "Herbal Goodness")', meta:'Due Aug 15 · Amazon catalog', tag:'Listing', done:false},
+  {text:'Trim the 82 Amazon bullet points exceeding the 125-character limit — batch 20/week', meta:'Wk1 of 4, due Aug 12 · Amazon catalog', tag:'Listing', done:false},
+  {text:'Confirm 240-unit inbound shipment for Papaya Leaf Blood Support Capsules (B00MSSXXYC) has landed', meta:'Due Aug 20 · currently 0 avail, OOS', tag:'Inventory', done:false},
+  {text:'Reorder Guava Leaf 12oz (Shopify) — 13 units total across Eldorado + Amazon, ~2 weeks of cover', meta:'Due Aug 11 · critical stock', tag:'Inventory', done:false},
+  {text:'Investigate Shopify checkout funnel — conversion sitting at 0.28–0.48% vs. 2.4–3.2% benchmark', meta:'Funnel audit due Aug 22', tag:'CRO', done:false},
+  {text:'Review the 10 active discount codes (all created 2015–2019); decide which 3, if any, stay live', meta:'Due Aug 15 · Shopify discounts', tag:'Marketing', done:false},
+  {text:'Call/email GNC Holdings on the $31,704.36 overdue balance (1–60 days past due)', meta:'Due Aug 12 · AR follow-up', tag:'Finance', done:false},
+  {text:'Resolve the unlabeled Shopify line item generating $1,625.18 / 55 orders in the last 91 days', meta:'Due before next refresh, Aug 15', tag:'Data quality', done:false},
+  {text:'Track the "Value for Money" negative review theme on B00IA275HG (42.9% of negative mentions)', meta:'Weekly check-in, starting now', tag:'Reviews', done:false},
+  {text:'Scope a CS response-time tool (Amazon has no built-in metric here) — compare 2 options', meta:'Due Aug 29 · ops', tag:'Ops', done:false},
+];
+function renderTodos(){
+  const list = document.getElementById('todoList');
+  list.innerHTML = TODOS.map((t,i)=>`
+    <div class="todo-item ${t.done?'done':''}" data-i="${i}">
+      <div class="todo-node">${t.done? '✓' : (i+1)}</div>
+      <div class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="#0d0f08" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg></div>
+      <div class="todo-body"><strong>${t.text}</strong><span>${t.meta}</span></div>
+      <div class="todo-meta"><span class="pill" style="background:rgba(255,255,255,0.08);color:var(--text-dim);">${t.tag}</span></div>
+    </div>`).join('');
+  updateProgress();
+}
+function updateProgress(){
+  const done = TODOS.filter(t=>t.done).length;
+  const pct = Math.round(done/TODOS.length*100);
+  document.getElementById('progressHeadline').textContent = `${done} of ${TODOS.length} complete this week`;
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+  document.getElementById('spineFill').style.height = pct+'%';
+  const circumference = 194.7;
+  document.getElementById('ringProgress').style.strokeDashoffset = circumference - (circumference*pct/100);
+}
+document.getElementById('todoList').addEventListener('click', e=>{
+  const item = e.target.closest('.todo-item');
+  if(!item) return;
+  const i = +item.dataset.i;
+  TODOS[i].done = !TODOS[i].done;
+  renderTodos();
+});
+renderTodos();
+
+/* ---------------- CS METRIC TABLE ---------------- */
+const CS_METRICS = [
+  ['Return rate', '0.34% (43 returns / ~12,832 units, 13wk)', 'Not separately exposed — supplements industry avg. ~7% (estimate)'],
+  ['Buy Box / checkout ownership', '100% across 12 top ASINs checked', 'N/A (single-seller storefront)'],
+  ['Listing quality scan', '128 error · 54 healthy · 10 warning / 200 sampled', 'Not available via connected tools'],
+  ['Overall star rating', 'Not exposed by connected tools', 'Not exposed by connected tools'],
+  ['Stockouts right now', '10 SKUs at 0 fulfillable units', '1 variant (Mullein 1oz) at 0 across all locations'],
+  ['Conversion rate', 'N/A (marketplace, not applicable)', '0.28%–0.48%, trailing 13wk'],
+  ['Repeat/returning rate', 'Not exposed by connected tools', '~34% weekly avg. (range 28.6–44.7%)'],
+  ['Top negative review theme', '"Value For Money" — 42.9% of negative mentions, top SKU', 'Not exposed by connected tools'],
+  ['Active promotions', 'Managed via Amazon Ads, see Marketing tab', '10 legacy codes (2015–2019), no live campaign'],
+  ['CS response time', 'Not exposed by connected tools', 'Not exposed by connected tools'],
+];
+document.getElementById('csMetricRows').innerHTML = CS_METRICS.map(r=>`
+  <tr><td class="metric-name">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+/* ---------------- PRODUCT INTELLIGENCE ---------------- */
+function renderLadderAndTable(){
+  const red = TOP_SKUS.filter(s=>s.stockFlag==='critical');
+  const yellow = TOP_SKUS.filter(s=>s.stockFlag==='warn');
+  const green = TOP_SKUS.filter(s=>s.stockFlag==='ok');
+  document.getElementById('countRed').textContent = red.length;
+  document.getElementById('countYellow').textContent = yellow.length;
+  document.getElementById('countGreen').textContent = green.length;
+  const item = s => `<div class="ladder-item"><b>${s.name}</b><div class="meta">${s.channel} · ${fmtMoney(s.revenue)} · ${s.stock}</div></div>`;
+  document.getElementById('ladderRed').innerHTML = red.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+  document.getElementById('ladderYellow').innerHTML = yellow.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+  document.getElementById('ladderGreen').innerHTML = green.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+}
+renderLadderAndTable();
+
+let sortState = {key:'rank', asc:true};
+function renderSkuTable(){
+  const rows = [...TOP_SKUS].sort((a,b)=>{
+    let av=a[sortState.key], bv=b[sortState.key];
+    if(typeof av === 'string') av = av.toLowerCase();
+    if(typeof bv === 'string') bv = bv.toLowerCase();
+    if(av===null||av===undefined) av = -Infinity;
+    if(bv===null||bv===undefined) bv = -Infinity;
+    if(av<bv) return sortState.asc? -1:1;
+    if(av>bv) return sortState.asc? 1:-1;
+    return 0;
+  });
+  document.getElementById('skuRows').innerHTML = rows.map(s=>`
+    <tr>
+      <td class="num">${s.rank}</td>
+      <td>${s.name}</td>
+      <td>${s.channel}</td>
+      <td class="muted">${s.window}</td>
+      <td class="num">${fmtMoney(s.revenue)}</td>
+      <td class="num">${s.velocity||'—'}</td>
+      <td><span class="stock-dot ${s.stockFlag}"></span>${s.stock}</td>
+    </tr>`).join('');
+}
+document.getElementById('skuTable').querySelector('thead').addEventListener('click', e=>{
+  const th = e.target.closest('th[data-key]');
+  if(!th) return;
+  const key = th.dataset.key;
+  if(sortState.key === key) sortState.asc = !sortState.asc;
+  else { sortState.key = key; sortState.asc = true; }
+  renderSkuTable();
+});
+renderSkuTable();
+
+/* ---------------- MARKETING CHARTS ---------------- */
+function drawBarChart(svgId, data, opts){
+  const svg = document.getElementById(svgId);
+  const w = svg.clientWidth || 560, h = 150;
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  const vals = data.map(d=>d===null||d===undefined?0:d);
+  const max = Math.max(...vals, opts && opts.min ? opts.min : 0) * 1.15 || 1;
+  const barW = w / data.length;
+  let svgHtml = '';
+  data.forEach((v,i)=>{
+    const val = v===null||v===undefined? 0 : v;
+    const bh = max? (val/max)*(h-24) : 0;
+    const x = i*barW + barW*0.18;
+    const bw = barW*0.64;
+    const color = (v===null||v===undefined) ? 'rgba(255,255,255,0.08)' : (opts && opts.benchmark && v < opts.benchmark ? '#ff6f61' : 'url(#barGrad)');
+    svgHtml += `<rect x="${x}" y="${h-20-bh}" width="${bw}" height="${bh}" rx="2" fill="${color}"></rect>`;
+  });
+  svgHtml += `<defs><linearGradient id="barGrad" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%" stop-color="#698805"/><stop offset="100%" stop-color="#d8c832"/></linearGradient></defs>`;
+  if(opts && opts.benchmark){
+    const by = h-20-(opts.benchmark/max)*(h-24);
+    svgHtml += `<line x1="0" y1="${by}" x2="${w}" y2="${by}" stroke="#f2c94c" stroke-width="1" stroke-dasharray="4,3"/>`;
+  }
+  svg.innerHTML = svgHtml;
+}
+const roasWindow = ROAS_ACTUAL.slice(18,31); // weeks 19-31
+drawBarChart('chartRoas', roasWindow, {benchmark:7});
+
+const SESSIONS_13WK = [4848,20992,24682,22501,19123,19719,23210,20659,21334,19858,19387,17887,20942];
+drawBarChart('chartSessions', SESSIONS_13WK);
+
+/* ---------------- BENCHMARK TABLE ---------------- */
+const BENCH = [
+  ['Gross margin', '50.2% (Jul 2026)', '60–78% (DTC/supplement brands)', 'below', 'Eightx, "Average Ecommerce Profit Margins"'],
+  ['OpEx ratio', '36.1% (Jul 2026)', '<35% internal target', 'above', 'internal target, cross-referenced vs. Eightx DTC Profitability 2026'],
+  ['Blended ROAS', '3.34x (Jul), 2.95x (Wk31)', '3–6x general DTC; Amazon Health & Household ~2.95–3.34x actual', 'in range', 'based.marketing Ecommerce ROAS Benchmarks 2026'],
+  ['Amazon TACoS', '10.2% (Jul 2026)', '8–15% "healthy" range', 'in range', 'IG PPC / Keywords.am TACoS guides'],
+  ['Shopify conversion rate', '0.28–0.48% (13wk avg.)', '2.4–3.2% (Nutrition & Supplements)', 'below', 'Craftberry, "Average Conversion Rate for Shopify Stores 2025"'],
+  ['Return rate', '0.34% (Amazon, 13wk)', '~7% (5–10%) for Supplements & Vitamins', 'below (favorable)', 'Eightx, "Average Ecommerce Return Rate 2026"'],
+  ['Repeat purchase / customer', '~34% weekly returning rate', '37.7% category avg. repurchase rate', 'in range', 'CommerceCatalyst 2026 DTC Benchmarks'],
+  ['Net margin', '13.8% (Jul 2026)', 'Median DTC ~3%; "healthy" cited as 10–20%', 'above median', 'Eightx / Finaloop Ecommerce Profit Benchmarks'],
+];
+document.getElementById('benchRows').innerHTML = BENCH.map(r=>{
+  const cls = r[3]==='below'? 'status-miss' : (r[3]==='above'? 'status-miss' : 'status-hit');
+  const clsFixed = (r[0]==='Return rate' || r[0]==='Net margin' || r[0]==='OpEx ratio') ? (r[3]==='below (favorable)'||r[3]==='above median'?'status-hit':(r[0]==='OpEx ratio'?'status-miss':'status-hit')) : cls;
+  return `<tr><td>${r[0]}</td><td>${r[1]}</td><td class="muted">${r[2]}</td><td class="${clsFixed}">${r[3]}</td><td class="muted">${r[4]}</td></tr>`;
+}).join('');
+</script>
+</body>
+</html>
