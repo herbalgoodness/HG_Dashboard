@@ -106,7 +106,7 @@
     border-radius:var(--radius);
     padding:20px;
   }
-  .kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:30px;}
+  .kpi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:30px;}
   .kpi{
     background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
     border:1px solid var(--line-soft);
@@ -268,6 +268,70 @@
   .three-col{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
   @media (max-width:900px){.three-col{grid-template-columns:1fr;}}
 
+  /* ============ MARKETPLACE HEALTH ============ */
+  .health-score-badge{
+    display:flex; align-items:center; gap:16px; padding:18px 20px; border-radius:var(--radius);
+    border:1px solid var(--line-soft); background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  }
+  .health-score-ring{
+    width:64px; height:64px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-weight:700; font-size:19px; color:#fff;
+    border:5px solid var(--line-soft);
+  }
+  .health-score-ring.red{border-color:var(--danger); color:var(--danger); box-shadow:0 0 16px rgba(255,111,97,0.35);}
+  .health-score-ring.yellow{border-color:var(--warn); color:var(--warn);}
+  .health-score-ring.green{border-color:var(--good); color:var(--good);}
+  .health-score-badge h4{margin:0 0 3px; font-size:15px; color:#fff;}
+  .health-score-badge p{margin:0; font-size:12.5px; color:var(--text-dim);}
+  .alert-banner{
+    display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:10px; margin-top:12px;
+    background:var(--danger-bg); border:1px solid rgba(255,111,97,0.3); font-size:12.5px; color:var(--text);
+  }
+  .alert-banner .ico{flex-shrink:0; font-size:15px;}
+  .alert-banner b{color:var(--danger);}
+  .health-metric{margin-bottom:18px;}
+  .health-metric:last-child{margin-bottom:0;}
+  .health-metric-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px;}
+  .health-metric-head span:first-child{font-size:13px; font-weight:600; color:var(--text);}
+  .health-bar-outer{position:relative; height:9px; border-radius:6px; background:rgba(255,255,255,0.06); overflow:visible;}
+  .health-bar-inner{height:100%; border-radius:6px; transition:width .5s ease;}
+  .health-bar-inner.good{background:linear-gradient(90deg,var(--olive),var(--good));}
+  .health-bar-inner.warn{background:linear-gradient(90deg,var(--gold-deep),var(--warn));}
+  .health-bar-inner.critical{background:linear-gradient(90deg,#b3261e,var(--danger));}
+  .health-threshold-mark{position:absolute; top:-3px; width:2px; height:15px; background:rgba(255,255,255,0.55);}
+  .health-metric-sub{margin-top:6px; font-size:11px; color:var(--text-faint); font-family:var(--mono);}
+  .channel-kpi{position:relative;}
+  .channel-kpi .trend{font-family:var(--mono); font-size:12.5px; font-weight:700;}
+  .channel-kpi .trend.up{color:var(--good);}
+  .channel-kpi .trend.down{color:var(--danger);}
+  .walmart-status-card{display:flex; flex-direction:column; gap:10px;}
+  .walmart-status-row{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--line-soft); font-size:13px;}
+  .walmart-status-row:last-child{border-bottom:none;}
+  .walmart-status-row .k{color:var(--text-dim);}
+  .walmart-status-row .v{color:var(--text); font-weight:600; font-family:var(--mono); font-size:12.5px;}
+
+  /* ============ EMAIL ANALYTICS ============ */
+  .anomaly-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:8px;}
+  @media (max-width:900px){.anomaly-grid{grid-template-columns:1fr;}}
+  .anomaly-card{background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015)); border:1px solid var(--line-soft); border-radius:var(--radius); padding:16px 18px;}
+  .anomaly-card .ac-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px;}
+  .anomaly-card .ac-head h4{margin:0; font-size:13.5px; color:#fff; font-weight:600;}
+  .anomaly-card .ac-head .tag{flex-shrink:0; margin-top:0;}
+  .anomaly-card .ac-row{display:flex; justify-content:space-between; gap:10px; font-size:12px; color:var(--text-dim); padding:6px 0; border-bottom:1px solid var(--line-soft);}
+  .anomaly-card .ac-row:last-of-type{border-bottom:none;}
+  .anomaly-card .ac-row b{color:var(--text); font-family:var(--mono); font-weight:600;}
+  .anomaly-card .ac-row .delta{font-family:var(--mono); font-weight:700; margin-left:6px;}
+  .anomaly-card .ac-row .delta.up{color:var(--good);}
+  .anomaly-card .ac-row .delta.down{color:var(--danger);}
+  .anomaly-card .ac-note{margin-top:10px; font-size:11.5px; color:var(--text-faint); line-height:1.5;}
+
+  .idea-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  @media (max-width:900px){.idea-grid{grid-template-columns:1fr;}}
+  .idea-card{background:rgba(255,255,255,0.025); border:1px solid var(--line-soft); border-radius:12px; padding:14px 16px; display:flex; gap:12px;}
+  .idea-card .idea-num{flex-shrink:0; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--olive),var(--gold-deep)); color:#0d0f08; font-family:var(--mono); font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center;}
+  .idea-card b{display:block; font-size:13px; color:var(--text); margin-bottom:3px;}
+  .idea-card span{font-size:12px; color:var(--text-dim); line-height:1.5;}
+
   footer{
     max-width:1320px; margin:40px auto 0; padding:26px 28px 40px; border-top:1px solid var(--line-soft);
     color:var(--text-faint); font-size:11.5px; line-height:1.8;
@@ -301,9 +365,11 @@
   </div>
   <nav class="tabs" id="tabNav">
     <button data-page="overview" class="active">Overview</button>
+    <button data-page="marketplace">Marketplace Health</button>
     <button data-page="cs">Customer Service</button>
     <button data-page="products">Product Intelligence</button>
     <button data-page="marketing">Marketing</button>
+    <button data-page="email">Email Analytics</button>
   </nav>
   <div class="status-chip"><span class="dot"></span><span id="lastUpdated">—</span></div>
 </div>
@@ -352,6 +418,36 @@
           <tbody id="weekSpendRows"></tbody>
         </table>
         <div id="weekSpendNote"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MARKETPLACE HEALTH ============ -->
+  <div class="page" id="page-marketplace">
+    <div class="page-head">
+      <span class="eyebrow">Amazon SP-API + Walmart Marketplace API · live via Lisa, synced today</span>
+      <h2>Two marketplaces, side by side — sales and account risk</h2>
+      <p>Rolling 30-day sales by channel, plus Amazon's account-health scorecard against Amazon's own published suspension thresholds. This is a live pull, refreshed on its own cadence — separate from the weekly budget-model figures on the Overview tab, so the two won't always match to the dollar.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:20px;">
+      <div class="kpi channel-kpi"><span class="eyebrow">All channels · rolling 30 days</span><div class="val" id="mpTotalRev">—</div><div class="sub" id="mpTotalSub">—</div><span class="trend" id="mpTotalTrend"></span></div>
+      <div class="kpi channel-kpi"><span class="eyebrow">Amazon · rolling 30 days</span><div class="val" id="mpAmzRev">—</div><div class="sub" id="mpAmzSub">—</div><span class="trend" id="mpAmzTrend"></span></div>
+      <div class="kpi channel-kpi"><span class="eyebrow">Walmart · rolling 30 days</span><div class="val" id="mpWmtRev">—</div><div class="sub" id="mpWmtSub">—</div><span class="trend" id="mpWmtTrend"></span></div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="card">
+        <h3 style="margin:0 0 16px;font-size:15px;">Amazon account health</h3>
+        <div class="health-score-badge" id="healthScoreBadge" style="margin-bottom:18px;"></div>
+        <div id="healthAlerts"></div>
+        <div style="margin-top:18px;" id="healthMetrics"></div>
+        <div class="note-box info" style="margin-top:16px;">ODR is based on chargebacks + negative reviews (≤3 stars) — Amazon's A-to-Z claims aren't separately exposed by this connection. Late-shipment rate covers merchant-fulfilled (MFN) orders only; FBA shipping is Amazon-managed and isn't part of this figure.</div>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 16px;font-size:15px;">Walmart integration status</h3>
+        <div class="walmart-status-card" id="walmartStatusCard"></div>
+        <div class="note-box info" style="margin-top:16px;">Walmart Seller Center doesn't expose the same suspension-risk scorecard Amazon does through this connection — no equivalent health score is available yet, so we're showing connection health instead of fabricating one. If Walmart later exposes account-health metrics through this integration, they'll appear here.</div>
       </div>
     </div>
   </div>
@@ -492,22 +588,78 @@
     </section>
   </div>
 
+  <!-- ============ EMAIL ANALYTICS ============ -->
+  <div class="page" id="page-email">
+    <div class="page-head">
+      <span class="eyebrow">Klaviyo · email channel · live via connected integration</span>
+      <h2>Newsletters, flows, and where automated revenue is leaking</h2>
+      <p>This week's newsletter sends and their revenue, every live flow measured against its own 90-day weekly average (not a generic benchmark), and concrete suggestions for what to fix and what to send next.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:20px;">
+      <div class="kpi"><span class="eyebrow">Newsletters sent · this week</span><div class="val" id="emlNlCount">—</div><div class="sub" id="emlNlSub">—</div><span class="tag info">excludes internal test sends</span></div>
+      <div class="kpi"><span class="eyebrow">Newsletter revenue · this week</span><div class="val" id="emlNlRev">—</div><div class="sub" id="emlNlRevSub">—</div><span class="tag good">Shopify "Placed Order", send-date attribution</span></div>
+      <div class="kpi"><span class="eyebrow">Total email-attributed revenue</span><div class="val" id="emlTotalRev">—</div><div class="sub">Newsletters + all live flows, this week</div><span class="tag info">Klaviyo Reporting API</span></div>
+    </div>
+
+    <section class="block">
+      <h3>This week's newsletter sends</h3>
+      <p class="desc">Aug 3–9, 2026, send-date attribution (matches the Klaviyo UI). One additional 1-recipient internal test send is excluded from all counts and revenue above.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Campaign</th><th>Sent</th><th class="num">Recipients</th><th class="num">Open rate</th><th class="num">Click rate</th><th class="num">Conversions</th><th class="num">Revenue</th></tr></thead>
+          <tbody id="emlNlRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Flow anomalies — this week vs. each flow's own 90-day weekly average</h3>
+      <p class="desc">Every live flow with meaningful volume, compared against itself over the trailing 90 days (divided into weekly averages) — not against a generic industry benchmark. Flows sending under ~15 recipients/week aren't included; at that volume, one order swings the numbers too much to call anything an anomaly.</p>
+      <div class="anomaly-grid" id="anomalyGrid"></div>
+      <div class="note-box info">Four flows — Welcome series, Abandoned Added to Cart, Browse Abandonment, and Customer Thank You — converted $0 this week despite normal-to-above-normal send volume. Worth a look, but worth some caution too: each of these flows only converts a handful of orders in a typical week even at full health, so one slow week can look identical to a broken automation. Abandoned Checkout, the highest-volume flow of the group, kept converting close to its usual dollar total.</div>
+    </section>
+
+    <section class="block">
+      <h3>Audience segmentation — 90-day campaign performance by list/segment</h3>
+      <p class="desc">Which audience a newsletter is sent to matters more than almost anything else on this page. Revenue per recipient is the cleanest single number to sort by.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Segment / list</th><th class="num">Recipients (90d)</th><th class="num">Open rate</th><th class="num">Click rate</th><th class="num">Revenue / recipient</th></tr></thead>
+          <tbody id="segRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Suggested flow fixes</h3>
+      <p class="desc">Ranked by dollar impact and how directly the fix is suggested by the data above — not a generic best-practices list.</p>
+      <div class="idea-grid" id="flowFixGrid"></div>
+    </section>
+
+    <section class="block">
+      <h3>Suggested newsletters &amp; content</h3>
+      <p class="desc">Built from the 90-day send-name history and the gaps this week's data surfaced.</p>
+      <div class="idea-grid" id="newsletterIdeaGrid"></div>
+    </section>
+  </div>
+
 </main>
 
 <footer>
   <div class="prov-grid">
     <div>
       <b>Data pulled</b><br>
-      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">Aug 8, 2026</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation.
+      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">Aug 8, 2026</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC — each of these three sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
     </div>
     <div>
       <b>Confirmed vs. estimated</b><br>
-      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, and the budget-sheet weekly actuals.<br>
-      <span class="estimate-flag">● Estimate</span> — every industry-benchmark and competitor figure on the Marketing tab, and the LTV proxy range.
+      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, the budget-sheet weekly actuals, the Marketplace Health tab's Amazon/Walmart sales + Amazon account-health figures (live via Lisa), and every number on the Email Analytics tab (newsletter sends/opens/clicks/revenue, flow stats, segment performance — all live via Klaviyo).<br>
+      <span class="estimate-flag">● Estimate</span> — every industry-benchmark and competitor figure on the Marketing tab, the LTV proxy range, and the "Suggested flow fixes" / "Suggested newsletters &amp; content" cards on Email Analytics, which are analysis and recommendations, not pulled data.
     </div>
     <div>
       <b>Known data gaps (not hidden)</b><br>
-      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric.
+      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken."
     </div>
   </div>
   <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
@@ -569,8 +721,9 @@ const staticKpis = [
   {eyebrow:'YTD Income · Jan 1 – Aug 8', val: fmtMoney(2185383.59), sub:'Confirmed, QuickBooks Total Income', tag:'info', tagText:'see pacing card →'},
   {eyebrow:'YTD pace vs. Bearish budget', val:'−10.2%', sub:'$2.14M actual vs. $2.39M pro-rated FY budget, wks 1–30', tag:'bad', tagText:'running behind annual plan'},
   {eyebrow:'Gross Margin · Jul 2026 close', val:'50.2%', sub:'$136,824.65 GP on $272,532.39 revenue', tag:'good', tagText:'above 43–45% benchmark'},
-  {eyebrow:'Net Operating Margin · Jul 2026', val:'14.1%', sub:'$38,450.18 NOI', tag:'warn', tagText:'below 15–20% target band'},
-  {eyebrow:'Cash on hand · as of Aug 8', val: fmtMoney(291057.30), sub:'QuickBooks balance sheet snapshot', tag:'good', tagText:'up from $204K in Jun'},
+  {eyebrow:'Revenue growth · Wk30 vs Wk29', val:'+21.6%', sub:'$66,376.02 vs. $54,595.97, all channels', tag:'good', tagText:'accelerating week-over-week'},
+  {eyebrow:'Repeat customer rate · Shopify', val:'~34%', sub:'Weekly avg., range 28.6%–44.7% over 13wk', tag:'good', tagText:'in line with 37.7% category avg.'},
+  {eyebrow:'Inventory health score', val:'79%', sub:'71 of 90 Amazon FBA SKUs scanned at healthy stock levels', tag:'warn', tagText:'19 SKUs flagged at-risk/critical'},
   {eyebrow:'Blended ROAS · this week', val:'2.95x', sub:'Wk 31 (Aug 1–7), Sponsored Products+Brands+Display', tag:'bad', tagText:'below 7.0x internal target'},
   {eyebrow:'AR at risk · GNC Holdings', val: fmtMoney(31704.36), sub:'Overdue 1–60 days, 100% of aged AR', tag:'warn', tagText:'single-customer concentration'},
   {eyebrow:'Amazon stockouts · live', val:'10 SKUs', sub:'0 fulfillable units with recent demand', tag:'bad', tagText:'9 more at <21 days cover'},
@@ -804,13 +957,217 @@ const BENCH = [
   ['Shopify conversion rate', '0.28–0.48% (13wk avg.)', '2.4–3.2% (Nutrition & Supplements)', 'below', 'Craftberry, "Average Conversion Rate for Shopify Stores 2025"'],
   ['Return rate', '0.34% (Amazon, 13wk)', '~7% (5–10%) for Supplements & Vitamins', 'below (favorable)', 'Eightx, "Average Ecommerce Return Rate 2026"'],
   ['Repeat purchase / customer', '~34% weekly returning rate', '37.7% category avg. repurchase rate', 'in range', 'CommerceCatalyst 2026 DTC Benchmarks'],
-  ['Net margin', '13.8% (Jul 2026)', 'Median DTC ~3%; "healthy" cited as 10–20%', 'above median', 'Eightx / Finaloop Ecommerce Profit Benchmarks'],
 ];
 document.getElementById('benchRows').innerHTML = BENCH.map(r=>{
   const cls = r[3]==='below'? 'status-miss' : (r[3]==='above'? 'status-miss' : 'status-hit');
-  const clsFixed = (r[0]==='Return rate' || r[0]==='Net margin' || r[0]==='OpEx ratio') ? (r[3]==='below (favorable)'||r[3]==='above median'?'status-hit':(r[0]==='OpEx ratio'?'status-miss':'status-hit')) : cls;
+  const clsFixed = (r[0]==='Return rate' || r[0]==='OpEx ratio') ? (r[3]==='below (favorable)'?'status-hit':(r[0]==='OpEx ratio'?'status-miss':'status-hit')) : cls;
   return `<tr><td>${r[0]}</td><td>${r[1]}</td><td class="muted">${r[2]}</td><td class="${clsFixed}">${r[3]}</td><td class="muted">${r[4]}</td></tr>`;
 }).join('');
+
+/* ---------------- MARKETPLACE HEALTH (live via Lisa: Amazon SP-API + Walmart API) ---------------- */
+const MP_PULLED_AT = 'Aug 9, 2026 · 2:00am UTC';
+const MP_SALES = {
+  period_label: 'Jul 11 – Aug 9, 2026 vs. prior 30 days',
+  total: {revenue: 20868.64, deltaPct: 17.9},
+  amazon: {revenue: 17639.17, deltaPct: 27.8, orders: 3823, units: 4253},
+  walmart: {revenue: 3229.47, deltaPct: -17.3, orders: 104, units: 108},
+};
+const AMZ_HEALTH = {
+  score: 40, label: 'At Risk', color: 'red',
+  metrics: [
+    {key:'odr', label:'Order Defect Rate', rate:0.74, status:'good', warn:0.75, fail:1, note:'chargebacks + ≤3-star reviews, trailing 60 days'},
+    {key:'cancellation', label:'Pre-fulfillment Cancellation Rate', rate:8.09, status:'critical', warn:2, fail:2.5, note:'trailing 7 days'},
+    {key:'late_shipment', label:'Late Shipment Rate', rate:22.22, status:'critical', warn:3, fail:4, note:'merchant-fulfilled only, trailing 10 days'},
+    {key:'return_rate', label:'Return Rate', rate:0.33, status:'good', warn:8, fail:10, note:'trailing 30 days'},
+  ],
+  alerts: [
+    {label:'Pre-fulfillment Cancellation Rate', message:'8.09% — exceeds Amazon\'s 2.5% fail threshold. Suspension risk.'},
+    {label:'Late Shipment Rate', message:'22.22% — exceeds Amazon\'s 4.0% fail threshold. Suspension risk.'},
+  ],
+};
+const WALMART_STATUS = {
+  connection_state:'connected', status:'active', last_sync: MP_PULLED_AT, endpoints_healthy:4, endpoints_total:5,
+};
+
+function renderMarketplaceHealth(){
+  const trendHtml = (pct) => `<span class="trend ${pct>=0?'up':'down'}">${pct>=0?'▲':'▼'} ${Math.abs(pct).toFixed(1)}% vs. prior 30d</span>`;
+  document.getElementById('mpTotalRev').textContent = fmtMoney(MP_SALES.total.revenue);
+  document.getElementById('mpTotalSub').textContent = MP_SALES.period_label;
+  document.getElementById('mpTotalTrend').outerHTML = trendHtml(MP_SALES.total.deltaPct).replace('<span class="trend', '<span id="mpTotalTrend" class="trend');
+
+  document.getElementById('mpAmzRev').textContent = fmtMoney(MP_SALES.amazon.revenue);
+  document.getElementById('mpAmzSub').textContent = `${MP_SALES.amazon.orders.toLocaleString()} orders · ${MP_SALES.amazon.units.toLocaleString()} units`;
+  document.getElementById('mpAmzTrend').outerHTML = trendHtml(MP_SALES.amazon.deltaPct).replace('<span class="trend', '<span id="mpAmzTrend" class="trend');
+
+  document.getElementById('mpWmtRev').textContent = fmtMoney(MP_SALES.walmart.revenue);
+  document.getElementById('mpWmtSub').textContent = `${MP_SALES.walmart.orders.toLocaleString()} orders · ${MP_SALES.walmart.units.toLocaleString()} units`;
+  document.getElementById('mpWmtTrend').outerHTML = trendHtml(MP_SALES.walmart.deltaPct).replace('<span class="trend', '<span id="mpWmtTrend" class="trend');
+
+  document.getElementById('healthScoreBadge').innerHTML = `
+    <div class="health-score-ring ${AMZ_HEALTH.color}">${AMZ_HEALTH.score}</div>
+    <div><h4>${AMZ_HEALTH.label}</h4><p>Overall suspension-risk score out of 100, computed from the four metrics below vs. Amazon's published thresholds.</p></div>`;
+
+  document.getElementById('healthAlerts').innerHTML = AMZ_HEALTH.alerts.map(a=>`
+    <div class="alert-banner"><span class="ico">⚠️</span><span><b>${a.label}:</b> ${a.message}</span></div>`).join('');
+
+  document.getElementById('healthMetrics').innerHTML = AMZ_HEALTH.metrics.map(m=>{
+    const scaleMax = m.fail*1.5;
+    const widthPct = Math.min(m.rate/scaleMax*100, 100);
+    const threshPct = Math.min(m.fail/scaleMax*100, 100);
+    const barClass = m.status==='critical'?'critical':(m.status==='warn'?'warn':'good');
+    const pillClass = m.status==='critical'?'bad':(m.status==='warn'?'warn':'good');
+    const statusText = m.status==='critical'?'critical':(m.status==='warn'?'watch':'healthy');
+    return `<div class="health-metric">
+      <div class="health-metric-head"><span>${m.label}</span><span class="tag ${pillClass}" style="margin-top:0;">${statusText}</span></div>
+      <div class="health-bar-outer">
+        <div class="health-bar-inner ${barClass}" style="width:${widthPct}%;"></div>
+        <div class="health-threshold-mark" style="left:${threshPct}%;" title="Amazon fail threshold: ${m.fail}%"></div>
+      </div>
+      <div class="health-metric-sub">${m.rate}% actual · warn ≥${m.warn}% · fail ≥${m.fail}% · ${m.note}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('walmartStatusCard').innerHTML = `
+    <div class="walmart-status-row"><span class="k">Connection state</span><span class="v" style="color:var(--good);">${WALMART_STATUS.connection_state}</span></div>
+    <div class="walmart-status-row"><span class="k">Status</span><span class="v" style="color:var(--good);">${WALMART_STATUS.status}</span></div>
+    <div class="walmart-status-row"><span class="k">Endpoints healthy</span><span class="v">${WALMART_STATUS.endpoints_healthy} of ${WALMART_STATUS.endpoints_total}</span></div>
+    <div class="walmart-status-row"><span class="k">Last synced</span><span class="v">${WALMART_STATUS.last_sync}</span></div>`;
+}
+renderMarketplaceHealth();
+
+/* ---------------- EMAIL ANALYTICS (live via Klaviyo Reporting API) ---------------- */
+const EML_NEWSLETTERS = [
+  {name:'August 6th NL Blog + bundle', sent:'Aug 6, 2026', recipients:20252, openRate:51.84, clickRate:0.119, conversions:1, revenue:213.30},
+  {name:'August 4th NL Personalized Content + Late Summer Product Spotlight', sent:'Aug 4, 2026', recipients:34886, openRate:29.73, clickRate:0.109, conversions:5, revenue:669.28},
+];
+const EML_FLOW_REVENUE_THIS_WEEK = 260.04; // sum of all live-flow conversion_value, last_7_days: Phantom re-engagement $54.95 + Abandoned Checkout $205.09; every other live flow converted $0 this week
+
+const EML_ANOMALIES = [
+  {name:'Welcome series Flow', severity:'red',
+   recipWk:31, recipAvg:67.0, recipDelta:-54,
+   revWk:0, revAvg:44.67, revDelta:-100,
+   openWk:38.71, openAvg:32.09, openDelta:21,
+   note:'Biggest concern here — this flow greets every new subscriber, and both volume and revenue dropped hard in the same week. Check signup-source volume (site popup, checkout opt-in) before touching the flow itself.'},
+  {name:'[PM] Abandoned Added to Cart', severity:'red',
+   recipWk:168, recipAvg:134.9, recipDelta:24,
+   revWk:0, revAvg:99.22, revDelta:-100,
+   openWk:26.79, openAvg:33.08, openDelta:-19,
+   note:'Largest dollar impact of the zero-revenue flows — normally the highest-earning abandonment flow, and volume was actually up 24% this week.'},
+  {name:'[PM] Abandoned Checkout', severity:'yellow',
+   recipWk:38, recipAvg:61.0, recipDelta:-38,
+   revWk:205.09, revAvg:216.08, revDelta:-5,
+   openWk:18.18, openAvg:32.0, openDelta:-43,
+   convWk:6.06, convAvg:2.70, convDelta:124,
+   note:'Open rate fell sharply but conversion rate more than doubled — fewer people opened, but the ones who did were far more likely to buy. Revenue held close to normal.'},
+  {name:'[PM] Browse Abandonment', severity:'yellow',
+   recipWk:24, recipAvg:16.3, recipDelta:48,
+   revWk:0, revAvg:6.94, revDelta:-100,
+   openWk:33.33, openAvg:45.45, openDelta:-27,
+   note:'Smallest dollar impact of the zero-revenue flows, but the pattern — more sends, no orders — matches Abandoned Cart.'},
+  {name:'[PM] Customer Thank You', severity:'yellow',
+   recipWk:144, recipAvg:129.8, recipDelta:11,
+   revWk:0, revAvg:8.78, revDelta:-100,
+   openWk:50.0, openAvg:45.4, openDelta:10,
+   note:'Volume and opens both slightly above normal — the drop is in the (already small) trickle of post-purchase upsell conversions.'},
+  {name:'Phantom re-engagement &amp; sunset', severity:'green',
+   recipWk:315, recipAvg:342.9, recipDelta:-8,
+   revWk:54.95, revAvg:21.91, revDelta:151,
+   openWk:51.43, openAvg:35.26, openDelta:46,
+   note:'The one clear win this week — opens up 46% and revenue up 151% against its own 90-day average.'},
+];
+
+const EML_SEGMENTS = [
+  {name:'purchased in the last 90 days', recipients:7787, openRate:37.9, clickRate:0.80, revPerRecip:0.266, flag:'good'},
+  {name:'[PM] Klaviyo Welcome 15% Off', recipients:11248, openRate:28.7, clickRate:0.28, revPerRecip:0.167, flag:'good'},
+  {name:'Truly Engaged (clickers + buyers)', recipients:45359, openRate:36.4, clickRate:1.07, revPerRecip:0.166, flag:'good'},
+  {name:'Newsletter  List', recipients:57786, openRate:36.0, clickRate:0.11, revPerRecip:0.021, flag:'info'},
+  {name:'Engaged (3 months)', recipients:289536, openRate:59.3, clickRate:0.20, revPerRecip:0.019, flag:'info'},
+  {name:'[PM] All Active', recipients:264628, openRate:20.3, clickRate:0.13, revPerRecip:0.024, flag:'warn'},
+  {name:'Never Engaged (Email)', recipients:24402, openRate:0.8, clickRate:0.02, revPerRecip:0.000, flag:'bad'},
+];
+
+const EML_FLOW_FIXES = [
+  {title:'Diagnose the Welcome series drop first', body:'Volume down 54% and revenue to $0 in the same week points at fewer new-subscriber adds upstream (site popup, checkout opt-in) rather than a broken flow — check signup-source volume before editing the flow.'},
+  {title:'Investigate the Abandoned Cart offer', body:'Recipients were up 24% but converted nothing this week — the largest dollar gap here. If a discount step or send-timing test was recently changed, that\'s the first thing to check.'},
+  {title:'A/B test the first Abandoned Checkout email', body:'Open rate fell 43% while the conversion rate on people who did open more than doubled — the send is reaching fewer people but resonating harder with them. Test subject lines on message 1 before touching the offer.'},
+  {title:'Suppress or re-permission "Never Engaged"', body:'24,402 contacts sit at a 0.8% open rate and $0 revenue per recipient over 90 days. Every broad send to this group drags down sender reputation for no return — route them into "Phantom re-engagement &amp; sunset" instead of the general newsletter list.'},
+  {title:'Default broad sends to the tighter audience pairing', body:'This week\'s two newsletters that used "Truly Engaged" + "Engaged (3 months)" hit 29–65% opens; 90-day data shows "[PM] All Active" caps opens near 20% across the board. Make the tighter pairing the default, not the exception.'},
+  {title:'Revive or retire the 5 dormant Story Email flows', body:'Gymnema, Kids Line, Papaya, Graviola, and Guayusa Leaf Story series show zero sends in 90 days despite being marked "live" — their trigger list has stopped growing. Either fix the entry point or archive them and fold the content into newsletters instead.'},
+];
+
+const EML_NEWSLETTER_IDEAS = [
+  {title:'Keep the weekly "NL Blog + bundle" cadence', body:'The workhorse format — it has run nearly every week since April and is what both of this week\'s sends were built on. Don\'t change what\'s already working.'},
+  {title:'Late-summer ingredient deep-dive', body:'Following the pattern of the Ashwagandha, Passionflower, and Gut-Brain-connection pieces sent earlier this year — pair a single-ingredient education email with the "Late Summer Product Spotlight" bundle already featured this week.'},
+  {title:'One-time "new here?" welcome nudge', body:'Given the Welcome series volume drop, a standalone campaign to the broader list pointing new or lapsed subscribers back into the welcome flow may help more than waiting on the automation alone.'},
+  {title:'Turn the dormant Story series into newsletter content', body:'Bamboo, Guava, Graviola, Gymnema, Papaya, Guayusa, and Kids Line leaf stories are written but not reaching anyone via automation — repurpose them as a recurring "Meet Your Ingredients" newsletter segment instead.'},
+  {title:'"We miss you" campaign to the Winback audience', body:'The Customer Winback flow reaches roughly 112 people/week but has converted $0 in both the trailing week and the 90-day window — a one-time discount-led newsletter to that same list may outperform the always-on automation.'},
+  {title:'Early back-to-school / fall seasonal push', body:'Mirrors the multi-day sale format already proven for Memorial Day and 4th of July — timed for late August, ahead of the next seasonal lull.'},
+];
+
+function renderEmailAnalytics(){
+  const totalNlRev = EML_NEWSLETTERS.reduce((s,n)=>s+n.revenue,0);
+  const totalNlRecip = EML_NEWSLETTERS.reduce((s,n)=>s+n.recipients,0);
+  const totalNlConv = EML_NEWSLETTERS.reduce((s,n)=>s+n.conversions,0);
+
+  document.getElementById('emlNlCount').textContent = EML_NEWSLETTERS.length;
+  document.getElementById('emlNlSub').textContent = totalNlRecip.toLocaleString()+' total recipients across both sends';
+  document.getElementById('emlNlRev').textContent = fmtMoney(totalNlRev);
+  document.getElementById('emlNlRevSub').textContent = totalNlConv+' orders attributed, Aug 3–9';
+  document.getElementById('emlTotalRev').textContent = fmtMoney(totalNlRev + EML_FLOW_REVENUE_THIS_WEEK);
+
+  document.getElementById('emlNlRows').innerHTML = EML_NEWSLETTERS.map(n=>`
+    <tr>
+      <td class="metric-name">${n.name}</td>
+      <td>${n.sent}</td>
+      <td class="num">${n.recipients.toLocaleString()}</td>
+      <td class="num">${n.openRate.toFixed(1)}%</td>
+      <td class="num">${n.clickRate.toFixed(2)}%</td>
+      <td class="num">${n.conversions}</td>
+      <td class="num">${fmtMoney(n.revenue)}</td>
+    </tr>`).join('') + `
+    <tr>
+      <td class="metric-name" style="color:var(--text-faint);">AUGUST HAS ENTERED THE CHAT.<span style="display:block;font-size:11px;font-weight:400;">internal test send — HG Employees list only, 1 recipient</span></td>
+      <td style="color:var(--text-faint);">Aug 3, 2026</td>
+      <td class="num" style="color:var(--text-faint);">1</td>
+      <td class="num" style="color:var(--text-faint);">—</td>
+      <td class="num" style="color:var(--text-faint);">—</td>
+      <td class="num" style="color:var(--text-faint);">excluded</td>
+      <td class="num" style="color:var(--text-faint);">excluded</td>
+    </tr>`;
+
+  document.getElementById('anomalyGrid').innerHTML = EML_ANOMALIES.map(a=>{
+    const tagCls = a.severity==='red' ? 'bad' : a.severity==='yellow' ? 'warn' : 'good';
+    const tagText = a.severity==='red' ? 'needs a look' : a.severity==='yellow' ? 'mixed signal' : 'trending up';
+    return `
+    <div class="anomaly-card">
+      <div class="ac-head"><h4>${a.name}</h4><span class="tag ${tagCls}">${tagText}</span></div>
+      <div class="ac-row"><span>Recipients (wk vs. 90d avg)</span><span><b>${a.recipWk}</b> vs ${a.recipAvg.toFixed(1)}/wk<span class="delta ${a.recipDelta>=0?'up':'down'}">${a.recipDelta>=0?'+':''}${a.recipDelta}%</span></span></div>
+      <div class="ac-row"><span>Revenue (wk vs. 90d avg)</span><span><b>${fmtMoney(a.revWk)}</b> vs ${fmtMoney(a.revAvg)}/wk<span class="delta ${a.revDelta>=0?'up':'down'}">${a.revDelta>=0?'+':''}${a.revDelta}%</span></span></div>
+      <div class="ac-row"><span>Open rate (wk vs. 90d avg)</span><span><b>${a.openWk.toFixed(1)}%</b> vs ${a.openAvg.toFixed(1)}%<span class="delta ${a.openDelta>=0?'up':'down'}">${a.openDelta>=0?'+':''}${a.openDelta}%</span></span></div>
+      ${a.convWk!==undefined?`<div class="ac-row"><span>Conversion rate (wk vs. 90d avg)</span><span><b>${a.convWk.toFixed(2)}%</b> vs ${a.convAvg.toFixed(2)}%<span class="delta up">+${a.convDelta}%</span></span></div>`:''}
+      <div class="ac-note">${a.note}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('segRows').innerHTML = EML_SEGMENTS.map(s=>{
+    const color = s.flag==='good' ? 'var(--good)' : s.flag==='bad' ? 'var(--danger)' : s.flag==='warn' ? 'var(--warn)' : 'var(--text)';
+    return `
+    <tr>
+      <td class="metric-name">${s.name}</td>
+      <td class="num">${s.recipients.toLocaleString()}</td>
+      <td class="num">${s.openRate.toFixed(1)}%</td>
+      <td class="num">${s.clickRate.toFixed(2)}%</td>
+      <td class="num" style="color:${color};font-weight:600;">$${s.revPerRecip.toFixed(3)}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('flowFixGrid').innerHTML = EML_FLOW_FIXES.map((f,i)=>`
+    <div class="idea-card"><div class="idea-num">${i+1}</div><div><b>${f.title}</b><span>${f.body}</span></div></div>`).join('');
+
+  document.getElementById('newsletterIdeaGrid').innerHTML = EML_NEWSLETTER_IDEAS.map((f,i)=>`
+    <div class="idea-card"><div class="idea-num">${i+1}</div><div><b>${f.title}</b><span>${f.body}</span></div></div>`).join('');
+}
+renderEmailAnalytics();
 </script>
 </body>
 </html>
