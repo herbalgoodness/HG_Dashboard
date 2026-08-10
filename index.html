@@ -494,6 +494,26 @@
         </table>
       </div>
     </section>
+
+    <section class="block">
+      <h3>Zendesk ticket detail — week of Aug 3–9, 2026</h3>
+      <p class="desc">Full breakdown behind the three Zendesk KPI cards on the Overview tab. Pulled live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, for the calendar week Aug 3–9, 2026.</p>
+      <div class="detail-grid">
+        <div class="card">
+          <h3 style="margin:0 0 14px;font-size:15px;">Volume &amp; resolution time</h3>
+          <table>
+            <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+            <tbody id="zendeskRows"></tbody>
+          </table>
+          <div class="note-box info" style="margin-top:14px;">All times above are wall-clock/calendar time, not business-hours-adjusted.</div>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 14px;font-size:15px;">CSAT — the gap, explained</h3>
+          <p style="margin:0 0 12px;font-size:13px;color:var(--text-dim);line-height:1.6;">Every one of the 68 tickets this week shows satisfaction status <b style="color:var(--text);">"unoffered,"</b> and the Zendesk account has <b style="color:var(--text);">zero satisfaction ratings on record historically</b>, account-wide.</p>
+          <div class="note-box">This does <b>not</b> mean customers rated service poorly — it means CSAT surveys aren't currently configured to go out. If the owner wants this data flowing, check Zendesk's Satisfaction Rating settings: Admin Center → Objects and rules → Business rules → Satisfaction Reason, or Channels → Talk/Messaging depending on setup.</div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ============ PRODUCT INTELLIGENCE ============ -->
@@ -650,16 +670,16 @@
   <div class="prov-grid">
     <div>
       <b>Data pulled</b><br>
-      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">Aug 8, 2026</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC — each of these three sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
+      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">Aug 8, 2026</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
     </div>
     <div>
       <b>Confirmed vs. estimated</b><br>
-      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, the budget-sheet weekly actuals, the Marketplace Health tab's Amazon/Walmart sales + Amazon account-health figures (live via Lisa), and every number on the Email Analytics tab (newsletter sends/opens/clicks/revenue, flow stats, segment performance — all live via Klaviyo).<br>
+      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, the budget-sheet weekly actuals, the Marketplace Health tab's Amazon/Walmart sales + Amazon account-health figures (live via Lisa), every number on the Email Analytics tab (newsletter sends/opens/clicks/revenue, flow stats, segment performance — all live via Klaviyo), and the Zendesk ticket volume/reply/resolution-time figures on the Overview and Customer Service tabs (live via Composio).<br>
       <span class="estimate-flag">● Estimate</span> — every industry-benchmark and competitor figure on the Marketing tab, the LTV proxy range, and the "Suggested flow fixes" / "Suggested newsletters &amp; content" cards on Email Analytics, which are analysis and recommendations, not pulled data.
     </div>
     <div>
       <b>Known data gaps (not hidden)</b><br>
-      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken."
+      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken." Zendesk CSAT: no data — surveys not configured to go out, not a reflection of customer satisfaction.
     </div>
   </div>
   <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
@@ -727,6 +747,9 @@ const staticKpis = [
   {eyebrow:'Blended ROAS · this week', val:'2.95x', sub:'Wk 31 (Aug 1–7), Sponsored Products+Brands+Display', tag:'bad', tagText:'below 7.0x internal target'},
   {eyebrow:'AR at risk · GNC Holdings', val: fmtMoney(31704.36), sub:'Overdue 1–60 days, 100% of aged AR', tag:'warn', tagText:'single-customer concentration'},
   {eyebrow:'Amazon stockouts · live', val:'10 SKUs', sub:'0 fulfillable units with recent demand', tag:'bad', tagText:'9 more at <21 days cover'},
+  {eyebrow:'Zendesk Tickets (Last Wk)', val:'68', sub:'Resolved: 68 (30 solved / 38 closed) · Open: 0 · Reopened: 8', tag:'good', tagText:'zero currently open'},
+  {eyebrow:'Avg Time to First Resolution', val:'15.9 hrs', sub:'Avg full resolution: 19.4 hrs', tag:'info', tagText:'wall-clock, not business-hours'},
+  {eyebrow:'CSAT', val:'N/A', sub:'0 ratings on record — surveys not sending', tag:'warn', tagText:'config gap, not a bad rating'},
 ];
 document.getElementById('staticKpis').innerHTML = staticKpis.map(k=>`
   <div class="kpi">
@@ -868,6 +891,21 @@ const CS_METRICS = [
 ];
 document.getElementById('csMetricRows').innerHTML = CS_METRICS.map(r=>`
   <tr><td class="metric-name">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+/* ---------------- CS: ZENDESK DETAIL (live via Composio MCP, Aug 3–9 2026) ---------------- */
+const ZENDESK_METRICS = [
+  ['New tickets logged', '68'],
+  ['Solved', '30'],
+  ['Closed', '38'],
+  ['Open / pending right now', '0'],
+  ['Reopened at least once', '8 of 68'],
+  ['Total replies across all tickets', '77 (~1.1 / ticket — many single-touch resolutions)'],
+  ['Avg. time to first reply', '15.0 hrs (902.6 min)'],
+  ['Avg. time to first resolution', '15.9 hrs (956.9 min)'],
+  ['Avg. time to full resolution', '19.4 hrs (1165.4 min)'],
+];
+document.getElementById('zendeskRows').innerHTML = ZENDESK_METRICS.map(r=>`
+  <tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
 
 /* ---------------- PRODUCT INTELLIGENCE ---------------- */
 function renderLadderAndTable(){
