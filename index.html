@@ -123,6 +123,13 @@
   .tag.warn{background:var(--warn-bg); color:var(--warn);}
   .tag.bad{background:var(--danger-bg); color:var(--danger);}
   .tag.info{background:rgba(255,255,255,0.07); color:var(--text-dim);}
+  .flag{display:inline-block; font-family:var(--mono); font-size:10px; padding:3px 8px; border-radius:20px; font-weight:600; white-space:nowrap;}
+  .flag.good{background:var(--good-bg); color:var(--good);}
+  .flag.warn{background:var(--warn-bg); color:var(--warn);}
+  .flag.bad{background:var(--danger-bg); color:var(--danger);}
+  .flag.info{background:rgba(255,255,255,0.07); color:var(--text-dim);}
+  .highlight-kpi{border-color:rgba(216,200,50,0.4); box-shadow:0 0 0 1px rgba(216,200,50,0.12) inset;}
+  .row-highlight{background:rgba(216,200,50,0.07);}
 
   /* ============ WEEK STRIP ============ */
   .week-strip-wrap{margin-bottom:22px;}
@@ -370,6 +377,7 @@
     <button data-page="products">Product Intelligence</button>
     <button data-page="marketing">Marketing</button>
     <button data-page="email">Email Analytics</button>
+    <button data-page="ppcseo">PPC &amp; SEO</button>
   </nav>
   <div class="status-chip"><span class="dot"></span><span id="lastUpdated">—</span></div>
 </div>
@@ -606,6 +614,28 @@
         </table>
       </div>
     </section>
+
+    <section class="block">
+      <h3>PPC &amp; SEO signal — quick read</h3>
+      <p class="desc">Full breakdown of GA4 channel performance, Google Ads/Meta Ads data gaps, and Ahrefs/SEMrush keyword research lives on its own tab now. Headline numbers only below.</p>
+      <div class="three-col" style="margin-bottom:16px;">
+        <div class="kpi highlight-kpi"><span class="eyebrow">GA4 · trailing 30 days</span><div class="val">8x</div><div class="sub">Paid Search converts at 19.35% per session vs. 2.35% (Cross-network) and 2.76% (Paid Social) — despite those two driving 4–22x more sessions</div><span class="tag good">most actionable PPC insight</span></div>
+        <div class="kpi"><span class="eyebrow">Google Ads live account</span><div class="val">No data</div><div class="sub">API quota exhausted (429) — retry in ~8–9 hrs. SEMrush SERP-visibility crawl used as a stand-in on the full tab</div><span class="tag bad">gap</span></div>
+        <div class="kpi"><span class="eyebrow">Meta Ads</span><div class="val">No data</div><div class="sub">Connected account has no ad accounts attached; owner needs to reconnect with Ads Manager admin access</div><span class="tag bad">gap</span></div>
+      </div>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Keyword opportunity</th><th class="num">Search volume</th><th class="num">Current position</th><th>Paid presence</th></tr></thead>
+          <tbody>
+            <tr><td>sea moss gel</td><td class="num">33,100</td><td class="num">6</td><td><span class="flag warn">not in paid — biggest SEO→PPC gap</span></td></tr>
+            <tr><td>mullein tea</td><td class="num">32,000</td><td class="num">15</td><td><span class="flag warn">not in paid</span></td></tr>
+            <tr><td>oregano oil and black seed oil</td><td class="num">19,000</td><td class="num">9</td><td><span class="flag warn">not in paid</span></td></tr>
+            <tr><td>chanca piedra</td><td class="num">18,100</td><td class="num">n/a (organic keyword not in Ahrefs top-traffic list)</td><td><span class="flag warn">not in paid</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">All four are proven organic winners today with zero paid spend behind them. See the <b>PPC &amp; SEO Intelligence</b> tab for the full GA4 channel table, the SEMrush paid-keyword breakdown, Ahrefs vs. SEMrush domain overview, top pages, competitor set, and the full action lists.</div>
+    </section>
   </div>
 
   <!-- ============ EMAIL ANALYTICS ============ -->
@@ -664,22 +694,228 @@
     </section>
   </div>
 
+  <!-- ============ PPC & SEO INTELLIGENCE ============ -->
+  <div class="page" id="page-ppcseo">
+    <div class="page-head">
+      <span class="eyebrow">GA4 (live) &middot; Ahrefs (live) &middot; SEMrush (live) &middot; Google Ads (gap) &middot; Meta Ads (gap)</span>
+      <h2>Where the paid and organic growth engines actually stand</h2>
+      <p>GA4 channel performance for the trailing 30 days, Google Ads and Meta Ads account gaps (with SEMrush's independent SERP-visibility crawl used as a stand-in for Google Ads), and the full Ahrefs/SEMrush organic keyword and competitor picture — with the honest gaps called out, not filled in.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:24px;">
+      <div class="kpi highlight-kpi"><span class="eyebrow">GA4 · trailing 30 days</span><div class="val">8x</div><div class="sub">Paid Search converts at 19.35% per session vs. 2.35% (Cross-network) and 2.76% (Paid Social) — despite those two channels driving 4&ndash;22x more session volume</div><span class="tag good">most actionable PPC insight</span></div>
+      <div class="kpi"><span class="eyebrow">Google Ads live account</span><div class="val">No data</div><div class="sub">Basic developer tier hit RESOURCE_EXHAUSTED / 429 quota; retry window ~8&ndash;9 hrs from this pull</div><span class="tag bad">gap — see note below</span></div>
+      <div class="kpi"><span class="eyebrow">Meta Ads</span><div class="val">No data</div><div class="sub">Connected account is a Shopify system user with no ad accounts attached; personal token expired</div><span class="tag bad">gap — reconnect requested</span></div>
+    </div>
+
+    <section class="block">
+      <h3>GA4 channel breakdown &mdash; trailing 30 days</h3>
+      <p class="desc">herbalgoodnessco.com &middot; GA4 property 269389709. Conv. Rate = conversions &divide; sessions. Paid Search's row is highlighted &mdash; it converts far above the two channels driving the most volume.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Channel</th><th class="num">Sessions</th><th class="num">Users</th><th class="num">Conversions</th><th class="num">Conv. Rate</th><th class="num">Engagement Rate</th><th class="num">Revenue</th></tr></thead>
+          <tbody>
+            <tr><td>Organic Search</td><td class="num">46,153</td><td class="num">39,504</td><td class="num">578</td><td class="num">1.25%</td><td class="num">60.46%</td><td class="num">$5,980.96</td></tr>
+            <tr><td>Cross-network</td><td class="num">26,529</td><td class="num">22,558</td><td class="num">623</td><td class="num">2.35%</td><td class="num">57.89%</td><td class="num">$7,166.78</td></tr>
+            <tr><td>Direct</td><td class="num">13,859</td><td class="num">13,541</td><td class="num">404</td><td class="num">2.92%</td><td class="num">56.64%</td><td class="num">$6,119.63</td></tr>
+            <tr><td>Paid Social</td><td class="num">5,533</td><td class="num">4,812</td><td class="num">153</td><td class="num">2.76%</td><td class="num">46.92%</td><td class="num">$1,695.29</td></tr>
+            <tr><td>Unassigned</td><td class="num">4,748</td><td class="num">3,958</td><td class="num">239</td><td class="num">5.03%</td><td class="num">47.22%</td><td class="num">$4,280.80</td></tr>
+            <tr class="row-highlight"><td>Paid Search <span class="flag good">8x better</span></td><td class="num">1,204</td><td class="num">945</td><td class="num">233</td><td class="num">19.35%</td><td class="num">61.54%</td><td class="num">$3,139.83</td></tr>
+            <tr><td>Referral</td><td class="num">948</td><td class="num">763</td><td class="num">44</td><td class="num">4.64%</td><td class="num">60.13%</td><td class="num">$339.02</td></tr>
+            <tr><td>Organic Social</td><td class="num">451</td><td class="num">407</td><td class="num">9</td><td class="num">2.00%</td><td class="num">57.21%</td><td class="num">$0</td></tr>
+            <tr><td>AI Assistant</td><td class="num">193</td><td class="num">145</td><td class="num">18</td><td class="num">9.33%</td><td class="num">66.32%</td><td class="num">$115.85</td></tr>
+            <tr><td>Organic Shopping</td><td class="num">122</td><td class="num">47</td><td class="num">13</td><td class="num">10.66%</td><td class="num">72.95%</td><td class="num">$58.61</td></tr>
+            <tr><td>Email</td><td class="num">50</td><td class="num">22</td><td class="num">5</td><td class="num">10.00%</td><td class="num">64.00%</td><td class="num">$303.94</td></tr>
+            <tr><td>Display</td><td class="num">29</td><td class="num">29</td><td class="num">0</td><td class="num">0.00%</td><td class="num">48.28%</td><td class="num">$0</td></tr>
+            <tr><td>Paid Shopping</td><td class="num">4</td><td class="num">4</td><td class="num">2</td><td class="num">50.00%</td><td class="num">50.00%</td><td class="num">$0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Google Ads &mdash; live account data</h3>
+      <p class="desc">What live spend/CTR/ROAS reporting would normally show here.</p>
+      <div class="note-box">Google Ads API &mdash; no data, quota exhausted (Basic developer tier hit RESOURCE_EXHAUSTED / 429; retry window ~8&ndash;9 hours from this pull). The section below uses SEMrush's independent SERP-visibility crawl of this account's paid keywords instead &mdash; this is third-party visibility data, <b>not live spend/conversion data</b>.</div>
+    </section>
+
+    <section class="block">
+      <h3>SEMrush SERP-visibility estimate <span class="flag info">not live account data</span></h3>
+      <p class="desc">SEMrush's crawl of herbalgoodnessco.com's Google Ads paid keyword footprint, US database &mdash; 12 tracked paid keywords total, ~$701/mo estimated traffic cost, ~3,686 estimated monthly paid clicks.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Keyword</th><th class="num">Position</th><th class="num">Search Volume</th><th class="num">CPC</th><th class="num">Traffic Share</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>black seed oil benefits</td><td class="num">1</td><td class="num">74,000</td><td class="num">$0.18</td><td class="num">94.35%</td><td><span class="flag bad">concentration risk</span> nearly all paid visibility rides on this one keyword</td></tr>
+            <tr><td>ashwagandha benefits for women</td><td class="num">6</td><td class="num">22,200</td><td class="num">$0.26</td><td class="num">3.01%</td><td></td></tr>
+            <tr><td>papaya leaf extract</td><td class="num">1</td><td class="num">1,300</td><td class="num">$0.61</td><td class="num">1.65%</td><td>small but converting perfectly (position 1)</td></tr>
+            <tr><td colspan="5" class="muted">+ 9 additional long-tail paid keywords, each under 400 search volume and &lt;1% traffic share</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Meta Ads</h3>
+      <div class="note-box">Meta Ads &mdash; no data. The currently connected account is a Shopify system user with no ad accounts attached; the separate Facebook personal token has expired. A reconnect link was sent to the owner &mdash; ask them to reconnect with the account that manages the actual ad account (Ads Manager admin), then re-run this pull. Nothing below is fabricated to fill this gap.</div>
+    </section>
+
+    <section class="block">
+      <h3>PPC action items</h3>
+      <div class="idea-grid">
+        <div class="idea-card"><div class="idea-num">1</div><div><b>Diversify beyond &ldquo;black seed oil benefits&rdquo;</b><span>It's 94% of paid traffic. Launch new campaigns for &ldquo;sea moss gel&rdquo; (33,100 vol), &ldquo;mullein tea&rdquo; (32,000 vol), &ldquo;oregano oil and black seed oil&rdquo; (19,000 vol), and &ldquo;chanca piedra&rdquo; (18,100 vol) &mdash; all proven organic winners today with zero paid presence.</span></div></div>
+        <div class="idea-card"><div class="idea-num">2</div><div><b>Audit Cross-network &amp; Paid Social targeting/landing pages</b><span>Both drive high session volume but convert far below Paid Search's rate. Consider reallocating some budget toward Search campaigns on proven high-intent queries until the gap is diagnosed.</span></div></div>
+        <div class="idea-card"><div class="idea-num">3</div><div><b>Re-pull live Google Ads data once quota clears</b><span>Validate these keyword picks against real spend/CPC/ROAS before committing budget &mdash; the recommendations here are based on organic-keyword proof-of-demand, not yet confirmed against live PPC economics.</span></div></div>
+        <div class="idea-card"><div class="idea-num">4</div><div><b>Reconnect Meta Ads properly</b><span>Use an actual Ads Manager account, not the Shopify system user, to get real spend/ROAS/creative-level performance instead of relying on GA4's channel-level proxy.</span></div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>New ad ideas</h3>
+      <div class="idea-grid">
+        <div class="idea-card"><div class="idea-num">A</div><div><b>Search campaign &mdash; &ldquo;soursop bitters benefits&rdquo;</b><span>Already #1 organic, 8,400 search volume, clear commercial intent. Target bottom-funnel searchers with product-focused ad copy.</span></div></div>
+        <div class="idea-card"><div class="idea-num">B</div><div><b>Search campaign &mdash; &ldquo;best oil of oregano with black seed oil&rdquo;</b><span>3,500 volume, $51 modeled CPC value, already position 1 organically &mdash; a strong commercial signal.</span></div></div>
+        <div class="idea-card"><div class="idea-num">C</div><div><b>Remarketing/product ad &mdash; &ldquo;papaya leaf extract&rdquo;</b><span>Smaller volume but a perfectly-converting existing paid keyword (position 1) &mdash; worth a dedicated remarketing push.</span></div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Domain overview &mdash; Ahrefs vs. SEMrush</h3>
+      <p class="desc">Both sources, shown side by side and clearly labeled. Ahrefs and SEMrush use different crawl methodologies and will disagree &mdash; the two are not reconciled into one fabricated number.</p>
+      <div class="two-col">
+        <div class="table-wrap card" style="padding:6px;">
+          <table>
+            <thead><tr><th colspan="2">Ahrefs &middot; herbalgoodnessco.com (US)</th></tr></thead>
+            <tbody>
+              <tr><td>Organic keywords tracked</td><td class="num">2,002</td></tr>
+              <tr><td>Ranking in top 3</td><td class="num">643</td></tr>
+              <tr><td>Est. monthly organic traffic</td><td class="num">15,182</td></tr>
+              <tr><td>Est. organic traffic value (&ldquo;Cost Value&rdquo;)</td><td class="num">$2,687/mo</td></tr>
+              <tr><td>Paid keywords tracked (Ahrefs' own crawl)</td><td class="num">79</td></tr>
+              <tr><td>Est. monthly paid clicks</td><td class="num">1,849</td></tr>
+              <tr><td>Est. modeled paid traffic value</td><td class="num">$68/mo</td></tr>
+              <tr><td>Paid landing pages</td><td class="num">64</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap card" style="padding:6px;">
+          <table>
+            <thead><tr><th colspan="2">SEMrush &middot; herbalgoodnessco.com (US database)</th></tr></thead>
+            <tbody>
+              <tr><td>Semrush Rank</td><td class="num">#129,695</td></tr>
+              <tr><td>Organic keywords tracked</td><td class="num">16,884</td></tr>
+              <tr><td>Est. monthly organic traffic</td><td class="num">14,750</td></tr>
+              <tr><td>Est. organic traffic value</td><td class="num">$6,018/mo</td></tr>
+              <tr><td>Paid keywords tracked</td><td class="num">12</td></tr>
+              <tr><td>Est. monthly paid clicks</td><td class="num">3,686</td></tr>
+              <tr><td>Est. paid traffic value</td><td class="num">$701/mo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">Ahrefs' dollar figures are converted from its cents-denominated API. Ahrefs and SEMrush crawl and model differently (different keyword universes, different traffic models) &mdash; expect the two columns to disagree, and treat each as internally consistent rather than trying to average them.</div>
+    </section>
+
+    <section class="block">
+      <h3>Top organic keywords (Ahrefs, sorted by estimated monthly traffic)</h3>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Keyword</th><th class="num">Search Volume</th><th class="num">Position</th><th class="num">Est. Monthly Traffic</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>oregano oil and black seed oil</td><td class="num">19,000</td><td class="num">9</td><td class="num">992</td><td>Commercial intent</td></tr>
+            <tr><td>oil of oregano with black seed oil side effects</td><td class="num">6,300</td><td class="num">6</td><td class="num">472</td><td></td></tr>
+            <tr><td>soursop bitters benefits</td><td class="num">8,400</td><td class="num">1</td><td class="num">282</td><td>Commercial intent</td></tr>
+            <tr><td>mullein tea</td><td class="num">32,000</td><td class="num">15</td><td class="num">273</td><td>Commercial intent · KD 1 — <span class="flag good">biggest easy-win opportunity</span></td></tr>
+            <tr><td>benefits of oregano oil under the tongue</td><td class="num">900</td><td class="num">1</td><td class="num">261</td><td></td></tr>
+            <tr><td>mullein tea benefits</td><td class="num">7,700</td><td class="num">1</td><td class="num">258</td><td></td></tr>
+            <tr><td>benefits of soursop bitters</td><td class="num">2,700</td><td class="num">1</td><td class="num">249</td><td></td></tr>
+            <tr><td>soursop bitters health benefits</td><td class="num">3,200</td><td class="num">1</td><td class="num">244</td><td>Commercial intent</td></tr>
+            <tr><td>oregano oil and black seed oil benefits</td><td class="num">2,400</td><td class="num">1</td><td class="num">228</td><td></td></tr>
+            <tr><td>soursop benefits</td><td class="num">58,000</td><td class="num">18</td><td class="num">187</td><td><span class="flag warn">largest search volume in dataset</span> — long-term SEO target</td></tr>
+            <tr><td>mullein benefits</td><td class="num">18,000</td><td class="num">13</td><td class="num">183</td><td>KD 43 — near-page-1 opportunity</td></tr>
+            <tr><td>benefits of oregano oil</td><td class="num">7,500</td><td class="num">13</td><td class="num">109</td><td>KD 21 — near-page-1 opportunity</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">Also from SEMrush: <b>&ldquo;sea moss gel&rdquo;</b> &mdash; position 6, 33,100 search volume, high commercial intent &mdash; and it appears <b>nowhere</b> in the paid keyword list above. This is the single biggest SEO-to-PPC gap in the account.</div>
+    </section>
+
+    <section class="block">
+      <h3>Top pages by organic traffic (Ahrefs)</h3>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>URL</th><th class="num">Traffic</th><th>Top Keyword</th><th class="num">Ranking Keywords</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/soursop-bitters-benefits-uses-and-how-to-take-them</td><td class="num">2,434</td><td>soursop bitters (6,800 vol)</td><td class="num">36</td><td></td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/oil-of-oregano-and-black-seed-oil-a-guide-to-botanical-synergy</td><td class="num">1,875</td><td>oregano oil and black seed oil (19,000 vol)</td><td class="num">26</td><td></td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/our-herbs/health-benefits-of-guava-leaves-herbal-goodness-2</td><td class="num">925</td><td>—</td><td class="num">32</td><td><span class="flag warn">near-duplicate</span> of row below — likely self-cannibalizing</td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/our-herbs/health-benefits-of-guava-leaves-herbal-goodness-1</td><td class="num">912</td><td>—</td><td class="num">34</td><td><span class="flag warn">near-duplicate</span> of row above — recommend consolidating</td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/the-ultimate-guide-to-soursop-leaf-benefits-uses-and-how-it-supports-wellness</td><td class="num">878</td><td>—</td><td class="num">26</td><td></td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/chanca-piedra-benefits-uses-and-side-effects-of-the-stone-breaker-herb</td><td class="num">737</td><td>—</td><td class="num">46</td><td></td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/making-mullein-tea-brewing-blends-and-the-lung-detox-conversation</td><td class="num">709</td><td>—</td><td class="num">54</td><td></td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/side-effects-of-oil-of-oregano-what-to-watch-out-for-how-to-use-it-safely</td><td class="num">698</td><td>—</td><td class="num">70</td><td></td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/is-oil-of-oregano-safe-to-take-daily-here-s-what-experts-say</td><td class="num">603</td><td>—</td><td class="num">70</td><td></td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/how-to-use-oil-of-oregano-safely-effectively</td><td class="num">569</td><td>—</td><td class="num">71</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Organic competitors (Ahrefs)</h3>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Domain</th><th class="num">Domain Rating</th><th class="num">Common Keywords</th><th class="num">Their Traffic</th><th>Type</th></tr></thead>
+          <tbody>
+            <tr><td>healthline.com</td><td class="num">92</td><td class="num">855</td><td class="num">20,564,078</td><td><span class="flag info">generic publisher</span></td></tr>
+            <tr><td>webmd.com</td><td class="num">92</td><td class="num">1,022</td><td class="num">14,929,127</td><td><span class="flag info">generic publisher</span></td></tr>
+            <tr><td>ubiehealth.com</td><td class="num">65</td><td class="num">247</td><td class="num">3,741,256</td><td><span class="flag info">generic publisher</span></td></tr>
+            <tr><td>health.com</td><td class="num">87</td><td class="num">278</td><td class="num">1,413,137</td><td><span class="flag info">generic publisher</span></td></tr>
+            <tr><td>bannerhealth.com</td><td class="num">78</td><td class="num">146</td><td class="num">1,224,939</td><td><span class="flag info">generic publisher</span></td></tr>
+            <tr><td>gnc.com</td><td class="num">75</td><td class="num">67</td><td class="num">792,160</td><td><span class="flag good">direct commerce competitor</span></td></tr>
+            <tr><td>vitaminshoppe.com</td><td class="num">73</td><td class="num">44</td><td class="num">744,144</td><td><span class="flag good">direct commerce competitor</span></td></tr>
+            <tr><td>tuasaude.com</td><td class="num">79</td><td class="num">180</td><td class="num">424,417</td><td><span class="flag info">generic publisher</span></td></tr>
+            <tr><td>iherb.com</td><td class="num">84</td><td class="num">160</td><td class="num">382,128</td><td><span class="flag good">direct commerce competitor</span></td></tr>
+            <tr><td>mountainroseherbs.com</td><td class="num">76</td><td class="num">91</td><td class="num">234,667</td><td><span class="flag good">direct commerce competitor</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">The top 5 by common keywords &mdash; Healthline, WebMD, Ubiehealth, Health.com, Banner Health (DR 78&ndash;92) &mdash; are massive generic health-content publishers, essentially unbeatable head-to-head on broad informational queries. The more realistic and valuable competitive set is <b>GNC, Vitamin Shoppe, iHerb, and Mountain Rose Herbs</b> (DR 73&ndash;84) &mdash; direct commerce competitors selling similar products, more beatable, and far more relevant to purchase-intent (&ldquo;buy X&rdquo;) queries than to generic &ldquo;what is X good for&rdquo; content.</div>
+    </section>
+
+    <section class="block">
+      <h3>SEO action items</h3>
+      <div class="idea-grid">
+        <div class="idea-card"><div class="idea-num">1</div><div><b>Push &ldquo;mullein tea&rdquo; to page 1</b><span>32,000 volume, keyword difficulty 1, currently position 15 &mdash; the lowest-effort, highest-volume opportunity in the entire account.</span></div></div>
+        <div class="idea-card"><div class="idea-num">2</div><div><b>Consolidate the two &ldquo;guava leaves benefits&rdquo; posts</b><span>herbal-goodness-1 and herbal-goodness-2 are currently splitting ranking authority on the same topic instead of compounding it.</span></div></div>
+        <div class="idea-card"><div class="idea-num">3</div><div><b>Shift competitive/backlink focus to GNC, Vitamin Shoppe, iHerb &amp; Mountain Rose Herbs</b><span>DR 73&ndash;84, direct commerce competitors &mdash; a more winnable and more revenue-relevant fight than chasing Healthline/WebMD (DR 87&ndash;92) on generic informational content.</span></div></div>
+        <div class="idea-card"><div class="idea-num">4</div><div><b>Build out &ldquo;soursop benefits&rdquo; content &amp; internal links</b><span>58,000 volume &mdash; the single largest keyword opportunity in the account, currently position 18.</span></div></div>
+        <div class="idea-card"><div class="idea-num">5</div><div><b>Add &ldquo;sea moss gel&rdquo; to both SEO push and a new PPC campaign</b><span>33,100 volume, position 6, zero paid presence &mdash; the single biggest SEO-to-PPC gap found.</span></div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Tooling gap</h3>
+      <div class="note-box info">Helium10 &mdash; not available as an integration; no &ldquo;helium10&rdquo; toolkit exists in the connected tool catalog. Jungle Scout is a possible alternative if you'd like it connected.</div>
+    </section>
+  </div>
+
 </main>
 
 <footer>
   <div class="prov-grid">
     <div>
       <b>Data pulled</b><br>
-      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
+      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 The PPC &amp; SEO Intelligence tab pulls GA4 channel data live from Google Analytics 4 (property 269389709), organic/paid keyword and competitor data live from Ahrefs and SEMrush — Google Ads is a gap this pull (API quota exhausted) and Meta Ads is a gap this pull (account reconnect needed), both noted explicitly on that tab rather than filled in — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
     </div>
     <div>
       <b>Confirmed vs. estimated</b><br>
-      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, the budget-sheet weekly actuals, the Marketplace Health tab's Amazon/Walmart sales + Amazon account-health figures (live via Lisa), every number on the Email Analytics tab (newsletter sends/opens/clicks/revenue, flow stats, segment performance — all live via Klaviyo), and the Zendesk ticket volume/reply/resolution-time figures on the Overview and Customer Service tabs (live via Composio).<br>
+      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, the budget-sheet weekly actuals, the Marketplace Health tab's Amazon/Walmart sales + Amazon account-health figures (live via Lisa), every number on the Email Analytics tab (newsletter sends/opens/clicks/revenue, flow stats, segment performance — all live via Klaviyo), and the Zendesk ticket volume/reply/resolution-time figures on the Overview and Customer Service tabs (live via Composio)., and the GA4 channel table plus Ahrefs/SEMrush domain, keyword, page, and competitor figures on the PPC &amp; SEO Intelligence tab (live via GA4/Ahrefs/SEMrush).<br>
       <span class="estimate-flag">● Estimate</span> — every industry-benchmark and competitor figure on the Marketing tab, the LTV proxy range, and the "Suggested flow fixes" / "Suggested newsletters &amp; content" cards on Email Analytics, which are analysis and recommendations, not pulled data.
     </div>
     <div>
       <b>Known data gaps (not hidden)</b><br>
-      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken." Zendesk CSAT: no data — surveys not configured to go out, not a reflection of customer satisfaction.
+      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken." Zendesk CSAT: no data — surveys not configured to go out, not a reflection of customer satisfaction. Google Ads: no data this pull — Basic developer tier API quota exhausted (429), retry in ~8–9 hours; SEMrush's SERP-visibility crawl is shown as a labeled stand-in, not live spend data. Meta Ads: no data — the connected account is a Shopify system user with no ad accounts attached and the personal token has expired; a reconnect request has been sent to the owner. Helium10: no integration available in the connected tool catalog — Jungle Scout exists as a possible alternative if the owner wants it connected.
     </div>
   </div>
   <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
