@@ -617,11 +617,11 @@
 
     <section class="block">
       <h3>PPC &amp; SEO signal — quick read</h3>
-      <p class="desc">Full breakdown of GA4 channel performance, Google Ads/Meta Ads data gaps, and Ahrefs/SEMrush keyword research lives on its own tab now. Headline numbers only below.</p>
+      <p class="desc">Full breakdown of GA4 channel performance, live Meta Ads performance, the Google Ads data gap, and Ahrefs/SEMrush keyword research lives on its own tab now. Headline numbers only below.</p>
       <div class="three-col" style="margin-bottom:16px;">
         <div class="kpi highlight-kpi"><span class="eyebrow">GA4 · trailing 30 days</span><div class="val">8x</div><div class="sub">Paid Search converts at 19.35% per session vs. 2.35% (Cross-network) and 2.76% (Paid Social) — despite those two driving 4–22x more sessions</div><span class="tag good">most actionable PPC insight</span></div>
         <div class="kpi"><span class="eyebrow">Google Ads live account</span><div class="val">No data</div><div class="sub">API quota exhausted (429) — retry in ~8–9 hrs. SEMrush SERP-visibility crawl used as a stand-in on the full tab</div><span class="tag bad">gap</span></div>
-        <div class="kpi"><span class="eyebrow">Meta Ads</span><div class="val">No data</div><div class="sub">Connected account has no ad accounts attached; owner needs to reconnect with Ads Manager admin access</div><span class="tag bad">gap</span></div>
+        <div class="kpi"><span class="eyebrow">Meta Ads &middot; trailing 30 days</span><div class="val">3.19x ROAS</div><div class="sub">$3,568.40 spend &middot; $11,388.48 attributed revenue &middot; 53 purchases</div><span class="tag warn">94.4% of spend on 1 campaign</span></div>
       </div>
       <div class="table-wrap card" style="padding:6px;">
         <table>
@@ -697,15 +697,15 @@
   <!-- ============ PPC & SEO INTELLIGENCE ============ -->
   <div class="page" id="page-ppcseo">
     <div class="page-head">
-      <span class="eyebrow">GA4 (live) &middot; Ahrefs (live) &middot; SEMrush (live) &middot; Google Ads (gap) &middot; Meta Ads (gap)</span>
+      <span class="eyebrow">GA4 (live) &middot; Ahrefs (live) &middot; SEMrush (live) &middot; Meta Ads (live) &middot; Google Ads (gap)</span>
       <h2>Where the paid and organic growth engines actually stand</h2>
-      <p>GA4 channel performance for the trailing 30 days, Google Ads and Meta Ads account gaps (with SEMrush's independent SERP-visibility crawl used as a stand-in for Google Ads), and the full Ahrefs/SEMrush organic keyword and competitor picture — with the honest gaps called out, not filled in.</p>
+      <p>GA4 channel performance for the trailing 30 days, live Meta Ads account performance now that the owner has reconnected with a real Ads Manager account, the Google Ads account gap (with SEMrush's independent SERP-visibility crawl used as a stand-in), and the full Ahrefs/SEMrush organic keyword and competitor picture — with the honest gaps called out, not filled in.</p>
     </div>
 
     <div class="three-col" style="margin-bottom:24px;">
       <div class="kpi highlight-kpi"><span class="eyebrow">GA4 · trailing 30 days</span><div class="val">8x</div><div class="sub">Paid Search converts at 19.35% per session vs. 2.35% (Cross-network) and 2.76% (Paid Social) — despite those two channels driving 4&ndash;22x more session volume</div><span class="tag good">most actionable PPC insight</span></div>
       <div class="kpi"><span class="eyebrow">Google Ads live account</span><div class="val">No data</div><div class="sub">Basic developer tier hit RESOURCE_EXHAUSTED / 429 quota; retry window ~8&ndash;9 hrs from this pull</div><span class="tag bad">gap — see note below</span></div>
-      <div class="kpi"><span class="eyebrow">Meta Ads</span><div class="val">No data</div><div class="sub">Connected account is a Shopify system user with no ad accounts attached; personal token expired</div><span class="tag bad">gap — reconnect requested</span></div>
+      <div class="kpi"><span class="eyebrow">Meta Ads live account</span><div class="val">3.19x ROAS</div><div class="sub">$3,568.40 spend / $11,388.48 attributed revenue, last 30 days (Jul 11–Aug 9) · act_1909407616148345</div><span class="tag warn">94.4% of spend on 1 campaign</span></div>
     </div>
 
     <section class="block">
@@ -756,8 +756,28 @@
     </section>
 
     <section class="block">
-      <h3>Meta Ads</h3>
-      <div class="note-box">Meta Ads &mdash; no data. The currently connected account is a Shopify system user with no ad accounts attached; the separate Facebook personal token has expired. A reconnect link was sent to the owner &mdash; ask them to reconnect with the account that manages the actual ad account (Ads Manager admin), then re-run this pull. Nothing below is fabricated to fill this gap.</div>
+      <h3>Meta Ads &mdash; live account data <span class="flag good">reconnected</span></h3>
+      <p class="desc">Ads Manager API &middot; account act_1909407616148345 (&ldquo;Herbal Goodness New Ad Account&rdquo;) &middot; last 30 days, Jul 11&ndash;Aug 9, 2026.</p>
+      <div class="three-col" style="margin-bottom:16px;">
+        <div class="kpi"><span class="eyebrow">Spend</span><div class="val">$3,568.40</div><div class="sub">Impressions 308,061 &middot; Reach 75,572 &middot; CPM $11.58</div></div>
+        <div class="kpi"><span class="eyebrow">Clicks / CTR / CPC</span><div class="val">5,650</div><div class="sub">CTR 1.83% &middot; CPC $0.63</div></div>
+        <div class="kpi highlight-kpi"><span class="eyebrow">Blended ROAS</span><div class="val">3.19x</div><div class="sub">$11,388.48 purchase value &divide; $3,568.40 spend</div></div>
+      </div>
+      <div class="three-col" style="margin-bottom:16px;">
+        <div class="kpi"><span class="eyebrow">Frequency</span><div class="val">4.08</div><div class="sub">Avg. times each person saw an ad, trailing 30 days</div><span class="tag warn">approaching ad-fatigue territory (~4&ndash;5)</span></div>
+        <div class="kpi"><span class="eyebrow">Purchases</span><div class="val">53</div><div class="sub">$11,388.48 attributed value &middot; cost/purchase $67.33</div></div>
+        <div class="kpi"><span class="eyebrow">Add to cart / Checkout</span><div class="val">100 / 90</div><div class="sub">ATC value $10,650.41 &middot; Initiate checkout value $5,925.40</div></div>
+      </div>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Campaign</th><th>Objective</th><th class="num">Spend</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPC</th><th class="num">Purchases / Leads</th><th>Revenue / Cost-per-lead</th><th class="num">% of Total Spend</th></tr></thead>
+          <tbody>
+            <tr><td>Sales- cbo- soursop - 27/11/25 <span class="flag bad">concentration risk</span></td><td>Sales</td><td class="num">$3,368.55</td><td class="num">4,860</td><td class="num">1.64%</td><td class="num">$0.69</td><td class="num">53 purchases</td><td>$11,388.48 (3.38x ROAS)</td><td class="num">94.4%</td></tr>
+            <tr><td>Webinar August 2026 Leads Campaign</td><td>Leads</td><td class="num">$199.85</td><td class="num">790</td><td class="num">6.78%</td><td class="num">$0.25</td><td class="num">196 leads</td><td>&asymp;$1.02 cost/lead</td><td class="num">5.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">These are Meta's own last-click, 7-day-click-attributed numbers straight from the Ads Manager API. They will not exactly match the GA4 &ldquo;Paid Social&rdquo; channel row shown earlier on this tab &mdash; Google and Meta each use their own attribution model, so that mismatch is expected and isn't reconciled into one fabricated number here.</div>
     </section>
 
     <section class="block">
@@ -766,7 +786,10 @@
         <div class="idea-card"><div class="idea-num">1</div><div><b>Diversify beyond &ldquo;black seed oil benefits&rdquo;</b><span>It's 94% of paid traffic. Launch new campaigns for &ldquo;sea moss gel&rdquo; (33,100 vol), &ldquo;mullein tea&rdquo; (32,000 vol), &ldquo;oregano oil and black seed oil&rdquo; (19,000 vol), and &ldquo;chanca piedra&rdquo; (18,100 vol) &mdash; all proven organic winners today with zero paid presence.</span></div></div>
         <div class="idea-card"><div class="idea-num">2</div><div><b>Audit Cross-network &amp; Paid Social targeting/landing pages</b><span>Both drive high session volume but convert far below Paid Search's rate. Consider reallocating some budget toward Search campaigns on proven high-intent queries until the gap is diagnosed.</span></div></div>
         <div class="idea-card"><div class="idea-num">3</div><div><b>Re-pull live Google Ads data once quota clears</b><span>Validate these keyword picks against real spend/CPC/ROAS before committing budget &mdash; the recommendations here are based on organic-keyword proof-of-demand, not yet confirmed against live PPC economics.</span></div></div>
-        <div class="idea-card"><div class="idea-num">4</div><div><b>Reconnect Meta Ads properly</b><span>Use an actual Ads Manager account, not the Shopify system user, to get real spend/ROAS/creative-level performance instead of relying on GA4's channel-level proxy.</span></div></div>
+        <div class="idea-card"><div class="idea-num">4</div><div><b>Meta Ads: fix the single-campaign concentration risk</b><span>94.4% of Meta Ads spend and effectively 100% of purchases ride on one long-running campaign (&ldquo;Sales- cbo- soursop,&rdquo; live since Nov 2025) &mdash; the same single-point-of-failure pattern already flagged in the Google Ads paid-keyword data above. Test a second sales campaign around a different hero product; this tab's own SEO findings already surface strong zero-paid-presence organic winners (mullein tea, oregano oil and black seed oil, chanca piedra) as candidates.</span></div></div>
+        <div class="idea-card"><div class="idea-num">5</div><div><b>Meta Ads: address creative fatigue before scaling spend</b><span>Frequency is already at 4.08 for the main sales campaign's audience &mdash; approaching creative-fatigue territory. Refresh ad creative or expand audience targeting before increasing budget further on this campaign.</span></div></div>
+        <div class="idea-card"><div class="idea-num">6</div><div><b>Meta Ads: scale the Webinar Leads campaign</b><span>6.78% CTR and ~$1.02 cost per lead on just 5.6% of budget is highly efficient. Worth increasing spend here if downstream lead-to-customer conversion from webinars is healthy &mdash; that data isn't in this pull, so check it separately before committing more budget.</span></div></div>
+        <div class="idea-card"><div class="idea-num">7</div><div><b>Meta Ads: treat 3.19x blended ROAS as fragile, not durable</b><span>The account-level ROAS is solid, but it's almost entirely carried by one campaign. Don't treat it as a durable baseline until a second profitable campaign is proven out.</span></div></div>
       </div>
     </section>
 
@@ -906,16 +929,16 @@
   <div class="prov-grid">
     <div>
       <b>Data pulled</b><br>
-      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 The PPC &amp; SEO Intelligence tab pulls GA4 channel data live from Google Analytics 4 (property 269389709), organic/paid keyword and competitor data live from Ahrefs and SEMrush — Google Ads is a gap this pull (API quota exhausted) and Meta Ads is a gap this pull (account reconnect needed), both noted explicitly on that tab rather than filled in — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
+      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 The PPC &amp; SEO Intelligence tab pulls GA4 channel data live from Google Analytics 4 (property 269389709), organic/paid keyword and competitor data live from Ahrefs and SEMrush, and Meta Ads account/campaign performance live from the Ads Manager API (account act_1909407616148345) now that the owner has reconnected with a real ad account — Google Ads remains a gap this pull (API quota exhausted), noted explicitly on that tab rather than filled in — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
     </div>
     <div>
       <b>Confirmed vs. estimated</b><br>
-      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, the budget-sheet weekly actuals, the Marketplace Health tab's Amazon/Walmart sales + Amazon account-health figures (live via Lisa), every number on the Email Analytics tab (newsletter sends/opens/clicks/revenue, flow stats, segment performance — all live via Klaviyo), and the Zendesk ticket volume/reply/resolution-time figures on the Overview and Customer Service tabs (live via Composio)., and the GA4 channel table plus Ahrefs/SEMrush domain, keyword, page, and competitor figures on the PPC &amp; SEO Intelligence tab (live via GA4/Ahrefs/SEMrush).<br>
+      <span class="confirmed-flag">● Confirmed</span> — QBO income/cash/AR-AP, Amazon sales/inventory/ads, Shopify sales/sessions/inventory, the budget-sheet weekly actuals, the Marketplace Health tab's Amazon/Walmart sales + Amazon account-health figures (live via Lisa), every number on the Email Analytics tab (newsletter sends/opens/clicks/revenue, flow stats, segment performance — all live via Klaviyo), and the Zendesk ticket volume/reply/resolution-time figures on the Overview and Customer Service tabs (live via Composio)., the GA4 channel table plus Ahrefs/SEMrush domain, keyword, page, and competitor figures on the PPC &amp; SEO Intelligence tab (live via GA4/Ahrefs/SEMrush), and that tab's Meta Ads account/campaign figures (live via the Ads Manager API, account act_1909407616148345).<br>
       <span class="estimate-flag">● Estimate</span> — every industry-benchmark and competitor figure on the Marketing tab, the LTV proxy range, and the "Suggested flow fixes" / "Suggested newsletters &amp; content" cards on Email Analytics, which are analysis and recommendations, not pulled data.
     </div>
     <div>
       <b>Known data gaps (not hidden)</b><br>
-      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken." Zendesk CSAT: no data — surveys not configured to go out, not a reflection of customer satisfaction. Google Ads: no data this pull — Basic developer tier API quota exhausted (429), retry in ~8–9 hours; SEMrush's SERP-visibility crawl is shown as a labeled stand-in, not live spend data. Meta Ads: no data — the connected account is a Shopify system user with no ad accounts attached and the personal token has expired; a reconnect request has been sent to the owner. Helium10: no integration available in the connected tool catalog — Jungle Scout exists as a possible alternative if the owner wants it connected.
+      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken." Zendesk CSAT: no data — surveys not configured to go out, not a reflection of customer satisfaction. Google Ads: no data this pull — Basic developer tier API quota exhausted (429), retry in ~8–9 hours; SEMrush's SERP-visibility crawl is shown as a labeled stand-in, not live spend data. Helium10: no integration available in the connected tool catalog — Jungle Scout exists as a possible alternative if the owner wants it connected.
     </div>
   </div>
   <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
