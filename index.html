@@ -275,6 +275,18 @@
   .three-col{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
   @media (max-width:900px){.three-col{grid-template-columns:1fr;}}
 
+  /* ============ MINI STAT TILES (Unit Economics) ============ */
+  .mini-stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+  @media (max-width:900px){.mini-stat-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.mini-stat-grid{grid-template-columns:1fr;}}
+  .mini-stat{background:rgba(255,255,255,0.025); border:1px solid var(--line-soft); border-radius:10px; padding:12px 14px;}
+  .mini-stat .mini-eyebrow{display:block; font-family:var(--mono); font-size:9.5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); margin-bottom:6px;}
+  .mini-stat .mini-val{font-size:16.5px; font-weight:700; color:#fff; margin-bottom:2px; line-height:1.3;}
+  .mini-stat .mini-val2{font-size:11px; color:var(--text-dim); margin-bottom:6px;}
+  .mini-stat .mini-note{font-size:10.5px; color:var(--text-faint); line-height:1.5;}
+  .platform-table td, .platform-table th{white-space:nowrap;}
+  .platform-table td .muted{cursor:help; border-bottom:1px dotted var(--line);}
+
   /* ============ MARKETPLACE HEALTH ============ */
   .health-score-badge{
     display:flex; align-items:center; gap:16px; padding:18px 20px; border-radius:var(--radius);
@@ -636,6 +648,109 @@
       </div>
       <div class="note-box info" style="margin-top:10px;">All four are proven organic winners today with zero paid spend behind them. See the <b>PPC &amp; SEO Intelligence</b> tab for the full GA4 channel table, the SEMrush paid-keyword breakdown, Ahrefs vs. SEMrush domain overview, top pages, competitor set, and the full action lists.</div>
     </section>
+
+    <section class="block">
+      <h3>Platform Performance</h3>
+      <p class="desc">Last 30 days ending Aug 10, 2026, unless noted. Each platform shows only the metrics that are genuinely measurable for it today — dashes mean the metric is not applicable to that platform or not available through any connected API, not zero. Hover a dash for why.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="platform-table">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>AOV / Avg Selling Price</th>
+              <th>Conversion Rate</th>
+              <th>ROAS / ACoS&ndash;TACoS</th>
+              <th>CTR / CPC</th>
+              <th>Bounce Rate</th>
+              <th>Avg Session Duration</th>
+              <th>Returning Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Shopify (DTC site)</td>
+              <td>$90.12 AOV</td>
+              <td>0.36% <span class="muted">(321 completed-checkout sessions ÷ 90,216 sessions)</span></td>
+              <td><span class="muted" title="Not applicable — the DTC site itself has no ad spend/ROAS; see the Meta and Google Ads rows.">—</span></td>
+              <td><span class="muted" title="Not applicable — Shopify is the destination site, not an ad placement with its own CTR/CPC.">—</span></td>
+              <td>41.92% <span class="muted">(GA4, site-wide)</span></td>
+              <td>~117 sec <span class="muted">(GA4)</span></td>
+              <td>33.5% (30d) / 24.5% (trailing 12mo)</td>
+            </tr>
+            <tr>
+              <td>Amazon <span class="muted">(top 20 ASINs by sales, ~30d)</span></td>
+              <td>$50.60 avg selling price/unit <span class="muted" title="Unit-based (3,434 units / $173,772.50) — not directly comparable to Shopify's per-order AOV.">(3,434 units / $173,772.50)</span></td>
+              <td><span class="muted" title="Not available — session-level conversion rate for these ASINs is not exposed via any connected Amazon API (Ads, Catalog, Finance, Inventory, Ranking, Fulfillment).">—</span></td>
+              <td>ACoS 29.70%, TACoS 10.69% <span class="muted" title="Blended across sampled ASINs; implied ad-ROAS ≈3.4x on ad-attributed sales only.">(blended, implied ad-ROAS ≈3.4x)</span></td>
+              <td><span class="muted" title="Not available for this sample — not surfaced by the connected Ads API at the ASIN level used here.">—</span></td>
+              <td><span class="muted" title="Not available — Amazon does not expose page-level bounce-rate analytics to sellers via API.">—</span></td>
+              <td><span class="muted" title="Not available — Amazon does not expose on-listing session-duration analytics to sellers via API.">—</span></td>
+              <td><span class="muted" title="Not available — Amazon does not expose per-customer purchase history/identity to sellers via any connected API (structural limitation).">—</span></td>
+            </tr>
+            <tr>
+              <td>Meta Ads</td>
+              <td><span class="muted" title="Not applicable — Meta Ads has no order/AOV concept, only attributed purchase value.">—</span></td>
+              <td><span class="muted" title="Not tracked as a conversion rate here — see the Meta Ads detail card on this tab and the PPC &amp; SEO tab for purchases/spend.">—</span></td>
+              <td>ROAS 3.19x <span class="muted">($3,568.40 spend, live)</span></td>
+              <td><span class="muted" title="Not included in this matrix pull — see the Meta Ads detail card on this tab and the PPC &amp; SEO tab.">—</span></td>
+              <td><span class="muted" title="Not applicable — Meta reports ad engagement, not on-site bounce rate.">—</span></td>
+              <td><span class="muted" title="Not applicable — not a site-analytics metric for an ad platform.">—</span></td>
+              <td><span class="muted" title="Not applicable — Meta does not expose repeat-customer identity to advertisers.">—</span></td>
+            </tr>
+            <tr>
+              <td>Google Ads</td>
+              <td><span class="muted" title="GAP — API quota exhausted this pull (see PPC &amp; SEO tab).">—</span></td>
+              <td><span class="muted" title="GAP — API quota exhausted this pull (see PPC &amp; SEO tab).">—</span></td>
+              <td><span class="flag bad">GAP — API quota exhausted</span> <span class="muted">(see PPC &amp; SEO tab)</span></td>
+              <td><span class="muted" title="GAP — API quota exhausted this pull (see PPC &amp; SEO tab).">—</span></td>
+              <td><span class="muted" title="Not applicable — not a site-analytics metric for an ad platform.">—</span></td>
+              <td><span class="muted" title="Not applicable — not a site-analytics metric for an ad platform.">—</span></td>
+              <td><span class="muted" title="Not applicable — Google Ads does not expose repeat-customer identity to advertisers.">—</span></td>
+            </tr>
+            <tr>
+              <td>Organic / Search (GSC)</td>
+              <td><span class="muted" title="Not applicable — Search Console measures search visibility, not transactions.">—</span></td>
+              <td><span class="muted" title="Not applicable — Search Console does not track on-site conversion.">—</span></td>
+              <td><span class="muted" title="Not applicable — organic search carries no ad spend.">—</span></td>
+              <td>CTR 0.98%, avg position 8.07</td>
+              <td><span class="muted" title="Not applicable here — see GA4 site-wide bounce rate on the Shopify row.">—</span></td>
+              <td><span class="muted" title="Not applicable here — see GA4 site-wide row.">—</span></td>
+              <td><span class="muted" title="Not applicable — Search Console does not track user identity.">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:10px;">Each platform shows only the metrics that are genuinely measurable for it today — dashes are disclosed gaps or not-applicable combinations, not zeros.</p>
+    </section>
+
+    <section class="block">
+      <h3>Unit Economics — Blended Company View</h3>
+      <p class="desc">Blended across channels where the underlying data allows; several figures are proxies/estimates due to platform limitations — see notes.</p>
+      <div class="mini-stat-grid">
+        <div class="mini-stat">
+          <span class="mini-eyebrow">AOV</span>
+          <div class="mini-val">$90.12 <span class="mini-val2" style="font-size:11px;">(30d)</span></div>
+          <div class="mini-val2">$95.79 (Shopify, trailing 12mo)</div>
+          <div class="mini-note">Shown as Shopify-only — Amazon's average selling price ($50.60/unit) is unit-based, not order-based, so blending the two into one AOV number would mix incompatible units. See the Platform Performance matrix for the Amazon figure.</div>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-eyebrow">CAC</span>
+          <div class="mini-val">$12.06</div>
+          <div class="mini-val2">Shopify, 30d — same figure/methodology as the Overview card</div>
+          <div class="mini-note">A true cross-channel blended CAC isn't computable: Amazon exposes no customer-identity data via any connected API, so Amazon-acquired customers can't be counted in a shared denominator with Shopify's.</div>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-eyebrow">POAS</span>
+          <div class="mini-val">Gap — needs COGS from QuickBooks</div>
+          <div class="mini-note">Pulled the QuickBooks P&amp;L for the account (YTD 2026: $2,204,982 total income) but the report's expense/COGS line items were not returned by the API for this account (expenses showed $0), so profit-based POAS can't be computed yet. Fix: review QuickBooks expense-account categorization, or provide a target gross-margin % to use as a stand-in.</div>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-eyebrow">CLV (12-month proxy)</span>
+          <div class="mini-val">$131.72 <span class="mini-val2" style="font-size:11px;">per customer</span></div>
+          <div class="mini-note">Computed as trailing-12-month Shopify revenue ÷ unique customers ($545,977.35 ÷ 4,145) — a 12-month revenue-per-customer proxy, not true lifetime value. Amazon CLV is not computable at all: Amazon does not expose per-customer purchase history/identity to sellers via any API.</div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ============ EMAIL ANALYTICS ============ -->
@@ -929,7 +1044,7 @@
   <div class="prov-grid">
     <div>
       <b>Data pulled</b><br>
-      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 The PPC &amp; SEO Intelligence tab pulls GA4 channel data live from Google Analytics 4 (property 269389709), organic/paid keyword and competitor data live from Ahrefs and SEMrush, and Meta Ads account/campaign performance live from the Ads Manager API (account act_1909407616148345) now that the owner has reconnected with a real ad account — Google Ads remains a gap this pull (API quota exhausted), noted explicitly on that tab rather than filled in — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
+      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 The PPC &amp; SEO Intelligence tab pulls GA4 channel data live from Google Analytics 4 (property 269389709), organic/paid keyword and competitor data live from Ahrefs and SEMrush, and Meta Ads account/campaign performance live from the Ads Manager API (account act_1909407616148345) now that the owner has reconnected with a real ad account — Google Ads remains a gap this pull (API quota exhausted), noted explicitly on that tab rather than filled in — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs. The Marketing tab's Platform Performance matrix and Unit Economics block additionally pull live from ShopifyQL (sales, new/returning customer, and session queries) and from the Loox shop metafield (loox.global_stats) for the store-wide review rating/count.
     </div>
     <div>
       <b>Confirmed vs. estimated</b><br>
@@ -938,7 +1053,7 @@
     </div>
     <div>
       <b>Known data gaps (not hidden)</b><br>
-      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken." Zendesk CSAT: no data — surveys not configured to go out, not a reflection of customer satisfaction. Google Ads: no data this pull — Basic developer tier API quota exhausted (429), retry in ~8–9 hours; SEMrush's SERP-visibility crawl is shown as a labeled stand-in, not live spend data. Helium10: no integration available in the connected tool catalog — Jungle Scout exists as a possible alternative if the owner wants it connected.
+      QuickBooks' P&amp;L tool did not return COGS/OpEx/Net Income this pull (row-cap issue on a 2,500+ item chart of accounts) — Gross Margin/Net Margin cards use the last confirmed monthly figures instead of this week's. Neither Amazon nor Shopify's connected tools expose a star-rating total, review count, or CS response-time metric. Walmart has no published account-health/suspension-risk scorecard through this connection — only connection status is shown, not a fabricated health score. Flow anomaly deltas use each flow's own 90-day weekly average as the baseline, not a statistical significance test — small-volume flows are flagged as such rather than called "broken." Zendesk CSAT: no data — surveys not configured to go out, not a reflection of customer satisfaction. Google Ads: no data this pull — Basic developer tier API quota exhausted (429), retry in ~8–9 hours; SEMrush's SERP-visibility crawl is shown as a labeled stand-in, not live spend data (unchanged from before). Helium10: no integration available in the connected tool catalog — Jungle Scout exists as a possible alternative if the owner wants it connected. Amazon IPI score: only exposed in Seller Central's UI (Inventory → Inventory Performance Dashboard) — no connected API surfaces it, so the Overview card is shown as an explicit gap rather than guessed. Amazon per-customer identity/CLV: a structural Amazon limitation — no connected API exposes per-customer purchase history to sellers, so Amazon customers can't be blended into Shopify's CAC/CLV denominators. QuickBooks COGS/expense breakdown: the P&amp;L report returned income-only for this account (expenses showed $0), so profit-based POAS on the Marketing tab can't be computed yet. Loox star-rating distribution: the Shopify metafield (and legacy Yotpo/Stamped/native-review metafields checked) exposes only aggregate avg-rating + count, never a star breakdown — getting that would require a separate Loox REST API key.
     </div>
   </div>
   <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
@@ -1013,6 +1128,9 @@ const staticKpis = [
   {eyebrow:'Zendesk Tickets (Last Wk)', val:'68', sub:'Resolved: 68 (30 solved / 38 closed) · Open: 0 · Reopened: 8', tag:'good', tagText:'zero currently open'},
   {eyebrow:'Avg Time to First Resolution', val:'15.9 hrs', sub:'Avg full resolution: 19.4 hrs', tag:'info', tagText:'wall-clock, not business-hours'},
   {eyebrow:'CSAT', val:'N/A', sub:'0 ratings on record — surveys not sending', tag:'warn', tagText:'config gap, not a bad rating'},
+  {eyebrow:'Amazon IPI Score', val:'Not available via API', sub:"Amazon's Inventory Performance Index is only exposed in Seller Central's UI (Inventory → Inventory Performance Dashboard) — no connected API (Ads, Catalog, Finance, Inventory, Ranking, Fulfillment) surfaces this score. Check manually in Seller Central.", tag:'info', tagText:'gap — check Seller Central UI'},
+  {eyebrow:'Shopify CAC', val:'$12.06', sub:'Last 30 days: $3,568.40 Meta Ads spend ÷ 296 new customers (445 total Shopify customers − 149 returning, per ShopifyQL). Google Ads spend excluded — API quota exhausted (see PPC & SEO tab for gap detail), so this understates true blended CAC.', tag:'warn', tagText:'Google Ads spend excluded'},
+  {eyebrow:'Reviews Summary (Loox)', val:'4.8★ avg · 16,556 reviews', sub:"Store-wide Loox aggregate, pulled from Shopify shop metafield (loox.global_stats). Sentiment reads strongly positive at this volume/rating. Gap: the specific breakdown of '# of reviews under 4 stars' is NOT available — Loox's Shopify metafields (and legacy Yotpo/Stamped/native-review metafields checked) expose only aggregate avg-rating + count, never a star-distribution. Getting that breakdown would require the user to supply a Loox REST API key (separate from the Shopify app connection).", tag:'good', tagText:'strong signal at this volume'},
 ];
 document.getElementById('staticKpis').innerHTML = staticKpis.map(k=>`
   <div class="kpi">
