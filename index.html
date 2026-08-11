@@ -670,7 +670,7 @@
   <div class="prov-grid">
     <div>
       <b>Data pulled</b><br>
-      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">Aug 8, 2026</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
+      QuickBooks Online, Amazon Seller Central + Ads, and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the same "2026 Budget Model — Bearish scenario" Google Sheet already wired into the monthly QuickBooks report automation. The Marketplace Health tab pulls separately from Amazon SP-API and the Walmart Marketplace API via the Lisa WellProof integration, live as of Aug 9, 2026 · 2:00am UTC. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 9, 2026 · 3:05am UTC. The Zendesk ticket metrics feeding both the Overview KPI cards and the Customer Service tab's ticket-detail section pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, as of Aug 10, 2026 — each of these sources refreshes on its own cadence, so figures won't always tie exactly across tabs.
     </div>
     <div>
       <b>Confirmed vs. estimated</b><br>
@@ -734,7 +734,11 @@ document.getElementById('tabNav').addEventListener('click', (e)=>{
   document.getElementById('page-'+btn.dataset.page).classList.add('active');
 });
 
-document.getElementById('lastUpdated').textContent = 'Data refreshed Aug 8, 2026 · next refresh Fri';
+/* ---------------- DATA PULL DATE (single source of truth — update this each weekly run) ---------------- */
+const DATA_PULL_DATE = 'Aug 10, 2026';
+const NEXT_REFRESH_LABEL = 'Mon, Aug 17';
+document.getElementById('lastUpdated').textContent = 'Data refreshed ' + DATA_PULL_DATE + ' · next refresh ' + NEXT_REFRESH_LABEL;
+document.getElementById('footDate').textContent = DATA_PULL_DATE;
 
 /* ---------------- STATIC KPI CARDS ---------------- */
 const staticKpis = [
