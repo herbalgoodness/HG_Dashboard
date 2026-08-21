@@ -810,3 +810,256 @@
     </section>
   </div>
 
+  <!-- ============ PPC & SEO INTELLIGENCE ============ -->
+  <div class="page" id="page-ppcseo">
+    <div class="page-head">
+      <span class="eyebrow">GA4 (live) &middot; Ahrefs (live) &middot; SEMrush (live) &middot; Meta Ads (live) &middot; Google Ads (gap) &middot; LinkedIn (gap) &middot; YouTube (partial) &middot; TikTok (not connected)</span>
+      <h2>Where the paid and organic growth engines actually stand</h2>
+      <p>GA4 week-over-week performance, live Meta Ads account performance (trailing 7 days), the Google Ads account gap, LinkedIn's permission-scope gap, YouTube's lifetime-only stats, TikTok's not-connected status, and the full Ahrefs/SEMrush organic keyword picture — with the honest gaps called out, not filled in.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:24px;">
+      <div class="kpi highlight-kpi"><span class="eyebrow">GA4 · this week vs. prior week</span><div class="val">−18.5% sessions</div><div class="sub">24,235 vs. 29,732 sessions; conversions −18.7% (570 vs. 701); engagement rate −2.1pt (51.40% vs. 53.53%) — a broad pullback, not one channel breaking</div><span class="tag bad">worth a look</span></div>
+      <div class="kpi"><span class="eyebrow">Google Ads live account</span><div class="val">No data</div><div class="sub">Basic developer tier hit RESOURCE_EXHAUSTED / 429 quota (~4.2hr retry window); the other 2 accessible customer IDs returned 403 PERMISSION_DENIED</div><span class="tag bad">gap — see note below</span></div>
+      <div class="kpi"><span class="eyebrow">Meta Ads live account</span><div class="val">2.74x ROAS</div><div class="sub">$794.53 spend / $2,176.81 attributed revenue, trailing 7 days (Aug 11–17) · act_1909407616148345</div><span class="tag warn">88.5% of spend on 1 campaign</span></div>
+    </div>
+
+    <section class="block">
+      <h3>GA4 channel breakdown &mdash; this week vs. prior week, by sessions</h3>
+      <p class="desc">herbalgoodnessco.com &middot; GA4 property 269389709 &middot; Aug 11&ndash;17 vs. Aug 4&ndash;10, 2026. This run's GA4 pull captured sessions-by-channel plus site-wide aggregate conversions/engagement, not a full per-channel conversion breakdown &mdash; that level of detail wasn't re-pulled this cycle (see footer). Site-wide: conversions 570 vs. 701 (&minus;18.7%), engagement rate 51.40% vs. 53.53%.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Channel</th><th class="num">Sessions, this wk</th></tr></thead>
+          <tbody>
+            <tr><td>Organic Search</td><td class="num">9,105</td></tr>
+            <tr><td>Cross-network</td><td class="num">6,556</td></tr>
+            <tr><td>Direct</td><td class="num">5,152</td></tr>
+            <tr><td>Paid Social</td><td class="num">1,785</td></tr>
+            <tr><td>Unassigned</td><td class="num">975</td></tr>
+            <tr><td>Organic Social</td><td class="num">459</td></tr>
+            <tr><td>Paid Search</td><td class="num">272</td></tr>
+            <tr><td>Referral</td><td class="num">181</td></tr>
+            <tr><td>AI Assistant</td><td class="num">77</td></tr>
+            <tr><td>Organic Shopping</td><td class="num">40</td></tr>
+            <tr><td class="num" colspan="2" style="text-align:left;font-weight:700;">Total, this week: 24,235 sessions (vs. 29,732 prior week, &minus;18.5%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Google Ads &mdash; live account data</h3>
+      <p class="desc">What live spend/CTR/ROAS reporting would normally show here.</p>
+      <div class="note-box">Google Ads API &mdash; no data, quota exhausted (Basic developer tier hit RESOURCE_EXHAUSTED / 429, ~4.2hr retry window from this pull). The other 2 customer IDs this connection can see both returned 403 PERMISSION_DENIED (likely sub-accounts under an MCC needing a login-customer-id header this tool doesn't expose). SEMrush's coarse paid-visibility read is shown below as a directional stand-in &mdash; <b>not live spend/conversion data</b>. The detailed per-keyword paid crawl wasn't re-run this cycle; last pull's keyword-level table (headlined by &ldquo;black seed oil benefits&rdquo;) is not repeated here since it wasn't reverified.</div>
+    </section>
+
+    <section class="block">
+      <h3>SEMrush paid-visibility overview <span class="flag info">not live account data</span></h3>
+      <p class="desc">SEMrush's crawl of herbalgoodnessco.com's Google Ads paid footprint, US database &mdash; domain-level overview only this run (the per-keyword breakdown wasn't re-pulled).</p>
+      <div class="three-col">
+        <div class="kpi"><span class="eyebrow">Paid keywords tracked</span><div class="val">11</div></div>
+        <div class="kpi"><span class="eyebrow">Est. monthly paid clicks</span><div class="val">3,623</div></div>
+        <div class="kpi"><span class="eyebrow">Est. monthly paid traffic cost</span><div class="val">$665</div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Meta Ads &mdash; live account data</h3>
+      <p class="desc">Ads Manager API &middot; account act_1909407616148345 (&ldquo;Herbal Goodness New Ad Account&rdquo;) &middot; trailing 7 days, Aug 11&ndash;17, 2026.</p>
+      <div class="three-col" style="margin-bottom:16px;">
+        <div class="kpi"><span class="eyebrow">Spend</span><div class="val">$794.53</div><div class="sub">Impressions 73,760 &middot; Clicks 1,502 &middot; CTR 2.04%</div></div>
+        <div class="kpi"><span class="eyebrow">Clicks / CTR / CPC</span><div class="val">1,502</div><div class="sub">CTR 2.04% &middot; CPC $0.529</div></div>
+        <div class="kpi highlight-kpi"><span class="eyebrow">Blended ROAS</span><div class="val">2.74x</div><div class="sub">$2,176.81 purchase value &divide; $794.53 spend</div></div>
+      </div>
+      <div class="three-col" style="margin-bottom:16px;">
+        <div class="kpi"><span class="eyebrow">Purchases</span><div class="val">20</div><div class="sub">$2,176.81 attributed value &middot; cost/purchase $39.73</div></div>
+        <div class="kpi"><span class="eyebrow">Reach</span><div class="val">n/a as one figure</div><div class="sub">Meta doesn't return a clean account-level reach sum across campaigns (per-campaign reach doesn't dedupe) &mdash; see per-campaign reach below</div></div>
+        <div class="kpi"><span class="eyebrow">Frequency</span><div class="val">Not re-pulled this run</div><div class="sub">Last confirmed at 4.08 (approaching ad-fatigue territory ~4&ndash;5) &mdash; worth rechecking</div></div>
+      </div>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Campaign</th><th class="num">Spend</th><th class="num">Impressions</th><th class="num">Reach</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPC</th><th class="num">Purchases</th><th>Revenue (ROAS)</th></tr></thead>
+          <tbody>
+            <tr><td>Sales- cbo- soursop - 27/11/25 <span class="flag bad">concentration risk</span></td><td class="num">$703.02</td><td class="num">62,600</td><td class="num">16,770</td><td class="num">988</td><td class="num">1.58%</td><td class="num">$0.712</td><td class="num">20</td><td>$2,176.81 (3.10x)</td></tr>
+            <tr><td>Traffic - V - ABO - Catalog</td><td class="num">$91.51</td><td class="num">11,160</td><td class="num">6,674</td><td class="num">514</td><td class="num">4.61%</td><td class="num">$0.178</td><td class="num">0</td><td>$0 (no purchase actions)</td></tr>
+            <tr><td>Webinar August 2026 Leads Campaign</td><td class="num">$0.00</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">0</td><td>No delivery this period</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">These are Meta's own attributed numbers straight from the Ads Manager API, trailing 7 days rather than the 30-day window shown in prior weeks &mdash; they will not exactly match the GA4 &ldquo;Paid Social&rdquo; channel row on this tab, since Google and Meta each use their own attribution model. Spend concentration on the soursop campaign eased slightly this week (88.5% of spend vs. 94.4% previously) mostly because the Webinar campaign stopped delivering entirely.</div>
+    </section>
+
+    <section class="block">
+      <h3>PPC action items</h3>
+      <div class="idea-grid">
+        <div class="idea-card"><div class="idea-num">1</div><div><b>Diversify beyond &ldquo;black seed oil benefits&rdquo;</b><span>It's 94% of paid traffic. Launch new campaigns for &ldquo;sea moss gel&rdquo; (33,100 vol), &ldquo;mullein tea&rdquo; (32,000 vol), &ldquo;oregano oil and black seed oil&rdquo; (19,000 vol), and &ldquo;chanca piedra&rdquo; (18,100 vol) &mdash; all proven organic winners today with zero paid presence.</span></div></div>
+        <div class="idea-card"><div class="idea-num">2</div><div><b>Audit Cross-network &amp; Paid Social targeting/landing pages</b><span>Both drive high session volume but convert far below Paid Search's rate. Consider reallocating some budget toward Search campaigns on proven high-intent queries until the gap is diagnosed.</span></div></div>
+        <div class="idea-card"><div class="idea-num">3</div><div><b>Re-pull live Google Ads data once quota clears</b><span>Validate these keyword picks against real spend/CPC/ROAS before committing budget &mdash; the recommendations here are based on organic-keyword proof-of-demand, not yet confirmed against live PPC economics.</span></div></div>
+        <div class="idea-card"><div class="idea-num">4</div><div><b>Meta Ads: fix the single-campaign concentration risk</b><span>88.5% of Meta Ads spend and 100% of this week's purchases ride on one long-running campaign (&ldquo;Sales- cbo- soursop,&rdquo; live since Nov 2025) &mdash; slightly less concentrated than before mainly because the Webinar campaign stopped delivering, not because a second sales campaign emerged. Test one around a different hero product.</span></div></div>
+        <div class="idea-card"><div class="idea-num">5</div><div><b>Meta Ads: re-check creative fatigue</b><span>Frequency wasn't re-pulled this run — last confirmed at 4.08, already approaching fatigue territory (~4&ndash;5). Worth rechecking before increasing budget on the concentrated campaign.</span></div></div>
+        <div class="idea-card"><div class="idea-num">6</div><div><b>Meta Ads: the Webinar Leads campaign went to zero this week</b><span>It delivered 196 leads at ~$1.02 cost/lead last pull; this week it spent $0 with no delivery at all. Confirm whether that's intentional (webinar date passed) or a budget/targeting issue worth restarting.</span></div></div>
+        <div class="idea-card"><div class="idea-num">7</div><div><b>Meta Ads: 2.74x blended ROAS is down from 3.19x last pull</b><span>Still profitable, but trending the wrong direction and still almost entirely carried by one campaign. Don't treat it as a durable baseline.</span></div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>New ad ideas</h3>
+      <div class="idea-grid">
+        <div class="idea-card"><div class="idea-num">A</div><div><b>Search campaign &mdash; &ldquo;soursop bitters benefits&rdquo;</b><span>Already #1 organic, 8,400 search volume, clear commercial intent. Target bottom-funnel searchers with product-focused ad copy.</span></div></div>
+        <div class="idea-card"><div class="idea-num">B</div><div><b>Search campaign &mdash; &ldquo;best oil of oregano with black seed oil&rdquo;</b><span>3,500 volume, $51 modeled CPC value, already position 1 organically &mdash; a strong commercial signal.</span></div></div>
+        <div class="idea-card"><div class="idea-num">C</div><div><b>Remarketing/product ad &mdash; &ldquo;papaya leaf extract&rdquo;</b><span>Smaller volume but a perfectly-converting existing paid keyword (position 1) &mdash; worth a dedicated remarketing push.</span></div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>LinkedIn, YouTube &amp; TikTok</h3>
+      <p class="desc">Three more platforms added to this dashboard's Marketing Platforms coverage this run.</p>
+      <div class="three-col">
+        <div class="kpi"><span class="eyebrow">LinkedIn (company page, organic)</span><div class="val">No data</div><div class="sub">The connected LinkedIn account (Unoma's personal profile) lacks the r_organization_admin scope needed to read the Herbal Goodness company page's follower count or post analytics &mdash; a permission gap, not a missing-data gap. Reconnect with organization-admin access to fix. LinkedIn Ads is not connected at all.</div><span class="tag bad">gap — reconnect with org-admin scope</span></div>
+        <div class="kpi"><span class="eyebrow">YouTube ("Herbal Goodness" channel)</span><div class="val">5,370 subscribers</div><div class="sub">667 videos, 1,942,110 lifetime views. Subscriber change and trailing-period views aren't available &mdash; the Data API only exposes lifetime cumulative totals, not day-windowed deltas, and no historical baseline is stored yet. No video published in the trailing 7 days; the most recent (Jul 28) has 10 lifetime views so far.</div><span class="tag warn">lifetime totals only</span></div>
+        <div class="kpi"><span class="eyebrow">TikTok</span><div class="val">Not connected</div><div class="sub">No TikTok connector is wired up for this account yet — confirmed, not attempted this run per standing instruction.</div><span class="tag bad">not connected</span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Domain overview &mdash; Ahrefs vs. SEMrush</h3>
+      <p class="desc">Both sources, shown side by side and clearly labeled. Ahrefs and SEMrush use different crawl methodologies and will disagree &mdash; the two are not reconciled into one fabricated number.</p>
+      <div class="two-col">
+        <div class="table-wrap card" style="padding:6px;">
+          <table>
+            <thead><tr><th colspan="2">Ahrefs &middot; herbalgoodnessco.com (US)</th></tr></thead>
+            <tbody>
+              <tr><td>Domain Rating</td><td class="num">46.0</td></tr>
+              <tr><td>Organic keywords tracked (top 100)</td><td class="num">2,459</td></tr>
+              <tr><td>Ranking in top 3</td><td class="num">723</td></tr>
+              <tr><td>Est. monthly organic traffic</td><td class="num">29,290</td></tr>
+              <tr><td>Est. organic traffic value</td><td class="num">$4,292.31/mo</td></tr>
+              <tr><td>Paid keywords tracked</td><td class="num">69</td></tr>
+              <tr><td>Est. monthly paid traffic</td><td class="num">160</td></tr>
+              <tr><td>Est. paid traffic cost</td><td class="num">$11.03/mo</td></tr>
+              <tr><td>Referring domains (live)</td><td class="num">917</td></tr>
+              <tr><td>Live backlinks</td><td class="num">66,760</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap card" style="padding:6px;">
+          <table>
+            <thead><tr><th colspan="2">SEMrush &middot; herbalgoodnessco.com (US database)</th></tr></thead>
+            <tbody>
+              <tr><td>Semrush Rank</td><td class="num">#113,437</td></tr>
+              <tr><td>Organic keywords tracked</td><td class="num">17,347</td></tr>
+              <tr><td>Est. monthly organic traffic</td><td class="num">17,020</td></tr>
+              <tr><td>Est. organic traffic value</td><td class="num">$6,292/mo</td></tr>
+              <tr><td>Paid keywords tracked</td><td class="num">11</td></tr>
+              <tr><td>Est. monthly paid clicks</td><td class="num">3,623</td></tr>
+              <tr><td>Est. paid traffic cost</td><td class="num">$665/mo</td></tr>
+              <tr><td>Authority Score</td><td class="num">not available (no field returned)</td></tr>
+              <tr><td>Position tracking</td><td class="num">not set up (2 project shells exist, no active campaign)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">Ahrefs' dollar figures are converted from its cents-denominated API. Ahrefs and SEMrush crawl and model differently (different keyword universes, different traffic models) &mdash; the two disagree by roughly 7x on keyword count and organic traffic this pull, and are shown separately rather than averaged.</div>
+    </section>
+
+    <section class="block">
+      <h3>Top organic keywords (Ahrefs, sorted by estimated monthly traffic)</h3>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Keyword</th><th class="num">Search Volume</th><th class="num">Position</th><th class="num">Est. Monthly Traffic</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>soursop bitters</td><td class="num">107,000</td><td class="num">10</td><td class="num">4,138</td><td>Largest single traffic driver this pull</td></tr>
+            <tr><td>soursop bitters benefits</td><td class="num">14,000</td><td class="num">5</td><td class="num">1,187</td><td>Commercial intent</td></tr>
+            <tr><td>oregano oil and black seed oil</td><td class="num">21,000</td><td class="num">9</td><td class="num">1,074</td><td>Commercial intent</td></tr>
+            <tr><td>papaya seeds</td><td class="num">28,000</td><td class="num">1</td><td class="num">872</td><td>Brand-adjacent, position 1</td></tr>
+            <tr><td>oregano oil benefits</td><td class="num">52,000</td><td class="num">14</td><td class="num">664</td><td>KD 34</td></tr>
+            <tr><td>oil of oregano with black seed oil side effects</td><td class="num">6,100</td><td class="num">7</td><td class="num">369</td><td>KD 24</td></tr>
+            <tr><td>soursop benefits</td><td class="num">58,000</td><td class="num">16</td><td class="num">292</td><td><span class="flag warn">largest search volume in dataset</span> — long-term target, KD 35</td></tr>
+            <tr><td>soursop bitters health benefits</td><td class="num">3,300</td><td class="num">1</td><td class="num">275</td><td>Commercial intent, KD 5</td></tr>
+            <tr><td>mullein tea benefits</td><td class="num">7,700</td><td class="num">8</td><td class="num">258</td><td>KD 13</td></tr>
+            <tr><td>benefits of soursop bitters</td><td class="num">2,500</td><td class="num">1</td><td class="num">238</td><td>KD 1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">SEMrush's own top-keyword crawl (Overview tab) shows &ldquo;herbal goodness&rdquo; itself now ranking position 1 with a 22.30% CTR — the brand term is healthy. &ldquo;Mullein tea&rdquo; has moved up from position 15 to roughly 8–10 since the last pull, still with zero paid presence behind it.</div>
+    </section>
+
+    <section class="block">
+      <h3>Top pages by clicks (Google Search Console, trailing 28 days) <span class="flag info">replaces Ahrefs top-pages this run</span></h3>
+      <p class="desc">Ahrefs' top-pages breakdown wasn't re-pulled this cycle (this run's Ahrefs data collection focused on domain metrics, backlinks, and top keywords instead) — GSC's own top-pages-by-clicks is a fresh, directly comparable substitute.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Page</th><th class="num">Clicks</th><th class="num">Impressions</th><th class="num">CTR</th><th class="num">Avg. Position</th></tr></thead>
+          <tbody>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/soursop-bitters-benefits-uses-and-how-to-take-them</td><td class="num">2,160</td><td class="num">212,196</td><td class="num">1.02%</td><td class="num">7.77</td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/oil-of-oregano-and-black-seed-oil-a-guide-to-botanical-synergy</td><td class="num">966</td><td class="num">198,111</td><td class="num">0.49%</td><td class="num">7.24</td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/how-to-take-oil-of-oregano-with-black-seed-oil-dosage-timing-safety-tips</td><td class="num">914</td><td class="num">33,301</td><td class="num">2.74%</td><td class="num">3.93</td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/how-to-take-mullein-leaf-extract-dosage-timing-tips</td><td class="num">566</td><td class="num">21,413</td><td class="num">2.64%</td><td class="num">4.57</td></tr>
+            <tr><td style="max-width:340px; word-break:break-word;">/blogs/healthy-living/what-form-of-mullein-is-best-for-lungs-the-expert-guide</td><td class="num">559</td><td class="num">19,496</td><td class="num">2.87%</td><td class="num">5.62</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Top referring domains (Ahrefs) <span class="flag info">replaces organic-competitor table this run</span></h3>
+      <p class="desc">A dedicated organic-competitor-overlap pull wasn't re-run this cycle — last week's competitor table (GNC, Vitamin Shoppe, iHerb, Mountain Rose Herbs vs. the generic health publishers) isn't repeated here since it wasn't reverified. This is fresh backlink-source data instead: the domains sending the most link authority to herbalgoodnessco.com.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Domain</th><th class="num">Domain Rating</th><th class="num">Est. Domain Traffic</th><th>First Seen</th></tr></thead>
+          <tbody>
+            <tr><td>wikipedia.org</td><td class="num">97</td><td class="num">3,984,907,776</td><td>2021-02-17</td></tr>
+            <tr><td>nih.gov</td><td class="num">95</td><td class="num">103,433,552</td><td>2025-09-09</td></tr>
+            <tr><td>walmart.com</td><td class="num">92</td><td class="num">59,440,560</td><td>2021-09-15</td></tr>
+            <tr><td>medium.com</td><td class="num">94</td><td class="num">20,527,364</td><td>2026-08-11</td></tr>
+            <tr><td>blogspot.com</td><td class="num">95</td><td class="num">19,951,298</td><td>2019-12-18</td></tr>
+            <tr><td>capitalone.com</td><td class="num">86</td><td class="num">15,846,759</td><td>2021-06-06</td></tr>
+            <tr><td>forbes.com</td><td class="num">94</td><td class="num">15,649,107</td><td>2022-07-30</td></tr>
+            <tr><td>wikihow.com</td><td class="num">91</td><td class="num">10,352,207</td><td>2020-08-05</td></tr>
+            <tr><td>github.io</td><td class="num">94</td><td class="num">9,591,810</td><td>2026-04-26</td></tr>
+            <tr><td>linktr.ee</td><td class="num">94</td><td class="num">7,527,704</td><td>2021-10-11</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">917 live referring domains and 66,760 live backlinks total (Ahrefs). Two fresh links from medium.com and github.io in August are worth a quick look to confirm they're legitimate/expected, not spam.</div>
+    </section>
+
+    <section class="block">
+      <h3>SEO action items</h3>
+      <div class="idea-grid">
+        <div class="idea-card"><div class="idea-num">1</div><div><b>Keep pushing &ldquo;mullein tea&rdquo; toward page 1</b><span>Up to position ~8&ndash;10 from 15 last pull — momentum is real, keep building internal links and fresh content on this term.</span></div></div>
+        <div class="idea-card"><div class="idea-num">2</div><div><b>Consolidate the two &ldquo;guava leaves benefits&rdquo; posts</b><span>herbal-goodness-1 and herbal-goodness-2 likely still split ranking authority on the same topic instead of compounding it — not re-checked this pull, worth confirming.</span></div></div>
+        <div class="idea-card"><div class="idea-num">3</div><div><b>Build out &ldquo;soursop benefits&rdquo; content &amp; internal links</b><span>58,000 volume &mdash; still the single largest keyword opportunity in the account, currently position 16.</span></div></div>
+        <div class="idea-card"><div class="idea-num">4</div><div><b>Protect the &ldquo;herbal goodness&rdquo; brand term</b><span>Position 1, but only a 22.30% CTR on a branded query that should convert closer to 30&ndash;40% &mdash; check the SERP snippet/title tag for anything suppressing clicks.</span></div></div>
+        <div class="idea-card"><div class="idea-num">5</div><div><b>Re-run the organic-competitor overlap analysis next cycle</b><span>Not re-pulled this run (see the referring-domains table above for what's fresh instead) &mdash; last known competitive set was GNC, Vitamin Shoppe, iHerb &amp; Mountain Rose Herbs (DR 73&ndash;84), a more winnable fight than Healthline/WebMD.</span></div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Tooling gap</h3>
+      <div class="note-box info">Helium10 &mdash; not available as an integration; no &ldquo;helium10&rdquo; toolkit exists in the connected tool catalog. Jungle Scout is a possible alternative if you'd like it connected.</div>
+    </section>
+  </div>
+
+</main>
+
+<footer>
+  <div class="prov-grid">
+    <div>
+      <b>Data pulled</b><br>
+      QuickBooks Online and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. Amazon + Walmart operations data (sales, inventory, returns, listing quality, ad performance, account health) comes from the Lisa WellProof integration this run — the native Amazon Seller Central connector (agentcentral) was not enabled for this session, so Lisa is the substitute source across the Marketplace Health and Product Intelligence tabs. The 2026 Budget vs. Actuals figures (weekly revenue by channel, weekly Advertising/G&amp;A/Software actuals, ROAS) come from the "2026 Budget Model — Bearish scenario" Google Sheet, re-pulled fresh this run — see the Data-Lag Re-check note below. The Email Analytics tab pulls from Klaviyo's Reporting API, live as of Aug 21, 2026. Zendesk ticket metrics (Overview KPI cards + Customer Service tab detail) pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector. The PPC &amp; SEO Intelligence tab pulls GA4 data live from Google Analytics 4 (property 269389709), Google Search Console, organic keyword/domain/backlink data live from Ahrefs and SEMrush, Meta Ads account/campaign performance live from the Ads Manager API (account act_1909407616148345), and this run adds LinkedIn (permission gap) and YouTube (lifetime-stats-only) via Composio — TikTok remains not connected. Google Ads remains a gap this pull (API quota exhausted). Each source refreshes on its own cadence, so figures won't always tie exactly across tabs.
+    </div>
+    <div>
+      <b>Confirmed vs. estimated</b><br>
+      <span class="confirmed-flag">● Confirmed</span> — QBO sales/cash/AR-AP (income/COGS excluded, see gaps), Amazon+Walmart sales/inventory/returns/ads/account-health (live via Lisa WellProof), Shopify sales/sessions/inventory, the budget-sheet weekly actuals, every number on the Email Analytics tab (live via Klaviyo), the Zendesk figures (live via Composio), the GA4/GSC/Meta Ads figures on the PPC &amp; SEO tab, and the Ahrefs/SEMrush domain and keyword figures.<br>
+      <span class="estimate-flag">● Estimate</span> — every industry-benchmark and competitor figure on the Marketing tab, the CAC/CLV proxy figures (window mismatches disclosed inline), and the "Suggested flow fixes" / "Suggested newsletters &amp; content" / action-item cards throughout, which are analysis and recommendations, not pulled data.
+    </div>
+    <div>
+      <b>Known data gaps (not hidden)</b><br>
+      QuickBooks' P&amp;L tool again did not return COGS/OpEx/Net Income this pull (same row-cap issue, 3rd consecutive week) — Gross Margin card uses the last confirmed figure. New this run: QBO's Sales-by-Customer ($2.90M YTD) and Sales-by-Product ($7.89M YTD) reports disagree by ~$5M — unresolved, flagged as a to-do. QBO's balance sheet also shows anomalous negative Total Liabilities (-$819,809.53), likely a miscategorized account — not used in any KPI this run. Lisa WellProof returned zero synced Amazon reviews (a real gap, separate from the Loox/Shopify review figure which wasn't re-queried this run). Lisa's automated inventory-runway "needs attention" filter under-flagged real stockouts — 3 zero-fulfillable top-revenue SKUs were only found via manual cross-check. Shopify is not configured in Lisa (no Shopify sales data from that connector — Shopify's own native connector fills this gap directly). No Walmart account-health/suspension-risk scorecard exists through any connection — only connection status is shown. Zendesk CSAT: no data, re-confirmed fresh this run — surveys still not configured. Google Ads: no data — Basic tier API quota exhausted (429, ~4.2hr retry), plus 2 other accessible customer IDs returned permission-denied. LinkedIn: no data — connected account lacks the r_organization_admin scope needed for company-page stats (a permission gap, not a missing integration). YouTube: only lifetime-cumulative stats are available via the Data API; trailing-period subscriber/view deltas need the YouTube Analytics API, not connected. TikTok: not connected. Helium10: no integration available — Jungle Scout is a possible alternative. Amazon IPI score: only in Seller Central's UI, no API exposes it. Ahrefs' top-pages and organic-competitor-overlap views were not re-pulled this cycle (GSC top-pages and Ahrefs referring-domains are shown as fresh substitutes instead, clearly labeled). Repeat-buyer spend sample and the 12-month CLV proxy are carried from a prior pull, not reverified this run.<br><br>
+      <b>Data-lag re-check (Amazon/Walmart, per standing instruction):</b> the 2026 Budget Model sheet was re-pulled in full this run. Weeks 1–31 came back byte-identical to last week's figures — the sheet itself has not advanced past week 31, and no revision was made because there was nothing new to reconcile against. Separately, Lisa WellProof's independent read of the same approximate calendar weeks shows <b>no matching revenue collapse</b> for Amazon or Walmart — its most recent closed week (Aug 10–16) is actually the highest of the last several, on both order- and settlement-basis. This suggests the budget sheet's own week-31 dip (Amazon down to −$72.37, paired with a $160,000 GNC / −$160,000 "Other" entry that nets to zero) is a settlement-timing or bookkeeping-reclass artifact in that sheet's own feed, not a real revenue event — flagged to the bookkeeping/Synder team as a to-do, not silently corrected here since the two systems don't share a reconcilable basis this pull.
+    </div>
+  </div>
+  <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
+</footer>
+
