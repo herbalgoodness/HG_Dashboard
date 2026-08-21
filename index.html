@@ -1063,3 +1063,521 @@
   <p style="margin:0;">This is a static, self-contained HTML file — no backend, no external storage, no localStorage. Checkbox state and the sort order you choose live only in this browser tab's memory and reset on reload. Persisting checklist progress, or having this page refresh itself, requires wiring it to a host backend (or, as set up here, a weekly scheduled regeneration that republishes this file with that week's real numbers).</p>
 </footer>
 
+<script>
+const REV_ACTUAL_TOTAL = [72158.79, 71015.14, 115437.3, 65123.07, 76178.02, 67858.35, 70766.62, 78938.7, 80372.49, 75875.81, 100959.82, 73874.89, 72501.75, 68438.06, 80159.29, 62016.72, 84989.71, 79602.71, 56076.2, 55730.3, 62213.72, 66082.54, 74581.29, 62363.02, 69348.37, 59809.15, 63385.84, 55750.62, 54595.97, 66376.02, 2682.17];
+const REV_ACTUAL_AMAZON = [57365.54, 53707.11, 56718.47, 50092.36, 54956.15, 53804.56, 58859.39, 59716.8, 56915.28, 57416.02, 52247.6, 53498.79, 55049.44, 50037.91, 51096.37, 52394.82, 47946.24, 47939.15, 46754.46, 44021.8, 47608.76, 41762.42, 45009.59, 47069.52, 50358.31, 46521.83, 41923.3, 43992.14, 40531.9, 12133.11, -72.37];
+const REV_ACTUAL_SHOPIFY = [9764.04, 11784.26, 9742.74, 9095.19, 10978.57, 8161.73, 7319.15, 14262.17, 10944.01, 12387.04, 16856.28, 11663.07, 13711.68, 14211.77, 11061.83, 7391.97, 12543.52, 11121.09, 7361.39, 9623.04, 10876.59, 7823.82, 11335.66, 9603.99, 9089.91, 9822.18, 8472.5, 7640.49, 10135.6, 7457.51, 1994.35];
+const REV_ACTUAL_WALMART = [3880.98, 3606.99, 4259.81, 4317.72, 5414.24, 5096.84, 4054.02, 3376.44, 4134.35, 4315.06, 3013.3, 2779.94, 3155.13, 2699.35, 1980.37, 1922.96, 2000.64, 2058.05, 1711.96, 2085.46, 2361.85, 2358.88, 2796.09, 3800.0, 2928.66, 3365.91, 3561.4, 3939.36, 3104.62, 3923.64, 760.19];
+const REV_ACTUAL_FAIRE = [1148.23, 1916.78, 2326.15, 1617.8, 523.35, 759.27, 499.63, 1259.32, 131.5, 1538.43, null, 5624.35, 585.5, 1504.55, null, 351.23, 1568.37, 268.74, 248.39, null, 967.66, 581.34, 1678.29, 1343.09, 1472.16, 68.83, 320.8, 178.63, 823.85, null, null];
+const REV_ACTUAL_GNC = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 160000.0];
+const REV_ACTUAL_TIKTOK = [null, null, null, null, null, 35.95, 34.43, 30.2, 30.2, null, null, null, null, null, null, null, null, null, null, null, null, 32.95, 99.9, null, 57.36, 30.4, null, null, null, null, null];
+const REV_ACTUAL_OTHER = [-0.0, -0.0, 42390.13, -0.0, 4305.71, 0.0, -0.0, 293.77, 8217.15, 219.26, 28842.64, 308.74, -0.0, -15.52, 16020.72, -44.26, 20930.94, 18215.68, -0.0, -0.0, 398.86, 13523.13, 13661.76, 546.42, 5441.97, -0.0, 9107.84, 0.0, -0.0, 42861.76, -160000.0];
+const ADV_MKTG_ACTUAL = [12619.39, 14784.58, 14224.15, 15638.73, 11918.43, 12779.26, 12461.41, 12556.59, null, 18402.36, 10153.81, 11759.28, null, 22074.1, 11935.47, 11551.09, 7735.51, null, 9050.72, 11097.15, 12817.93, 8380.0, 12163.15, 9453.86, 11533.17, 10243.47, 9733.72, 8585.03, 6992.98, 8220.36, 6461.64];
+const GNA_ACTUAL = [996.66, 62.95, 8992.6, 159.0, 1072.25, 75.4, 1112.13, null, 693.59, 1412.33, 2412.95, 306.51, 2069.88, 1892.34, 1690.53, 1035.77, 1190.07, 1081.86, 1081.3, 2018.38, null, 1627.48, 279.67, 15.99, 1097.83, 219.89, 1214.3, 50.22, 955.04, 209.68, 292.86];
+const SOFTWARE_ACTUAL = [3485.44, 1386.67, 993.91, 833.66, 1973.12, 2801.61, 1122.74, 1683.41, 6313.34, 1354.02, 1254.05, 1566.25, 2993.08, 2162.7, 797.75, 1424.89, 2120.25, 2239.55, 1694.66, 868.78, 2786.15, 2241.07, 1728.06, 3988.86, 3218.55, 2644.1, 1553.8, 1154.56, 3063.61, 2010.38, 271.4];
+const ROAS_ACTUAL = [5.7, 4.8, 8.1, 4.2, 6.4, 5.3, 5.7, 6.3, null, 4.1, 9.9, 6.3, null, 3.1, 6.7, 5.4, 11.0, null, 6.2, 5.0, 4.9, 7.9, 6.1, 6.6, 6.0, 5.8, 6.5, 6.5, 7.8, 8.1, 0.4];
+const REV_BUDGET_TOTAL = [72158.79, 71015.14, 115437.3, 65123.07, 76178.02, 67858.35, 70766.62, 78938.7, 80372.49, 75875.81, 100959.82, 73874.89, 72501.75, 68438.06, 80159.29, 62016.72, 84989.71, 79602.71, 56076.2, 55730.3, 62213.72, 66082.54, 74581.29, 62363.02, 69348.37, 59809.15, 63385.84, 55750.62, 54595.97, 66376.02, 2682.17, 155855.97, 87000.0, 72000.0, 89200.0, 74200.0, 93200.0, 77200.0, 96362.76, 80218.85, 100114.98, 84042.55, 100476.14, 85079.35, 100242.08, 87235.99, 102791.85, 104400.0, 107513.26, 92370.72, 109700.0, 92675.91];
+const REV_BUDGET_AMAZON = [57365.54, 53707.11, 56718.47, 50092.36, 54956.15, 53804.56, 58859.39, 59716.8, 56915.28, 57416.02, 52247.6, 53498.79, 55049.44, 50037.91, 51096.37, 52394.82, 47946.24, 47939.15, 46754.46, 44021.8, 47608.76, 41762.42, 45009.59, 47069.52, 50358.31, 46521.83, 41923.3, 43992.14, 40531.9, 12133.11, -72.37, 71770.7, 55000.0, 56000.0, 57000.0, 58000.0, 60000.0, 60000.0, 63000.0, 63000.0, 65000.0, 65000.0, 65000.0, 65000.0, 65000.0, 67000.0, 67000.0, 67000.0, 70000.0, 70000.0, 70000.0, 70000.0];
+const REV_BUDGET_SHOPIFY = [9764.04, 11784.26, 9742.74, 9095.19, 10978.57, 8161.73, 7319.15, 14262.17, 10944.01, 12387.04, 16856.28, 11663.07, 13711.68, 14211.77, 11061.83, 7391.97, 12543.52, 11121.09, 7361.39, 9623.04, 10876.59, 7823.82, 11335.66, 9603.99, 9089.91, 9822.18, 8472.5, 7640.49, 10135.6, 7457.51, 1994.35, 8567.99, 10000.0, 10000.0, 10000.0, 10000.0, 11000.0, 11000.0, 11000.0, 11000.0, 12000.0, 12000.0, 12000.0, 12000.0, 12000.0, 13000.0, 13000.0, 30000.0, 14000.0, 15000.0, 15000.0, 15000.0];
+const REV_BUDGET_WALMART = [3880.98, 3606.99, 4259.81, 4317.72, 5414.24, 5096.84, 4054.02, 3376.44, 4134.35, 4315.06, 3013.3, 2779.94, 3155.13, 2699.35, 1980.37, 1922.96, 2000.64, 2058.05, 1711.96, 2085.46, 2361.85, 2358.88, 2796.09, 3800.0, 2928.66, 3365.91, 3561.4, 3939.36, 3104.62, 3923.64, 760.19, 1441.92, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4500.0, 4800.0, 4800.0, 4800.0, 4800.0];
+const TOP_SKUS = [{"name": "Papaya Leaf Extract Capsules", "channel": "Amazon", "asin": "798304169072", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 143401.31, "units": 1898, "velocity": "146/wk", "stock": "740 fulfillable \u2014 healthy", "stockFlag": "ok", "rank": 1}, {"name": "Papaya Leaf Extract Liquid 16oz", "channel": "Amazon", "asin": "798304192766 / 810128952941", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 129589.83, "units": 1461, "velocity": "112/wk", "stock": "698 fulfillable \u2014 healthy", "stockFlag": "ok", "rank": 2}, {"name": "Soursop Graviola Drops 12oz", "channel": "Amazon", "asin": "798304395136", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 62351.44, "units": 899, "velocity": "69/wk", "stock": "734 fulfillable \u2014 healthy (has real COGS: $3.95/unit)", "stockFlag": "ok", "rank": 3}, {"name": "Papaya Leaf Extract Caps 600mg 10X", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 32842.47, "units": 173, "velocity": "13/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 4}, {"name": "Papaya Leaf Extract 60 Caps", "channel": "Amazon", "asin": "810128951951 (B0CRGYMKRB)", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 35390.75, "units": 587, "velocity": "45/wk", "stock": "0 fulfillable \u2014 152 reserved, 8 inbound. Title is 196 chars, over Amazon's 75-char limit.", "stockFlag": "critical", "rank": 5}, {"name": "Papaya Seeds Extract Liquid 1oz", "channel": "Amazon", "asin": "798304214185", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 25842.15, "units": 752, "velocity": "58/wk", "stock": "45 fulfillable \u2014 watch (0 inbound)", "stockFlag": "warn", "rank": 6}, {"name": "Soursop Leaf Graviola Extract 15X Liquid", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 20238.04, "units": 219, "velocity": "17/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 7}, {"name": "Papaya Leaf Blood Support Capsules", "channel": "Amazon", "asin": "798304282092 (+ stickerless)", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 44993.67, "units": 759, "velocity": "58/wk", "stock": "27 fulfillable combined \u2014 watch, 81 inbound", "stockFlag": "warn", "rank": 8}, {"name": "Papaya Seeds Powder Capsules", "channel": "Amazon", "asin": "798304495423 (B097HRF61S)", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 10524.0, "units": null, "velocity": "\u2014", "stock": "0 fulfillable \u2014 351 reserved, 0 inbound", "stockFlag": "critical", "rank": 9}, {"name": "Papaya Leaf Blood Platelet Liquid 1oz", "channel": "Amazon", "asin": "810128952118 (B0D15S2NHM)", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 4290.0, "units": null, "velocity": "\u2014", "stock": "0 fulfillable \u2014 101 reserved, 0 inbound", "stockFlag": "critical", "rank": 10}, {"name": "Organic Papaya Leaf Extract 16oz 15X Liquid", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 14262.41, "units": 108, "velocity": "8/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 11}, {"name": "SKU 850035852385", "channel": "Amazon", "asin": "850035852385", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 19137.19, "units": 616, "velocity": "47/wk", "stock": "not verified this pull \u2014 product name unresolved", "stockFlag": "ok", "rank": 12}, {"name": "SKU 798304441550", "channel": "Amazon", "asin": "798304441550", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 18567.62, "units": 420, "velocity": "32/wk", "stock": "not verified this pull \u2014 product name unresolved", "stockFlag": "ok", "rank": 13}, {"name": "Mullein Leaf Organic 15X Liquid Extract", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 9640.87, "units": 149, "velocity": "11/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 14}, {"name": "Blood Platelet Plus Capsules 20X 60ct", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 9268.81, "units": 102, "velocity": "8/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 15}, {"name": "Organic Papaya Leaf Extract 1oz Trial Size", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 5368.26, "units": 56, "velocity": "4/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 16}, {"name": "Soursop Bitters 15X Liquid Extract", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 4569.19, "units": 44, "velocity": "3/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 17}, {"name": "Papaya Leaf Blood Support Capsules 10X 60ct", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 4093.30, "units": 13, "velocity": "1/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 18}, {"name": "Blood Platelet Support w/ Papaya Leaf 15X Liquid", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 3856.81, "units": 42, "velocity": "3/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 19}, {"name": "Papaya Leaf Blood Support (15X Liquid)", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 2525.95, "units": 19, "velocity": "1/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 20}, {"name": "Papaya Seed Powder Capsules 60ct (Shopify)", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 2342.29, "units": 23, "velocity": "2/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 21}, {"name": "Soursop Graviola Extract Caps 10X 60ct", "channel": "Shopify", "asin": "\u2014", "window": "91-day (May 23 \u2013 Aug 21)", "revenue": 2342.22, "units": 41, "velocity": "3/wk", "stock": "not flagged OOS", "stockFlag": "ok", "rank": 22}, {"name": "Guava Leaf Tea Organic 24 Bags", "channel": "Shopify", "asin": "\u2014", "window": "live inventory snapshot, Aug 21", "revenue": null, "units": null, "velocity": "\u2014", "stock": "0 avail, all variants \u2014 out of stock", "stockFlag": "critical", "rank": 23}, {"name": "Bamboo Leaf Tea 24 Bags", "channel": "Shopify", "asin": "\u2014", "window": "live inventory snapshot, Aug 21", "revenue": null, "units": null, "velocity": "\u2014", "stock": "0 avail, all variants \u2014 out of stock", "stockFlag": "critical", "rank": 24}, {"name": "Dandelion Root Organic Liquid Extract", "channel": "Shopify", "asin": "\u2014", "window": "live inventory snapshot, Aug 21", "revenue": null, "units": null, "velocity": "\u2014", "stock": "12oz variant 0 avail; 1oz variant shows 9,982 \u2014 API data inconsistent, verify in Shopify admin", "stockFlag": "warn", "rank": 25}];
+
+const WEEK_COUNT = 52;
+function weekMeta(n){
+  const start = new Date(2026,0,1);
+  start.setDate(start.getDate() + (n-1)*7);
+  const end = new Date(start.getTime());
+  end.setDate(end.getDate()+6);
+  const fmt = d => d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  return {start, end, label: fmt(start)+' – '+fmt(end)};
+}
+const LAST_ACTUAL_WEEK = 30; // week 31 flagged partial/refreshing in the sheet, so 30 is the last clean closed week
+const CURRENT_WEEK = 31;
+
+function fmtMoney(v){
+  if(v===null || v===undefined || isNaN(v)) return '—';
+  const neg = v<0;
+  const s = Math.abs(v).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  return neg? '('+s+')' : s;
+}
+function fmtPct(v,d){ if(v===null||v===undefined||isNaN(v)) return '—'; return v.toFixed(d===undefined?1:d)+'%'; }
+
+/* ---------------- TAB SWITCHING ---------------- */
+document.getElementById('tabNav').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button[data-page]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+btn.dataset.page).classList.add('active');
+});
+
+/* ---------------- DATA PULL DATE (single source of truth — update this each weekly run) ---------------- */
+const DATA_PULL_DATE = 'Aug 21, 2026';
+const NEXT_REFRESH_LABEL = 'Mon, Aug 24';
+document.getElementById('lastUpdated').textContent = 'Data refreshed ' + DATA_PULL_DATE + ' · next refresh ' + NEXT_REFRESH_LABEL;
+document.getElementById('footDate').textContent = DATA_PULL_DATE;
+
+/* ---------------- STATIC KPI CARDS ---------------- */
+const staticKpis = [
+  {eyebrow:'YTD Sales · Jan 1 – Aug 21 (QBO)', val: fmtMoney(2901621.78), sub:'Sales by Customer report, all 73 customers. Flag: QuickBooks\' own Sales-by-Product report returns a different YTD total ($7,886,554.04) for the same period — an internal QBO reporting inconsistency, not resolved this pull. See footer.', tag:'warn', tagText:'QBO reports disagree — needs review'},
+  {eyebrow:'YTD pace vs. Bearish budget', val:'−13.0%', sub:'$2.15M actual vs. $2.47M pro-rated FY budget, wks 1–31', tag:'bad', tagText:'running behind annual plan'},
+  {eyebrow:'Gross Margin · Jul 2026 close', val:'50.2%', sub:'Carried from last confirmed pull — QuickBooks\' P&L tool again failed to return COGS/OpEx this run (same row-cap issue on the account\'s 2,500+ item chart of accounts).', tag:'good', tagText:'above 43–45% benchmark (stale figure)'},
+  {eyebrow:'Revenue growth · Wk30 vs Wk29', val:'+21.6%', sub:'$66,376.02 vs. $54,595.97, all channels. Wk31 vs Wk30 excluded from this headline — wk31 revenue collapses to $2,682.17 in the budget sheet, which Lisa WellProof\'s independent Amazon/Walmart read does not corroborate. See footer.', tag:'good', tagText:'accelerating week-over-week'},
+  {eyebrow:'Repeat customer rate · Shopify', val:'~31%', sub:'91-day avg 30.81%, weekly range 28.6%–44.7%', tag:'good', tagText:'in line with 37.7% category avg.'},
+  {eyebrow:'Inventory health · top revenue SKUs', val:'20 of 25 healthy', sub:'Top 25 revenue SKUs (Amazon+Shopify): 3 critical (0 fulfillable, real demand, no inbound relief) · 2 watch · 20 healthy. Full 168-SKU catalog not scanned this run — Lisa\'s automated runway tool flagged only 1 (already-dead listing), undercounting the 3 real stockouts found by manual check.', tag:'warn', tagText:'3 SKUs need immediate restock'},
+  {eyebrow:'Blended ROAS · this week', val:'~2.5x', sub:'Trailing 7 days: ~$4,940 Amazon Ads spend / ~$12,300 sales, summed across 50 campaigns (SP+SB+SD blended). MTD August ≈2.6x per Ads Command Center.', tag:'bad', tagText:'below 7.0x internal target'},
+  {eyebrow:'AR at risk · GNC Holdings', val: fmtMoney(5440.08), sub:'Largest single overdue balance, 31–60 days past due, out of $88,831.12 billed YTD. Total AR overdue nets to just $3,610.27 company-wide once small credits in other aging buckets are included.', tag:'warn', tagText:'single-customer concentration'},
+  {eyebrow:'Amazon stockouts · confirmed this run', val:'3 SKUs', sub:'0 fulfillable units, real demand (91d revenue $4,290–$35,391 each), zero inbound relief scheduled: Papaya Leaf Extract 60 Caps, Papaya Seeds Powder Capsules, Papaya Leaf Blood Platelet Liquid 1oz. Found via manual cross-check — Lisa\'s automated "needs attention" filter missed all three.', tag:'bad', tagText:'no inbound relief scheduled'},
+  {eyebrow:'Zendesk Tickets (Last Wk)', val:'52', sub:'Resolved: 51 (39 solved / 12 closed) · Open: 1 · Reopened: 10 tickets (14 reopen events)', tag:'good', tagText:'98% resolved this week'},
+  {eyebrow:'Avg Time to First Resolution', val:'9.6 hrs', sub:'Avg full resolution: 13.5 hrs', tag:'info', tagText:'wall-clock, not business-hours'},
+  {eyebrow:'CSAT', val:'N/A', sub:'0 ratings on record — surveys still not configured (re-checked fresh this run, same gap as prior weeks)', tag:'warn', tagText:'config gap, not a bad rating'},
+  {eyebrow:'Amazon IPI Score', val:'Not available via API', sub:"Amazon's Inventory Performance Index is only exposed in Seller Central's UI (Inventory → Inventory Performance Dashboard) — no connected API (Ads, Catalog, Finance, Inventory, Ranking, Fulfillment) surfaces this score. Check manually in Seller Central.", tag:'info', tagText:'gap — check Seller Central UI'},
+  {eyebrow:'Shopify CAC', val:'~$11.35', sub:'Meta Ads spend $794.53 (trailing 7d) ÷ ~70 new Shopify customers (week of Aug 10–16, closest full week). Window mismatch between sources makes this directional, not exact. Google Ads spend excluded — API quota exhausted.', tag:'warn', tagText:'directional — see note'},
+  {eyebrow:'Reviews Summary (Loox)', val:'4.8★ avg · 16,556 reviews', sub:"Carried from last confirmed pull — the Loox shop metafield wasn't re-queried this run. Separately, Lisa WellProof's own Amazon review sync returned zero reviews this run (a different, non-overlapping data source) — flagged in the Customer Service tab, not treated as a change to this Loox figure.", tag:'good', tagText:'not reverified this pull'},
+];
+document.getElementById('staticKpis').innerHTML = staticKpis.map(k=>`
+  <div class="kpi">
+    <span class="eyebrow">${k.eyebrow}</span>
+    <div class="val">${k.val}</div>
+    <div class="sub">${k.sub}</div>
+    <span class="tag ${k.tag}">${k.tagText}</span>
+  </div>`).join('');
+
+/* ---------------- WEEK STRIP ---------------- */
+const weekStripEl = document.getElementById('weekStrip');
+let stripHtml = '';
+for(let n=1;n<=WEEK_COUNT;n++){
+  let cls = 'future';
+  if(n <= LAST_ACTUAL_WEEK) cls = 'has-actual';
+  else if(n === CURRENT_WEEK) cls = 'partial';
+  stripHtml += `<button class="wk-btn ${cls}" data-week="${n}" title="${weekMeta(n).label}"><span class="n">Wk${n}</span><span class="dot2"></span></button>`;
+}
+weekStripEl.innerHTML = stripHtml;
+
+function selectWeek(n){
+  document.querySelectorAll('.wk-btn').forEach(b=>b.classList.toggle('active', +b.dataset.week===n));
+  const meta = weekMeta(n);
+  document.getElementById('weekDetailTitle').textContent = 'Week '+n+(n===CURRENT_WEEK? ' (in progress)':'');
+  document.getElementById('weekDetailDates').textContent = meta.label+', 2026';
+
+  const idx = n-1;
+  const hasActual = n <= LAST_ACTUAL_WEEK;
+  const isPartial = n === CURRENT_WEEK;
+
+  const rows = [
+    {label:'Amazon', actual: hasActual||isPartial? REV_ACTUAL_AMAZON[idx] : null, budget: REV_BUDGET_AMAZON[idx]},
+    {label:'Shopify', actual: hasActual||isPartial? REV_ACTUAL_SHOPIFY[idx] : null, budget: REV_BUDGET_SHOPIFY[idx]},
+    {label:'Walmart', actual: hasActual||isPartial? REV_ACTUAL_WALMART[idx] : null, budget: REV_BUDGET_WALMART[idx]},
+    {label:'GNC / Faire / Other', actual: hasActual||isPartial? sumSafe([REV_ACTUAL_GNC[idx],REV_ACTUAL_FAIRE[idx],REV_ACTUAL_TIKTOK[idx],REV_ACTUAL_OTHER[idx]]) : null, budget: null},
+    {label:'Total', actual: hasActual||isPartial? REV_ACTUAL_TOTAL[idx] : null, budget: REV_BUDGET_TOTAL[idx], strong:true},
+  ];
+  document.getElementById('weekChannelRows').innerHTML = rows.map(r=>{
+    const variance = (r.actual!==null && r.actual!==undefined && r.budget!==null && r.budget!==undefined) ? r.actual - r.budget : null;
+    const varPct = (variance!==null && r.budget) ? (variance/r.budget*100) : null;
+    const varColor = variance===null? 'var(--text-faint)' : (variance>=0? 'var(--good)':'var(--danger)');
+    return `<tr${r.strong?' style="font-weight:700;"':''}>
+      <td>${r.label}</td>
+      <td class="num">${r.actual===null? '<span class=\"muted\">no data yet</span>' : fmtMoney(r.actual)}</td>
+      <td class="num">${r.budget===null?'<span class="muted">n/a</span>':fmtMoney(r.budget)}</td>
+      <td class="num" style="color:${varColor};">${variance===null?'—':(variance>=0?'+':'')+fmtMoney(variance)+(varPct!==null?' ('+(varPct>=0?'+':'')+varPct.toFixed(1)+'%)':'')}</td>
+    </tr>`;
+  }).join('');
+
+  let note = '';
+  if(!hasActual && !isPartial){
+    note = `<div class="note-box">Week ${n} hasn't happened yet — showing Bearish-scenario budget only. Actuals populate automatically once the week closes and the sheet refreshes.</div>`;
+  } else if(isPartial){
+    note = `<div class="note-box">Week ${n} is still in progress / the budget sheet's Synder refresh for this week hadn't fully settled as of the last pull — treat these as directional, not final.</div>`;
+  }
+  document.getElementById('weekNote').innerHTML = note;
+
+  const prevIdx = idx-1;
+  const spendRows = [
+    {label:'Advertising & Marketing', cur: ADV_MKTG_ACTUAL[idx], prev: prevIdx>=0? ADV_MKTG_ACTUAL[prevIdx]:null},
+    {label:'Software', cur: SOFTWARE_ACTUAL[idx], prev: prevIdx>=0? SOFTWARE_ACTUAL[prevIdx]:null},
+    {label:'G&A', cur: GNA_ACTUAL[idx], prev: prevIdx>=0? GNA_ACTUAL[prevIdx]:null},
+    {label:'Blended ROAS', cur: ROAS_ACTUAL[idx], prev: prevIdx>=0? ROAS_ACTUAL[prevIdx]:null, isRatio:true},
+  ];
+  document.getElementById('weekSpendRows').innerHTML = spendRows.map(r=>`
+    <tr>
+      <td>${r.label}</td>
+      <td class="num">${r.cur===null||r.cur===undefined? '<span class="muted">no data</span>' : (r.isRatio? r.cur.toFixed(1)+'x' : fmtMoney(r.cur))}</td>
+      <td class="num">${r.prev===null||r.prev===undefined? '<span class="muted">—</span>' : (r.isRatio? r.prev.toFixed(1)+'x' : fmtMoney(r.prev))}</td>
+    </tr>`).join('');
+  document.getElementById('weekSpendNote').innerHTML = (n>31)? '<div class="note-box info">Weekly OpEx and ROAS actuals aren\'t available for future weeks — only revenue is budgeted week-by-week in the Bearish model.</div>' : '';
+}
+function sumSafe(arr){ const vals = arr.filter(v=>v!==null && v!==undefined); if(!vals.length) return null; return vals.reduce((a,b)=>a+b,0); }
+
+weekStripEl.addEventListener('click', e=>{
+  const btn = e.target.closest('.wk-btn');
+  if(!btn) return;
+  selectWeek(+btn.dataset.week);
+});
+selectWeek(CURRENT_WEEK);
+// scroll strip to current week
+setTimeout(()=>{ const active = weekStripEl.querySelector('.wk-btn.active'); if(active) active.scrollIntoView({inline:'center'}); }, 50);
+
+/* ---------------- CUSTOMER SERVICE: TO-DOS ---------------- */
+const TODOS = [
+  {text:'Restock 3 zero-fulfillable Amazon SKUs with real demand and no inbound relief: Papaya Leaf Extract 60 Caps, Papaya Seeds Powder Capsules, Papaya Leaf Blood Platelet Liquid 1oz', meta:'Due Aug 25 · Amazon inventory, urgent', tag:'Inventory', done:false},
+  {text:'Fix or deactivate the completely empty Amazon listing on SKU 798304441543 (0/100 quality score, stockout today, reorder date already passed Aug 7)', meta:'Due Aug 26 · Amazon catalog', tag:'Listing', done:false},
+  {text:'Shorten the 196-character title on Papaya Leaf Extract 60 Caps (810128951951) — Amazon\'s 75-char limit may be auto-truncating it on the #5 revenue Amazon SKU', meta:'Due Aug 26 · Amazon catalog', tag:'Listing', done:false},
+  {text:'Work through the remaining 84 of 134 Amazon listing ERRORs (Item Highlight over 125 chars, SKU-not-in-catalog) beyond the 50 already sampled', meta:'Due Sep 2 · batch 25/week', tag:'Listing', done:false},
+  {text:'Escalate Amazon account health: pre-fulfillment cancellation 8.98% and late-shipment 16.67% both still breach suspension-risk thresholds despite 5 weeks of improvement', meta:'Due Aug 24 · suspension risk', tag:'Ops', done:false},
+  {text:'Fix WhatsApp Welcome Flow and WhatsApp Abandoned Cart Flow in Klaviyo — both live but delivering to 0% / 0.7% of recipients', meta:'Due Aug 27 · Klaviyo', tag:'Marketing', done:false},
+  {text:'Decide fate of 9 Klaviyo flows with zero sends in 90 days despite "live" status (Leaf Story series, Birthday, Anniversary, Onboarding) — fix triggers or archive', meta:'Due Sep 2 · Klaviyo', tag:'Marketing', done:false},
+  {text:'Follow up with GNC Holdings on the $5,440.08 balance 31–60 days past due (of $88,831.12 billed YTD)', meta:'Due Aug 25 · AR follow-up', tag:'Finance', done:false},
+  {text:'Reconcile QuickBooks\' Sales-by-Customer ($2.90M YTD) vs. Sales-by-Product ($7.89M YTD) — the two reports disagree by ~$5M and neither should be trusted at face value until resolved', meta:'Due Aug 28 · QBO data quality', tag:'Data quality', done:false},
+  {text:'Ask the bookkeeping/Synder team to investigate the Wk31 Amazon/Walmart dip and the GNC $160,000 / Other −$160,000 reclass pair — Lisa\'s independent Amazon read shows no matching collapse', meta:'Due Aug 26 · budget-sheet data quality', tag:'Data quality', done:false},
+];
+function renderTodos(){
+  const list = document.getElementById('todoList');
+  list.innerHTML = TODOS.map((t,i)=>`
+    <div class="todo-item ${t.done?'done':''}" data-i="${i}">
+      <div class="todo-node">${t.done? '✓' : (i+1)}</div>
+      <div class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="#0d0f08" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg></div>
+      <div class="todo-body"><strong>${t.text}</strong><span>${t.meta}</span></div>
+      <div class="todo-meta"><span class="pill" style="background:rgba(255,255,255,0.08);color:var(--text-dim);">${t.tag}</span></div>
+    </div>`).join('');
+  updateProgress();
+}
+function updateProgress(){
+  const done = TODOS.filter(t=>t.done).length;
+  const pct = Math.round(done/TODOS.length*100);
+  document.getElementById('progressHeadline').textContent = `${done} of ${TODOS.length} complete this week`;
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+  document.getElementById('spineFill').style.height = pct+'%';
+  const circumference = 194.7;
+  document.getElementById('ringProgress').style.strokeDashoffset = circumference - (circumference*pct/100);
+}
+document.getElementById('todoList').addEventListener('click', e=>{
+  const item = e.target.closest('.todo-item');
+  if(!item) return;
+  const i = +item.dataset.i;
+  TODOS[i].done = !TODOS[i].done;
+  renderTodos();
+});
+renderTodos();
+
+/* ---------------- CS METRIC TABLE ---------------- */
+const CS_METRICS = [
+  ['Return rate', '0.31% (42 returns / 13,376 units, 91d) — almost entirely shipping/delivery-related, not product quality', 'Not re-checked this pull'],
+  ['Buy Box / checkout ownership', 'Not re-checked this pull', 'N/A (single-seller storefront)'],
+  ['Listing quality scan', '134 error · 23 warning / 157 active issues (50-row sample pulled in full)', 'Not available via connected tools'],
+  ['Overall star rating', '0 reviews synced via Lisa this run (gap, not a rating of zero)', 'Not exposed by connected tools'],
+  ['Stockouts right now', '3 top-revenue SKUs at 0 fulfillable units, real demand (+1 empty listing, +2 stranded/damaged)', '6 products at 0 inventory (4 teas, 1 draft bundle, 1 with inconsistent variant data)'],
+  ['Conversion rate', 'N/A (marketplace, not applicable)', '0.28%–0.48%, trailing 13wk'],
+  ['Repeat/returning rate', 'Not exposed by connected tools', '~31% weekly avg. (range 28.6–44.7%)'],
+  ['Top negative review theme', 'Not available — zero reviews synced this run', 'Not exposed by connected tools'],
+  ['Active promotions', 'Managed via Amazon Ads, see Marketing tab', '≥50 active codes — many legacy/affiliate, 0 lifetime uses, no expiration date set'],
+  ['CS response time', 'Not exposed by connected tools', 'See Zendesk detail below (9.6 hrs avg. first resolution)'],
+];
+document.getElementById('csMetricRows').innerHTML = CS_METRICS.map(r=>`
+  <tr><td class="metric-name">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+/* ---------------- CS: ZENDESK DETAIL (live via Composio MCP, Aug 10–16 2026) ---------------- */
+const ZENDESK_METRICS = [
+  ['New tickets logged', '52'],
+  ['Solved', '39'],
+  ['Closed', '12'],
+  ['Open / pending right now', '1 open / 0 pending'],
+  ['Reopened at least once', '10 of 52 (14 reopen events total)'],
+  ['Total replies across all tickets', '55 (~1.1 / ticket — many single-touch resolutions)'],
+  ['Avg. time to first reply', '12.1 hrs (728.5 min, 42 of 52 tickets had a recorded reply time)'],
+  ['Avg. time to first resolution', '9.6 hrs (574.5 min)'],
+  ['Avg. time to full resolution', '13.5 hrs (809.0 min, excludes the 1 still-open ticket)'],
+];
+document.getElementById('zendeskRows').innerHTML = ZENDESK_METRICS.map(r=>`
+  <tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
+
+/* ---------------- PRODUCT INTELLIGENCE ---------------- */
+function renderLadderAndTable(){
+  const red = TOP_SKUS.filter(s=>s.stockFlag==='critical');
+  const yellow = TOP_SKUS.filter(s=>s.stockFlag==='warn');
+  const green = TOP_SKUS.filter(s=>s.stockFlag==='ok');
+  document.getElementById('countRed').textContent = red.length;
+  document.getElementById('countYellow').textContent = yellow.length;
+  document.getElementById('countGreen').textContent = green.length;
+  const item = s => `<div class="ladder-item"><b>${s.name}</b><div class="meta">${s.channel} · ${fmtMoney(s.revenue)} · ${s.stock}</div></div>`;
+  document.getElementById('ladderRed').innerHTML = red.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+  document.getElementById('ladderYellow').innerHTML = yellow.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+  document.getElementById('ladderGreen').innerHTML = green.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+}
+renderLadderAndTable();
+
+let sortState = {key:'rank', asc:true};
+function renderSkuTable(){
+  const rows = [...TOP_SKUS].sort((a,b)=>{
+    let av=a[sortState.key], bv=b[sortState.key];
+    if(typeof av === 'string') av = av.toLowerCase();
+    if(typeof bv === 'string') bv = bv.toLowerCase();
+    if(av===null||av===undefined) av = -Infinity;
+    if(bv===null||bv===undefined) bv = -Infinity;
+    if(av<bv) return sortState.asc? -1:1;
+    if(av>bv) return sortState.asc? 1:-1;
+    return 0;
+  });
+  document.getElementById('skuRows').innerHTML = rows.map(s=>`
+    <tr>
+      <td class="num">${s.rank}</td>
+      <td>${s.name}</td>
+      <td>${s.channel}</td>
+      <td class="muted">${s.window}</td>
+      <td class="num">${fmtMoney(s.revenue)}</td>
+      <td class="num">${s.velocity||'—'}</td>
+      <td><span class="stock-dot ${s.stockFlag}"></span>${s.stock}</td>
+    </tr>`).join('');
+}
+document.getElementById('skuTable').querySelector('thead').addEventListener('click', e=>{
+  const th = e.target.closest('th[data-key]');
+  if(!th) return;
+  const key = th.dataset.key;
+  if(sortState.key === key) sortState.asc = !sortState.asc;
+  else { sortState.key = key; sortState.asc = true; }
+  renderSkuTable();
+});
+renderSkuTable();
+
+/* ---------------- MARKETING CHARTS ---------------- */
+function drawBarChart(svgId, data, opts){
+  const svg = document.getElementById(svgId);
+  const w = svg.clientWidth || 560, h = 150;
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  const vals = data.map(d=>d===null||d===undefined?0:d);
+  const max = Math.max(...vals, opts && opts.min ? opts.min : 0) * 1.15 || 1;
+  const barW = w / data.length;
+  let svgHtml = '';
+  data.forEach((v,i)=>{
+    const val = v===null||v===undefined? 0 : v;
+    const bh = max? (val/max)*(h-24) : 0;
+    const x = i*barW + barW*0.18;
+    const bw = barW*0.64;
+    const color = (v===null||v===undefined) ? 'rgba(255,255,255,0.08)' : (opts && opts.benchmark && v < opts.benchmark ? '#ff6f61' : 'url(#barGrad)');
+    svgHtml += `<rect x="${x}" y="${h-20-bh}" width="${bw}" height="${bh}" rx="2" fill="${color}"></rect>`;
+  });
+  svgHtml += `<defs><linearGradient id="barGrad" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%" stop-color="#698805"/><stop offset="100%" stop-color="#d8c832"/></linearGradient></defs>`;
+  if(opts && opts.benchmark){
+    const by = h-20-(opts.benchmark/max)*(h-24);
+    svgHtml += `<line x1="0" y1="${by}" x2="${w}" y2="${by}" stroke="#f2c94c" stroke-width="1" stroke-dasharray="4,3"/>`;
+  }
+  svg.innerHTML = svgHtml;
+}
+const roasWindow = ROAS_ACTUAL.slice(18,31); // weeks 19-31
+drawBarChart('chartRoas', roasWindow, {benchmark:7});
+
+const SESSIONS_13WK = [21067,22501,19123,19719,23210,20659,21334,19858,19387,17887,20942,23567,19704];
+drawBarChart('chartSessions', SESSIONS_13WK);
+
+/* ---------------- BENCHMARK TABLE ---------------- */
+const BENCH = [
+  ['Gross margin', '50.2% (Jul 2026, stale — COGS suppressed again this pull)', '60–78% (DTC/supplement brands)', 'below', 'Eightx, "Average Ecommerce Profit Margins"'],
+  ['OpEx ratio', '36.1% (Jul 2026, stale — same COGS gap)', '<35% internal target', 'above', 'internal target, cross-referenced vs. Eightx DTC Profitability 2026'],
+  ['Blended ROAS', '~2.5x (trailing 7d), ~2.6x (MTD Aug)', '3–6x general DTC; Amazon Health & Household ~2.95–3.34x actual', 'below', 'based.marketing Ecommerce ROAS Benchmarks 2026'],
+  ['Amazon TACoS', '~10.4% (MTD Aug, settlement basis)', '8–15% "healthy" range', 'in range', 'IG PPC / Keywords.am TACoS guides'],
+  ['Shopify conversion rate', '0.28–0.48% (13wk avg.)', '2.4–3.2% (Nutrition & Supplements)', 'below', 'Craftberry, "Average Conversion Rate for Shopify Stores 2025"'],
+  ['Return rate', '0.31% (Amazon, 91d)', '~7% (5–10%) for Supplements & Vitamins', 'below (favorable)', 'Eightx, "Average Ecommerce Return Rate 2026"'],
+  ['Repeat purchase / customer', '~31% weekly returning rate', '37.7% category avg. repurchase rate', 'below', 'CommerceCatalyst 2026 DTC Benchmarks'],
+];
+document.getElementById('benchRows').innerHTML = BENCH.map(r=>{
+  const cls = r[3]==='below'? 'status-miss' : (r[3]==='above'? 'status-miss' : 'status-hit');
+  const clsFixed = (r[0]==='Return rate' || r[0]==='OpEx ratio') ? (r[3]==='below (favorable)'?'status-hit':(r[0]==='OpEx ratio'?'status-miss':'status-hit')) : cls;
+  return `<tr><td>${r[0]}</td><td>${r[1]}</td><td class="muted">${r[2]}</td><td class="${clsFixed}">${r[3]}</td><td class="muted">${r[4]}</td></tr>`;
+}).join('');
+
+/* ---------------- MARKETPLACE HEALTH (live via Lisa: Amazon SP-API + Walmart API) ---------------- */
+const MP_PULLED_AT = 'Aug 21, 2026 · 9:57pm UTC';
+const MP_SALES = {
+  period_label: 'May 23 – Aug 21, 2026 (91 days) vs. prior 91 days — 30-day window not comparably available this pull, see footer',
+  total: {revenue: 123116.83, deltaPct: -66.0, orders: 11966, units: 13376},
+  amazon: {revenue: 112060.24, deltaPct: -63.3},
+  walmart: {revenue: 11056.59, deltaPct: 424.7},
+};
+const AMZ_HEALTH = {
+  score: 40, label: 'At Risk', color: 'red',
+  metrics: [
+    {key:'odr', label:'Order Defect Rate', rate:0.79, status:'warn', warn:0.75, fail:1, note:'chargebacks + ≤3-star reviews, trailing 60 days'},
+    {key:'cancellation', label:'Pre-fulfillment Cancellation Rate', rate:8.98, status:'critical', warn:2, fail:2.5, note:'trailing 7 days — improving trend: 14.98%→15.66%→12.77%→10.06%→7.87% over the last 5 weeks, still 3x the fail threshold'},
+    {key:'late_shipment', label:'Late Shipment Rate', rate:16.67, status:'critical', warn:3, fail:4, note:'merchant-fulfilled only — 1 of 6 MFN orders, a thin denominator but still Amazon-visible'},
+    {key:'return_rate', label:'Return Rate', rate:0.31, status:'good', warn:8, fail:10, note:'trailing 91 days'},
+  ],
+  alerts: [
+    {label:'Pre-fulfillment Cancellation Rate', message:'8.98% — exceeds Amazon\'s 2.5% fail threshold. Suspension risk, though trending down over the last 5 weeks.'},
+    {label:'Late Shipment Rate', message:'16.67% — exceeds Amazon\'s 4.0% fail threshold. Suspension risk (small sample: 1 of 6 MFN orders).'},
+  ],
+};
+const WALMART_STATUS = {
+  connection_state:'connected', status:'healthy', last_sync: MP_PULLED_AT, endpoints_healthy:5, endpoints_total:5,
+};
+
+function renderMarketplaceHealth(){
+  const trendHtml = (pct) => `<span class="trend ${pct>=0?'up':'down'}">${pct>=0?'▲':'▼'} ${Math.abs(pct).toFixed(1)}% vs. prior 91d</span>`;
+  document.getElementById('mpTotalRev').textContent = fmtMoney(MP_SALES.total.revenue);
+  document.getElementById('mpTotalSub').textContent = `${MP_SALES.total.orders.toLocaleString()} orders · ${MP_SALES.total.units.toLocaleString()} units · ${MP_SALES.period_label}`;
+  document.getElementById('mpTotalTrend').outerHTML = trendHtml(MP_SALES.total.deltaPct).replace('<span class="trend', '<span id="mpTotalTrend" class="trend');
+
+  document.getElementById('mpAmzRev').textContent = fmtMoney(MP_SALES.amazon.revenue);
+  document.getElementById('mpAmzSub').textContent = `Order/unit split by channel not available this pull — see combined total above`;
+  document.getElementById('mpAmzTrend').outerHTML = trendHtml(MP_SALES.amazon.deltaPct).replace('<span class="trend', '<span id="mpAmzTrend" class="trend');
+
+  document.getElementById('mpWmtRev').textContent = fmtMoney(MP_SALES.walmart.revenue);
+  document.getElementById('mpWmtSub').textContent = `Order/unit split by channel not available this pull — see combined total above`;
+  document.getElementById('mpWmtTrend').outerHTML = trendHtml(MP_SALES.walmart.deltaPct).replace('<span class="trend', '<span id="mpWmtTrend" class="trend');
+
+  document.getElementById('healthScoreBadge').innerHTML = `
+    <div class="health-score-ring ${AMZ_HEALTH.color}">${AMZ_HEALTH.score}</div>
+    <div><h4>${AMZ_HEALTH.label}</h4><p>Overall suspension-risk score out of 100, computed from the four metrics below vs. Amazon's published thresholds.</p></div>`;
+
+  document.getElementById('healthAlerts').innerHTML = AMZ_HEALTH.alerts.map(a=>`
+    <div class="alert-banner"><span class="ico">⚠️</span><span><b>${a.label}:</b> ${a.message}</span></div>`).join('');
+
+  document.getElementById('healthMetrics').innerHTML = AMZ_HEALTH.metrics.map(m=>{
+    const scaleMax = m.fail*1.5;
+    const widthPct = Math.min(m.rate/scaleMax*100, 100);
+    const threshPct = Math.min(m.fail/scaleMax*100, 100);
+    const barClass = m.status==='critical'?'critical':(m.status==='warn'?'warn':'good');
+    const pillClass = m.status==='critical'?'bad':(m.status==='warn'?'warn':'good');
+    const statusText = m.status==='critical'?'critical':(m.status==='warn'?'watch':'healthy');
+    return `<div class="health-metric">
+      <div class="health-metric-head"><span>${m.label}</span><span class="tag ${pillClass}" style="margin-top:0;">${statusText}</span></div>
+      <div class="health-bar-outer">
+        <div class="health-bar-inner ${barClass}" style="width:${widthPct}%;"></div>
+        <div class="health-threshold-mark" style="left:${threshPct}%;" title="Amazon fail threshold: ${m.fail}%"></div>
+      </div>
+      <div class="health-metric-sub">${m.rate}% actual · warn ≥${m.warn}% · fail ≥${m.fail}% · ${m.note}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('walmartStatusCard').innerHTML = `
+    <div class="walmart-status-row"><span class="k">Connection state</span><span class="v" style="color:var(--good);">${WALMART_STATUS.connection_state}</span></div>
+    <div class="walmart-status-row"><span class="k">Status</span><span class="v" style="color:var(--good);">${WALMART_STATUS.status}</span></div>
+    <div class="walmart-status-row"><span class="k">Endpoints healthy</span><span class="v">${WALMART_STATUS.endpoints_healthy} of ${WALMART_STATUS.endpoints_total}</span></div>
+    <div class="walmart-status-row"><span class="k">Last synced</span><span class="v">${WALMART_STATUS.last_sync}</span></div>`;
+}
+renderMarketplaceHealth();
+
+/* ---------------- EMAIL ANALYTICS (live via Klaviyo Reporting API) ---------------- */
+const EML_NEWSLETTERS = [
+  {name:'August 11th NL Back to school + Webinar', sent:'Aug 11, 2026', recipients:34857, openRate:29.4, clickRate:0.08, conversions:4, revenue:368.70},
+  {name:'August 13th NL Education + Collection spotlight', sent:'Aug 13, 2026', recipients:20166, openRate:55.0, clickRate:0.16, conversions:4, revenue:404.85},
+  {name:'Two Weeks Out Aug 13th (webinar reminder, Facebook Webinar Leads list)', sent:'Aug 13, 2026', recipients:205, openRate:11.4, clickRate:0, conversions:0, revenue:0},
+];
+const EML_FLOW_REVENUE_THIS_WEEK = 260.97; // [PM] Abandoned Checkout $106.90 + [PM] Welcome 15% Off $154.07; every other live email flow converted $0 this week (SMS/WhatsApp flows shown separately, not counted here)
+
+const EML_ANOMALIES = [
+  {name:'[PM] Abandoned Added to Cart', severity:'red',
+   recipWk:110, recipAvg:138.9, recipDelta:-21,
+   revWk:0, revAvg:99.29, revDelta:-100,
+   note:'Largest dollar impact this week — normally converts close to $100/week and dropped to zero despite recipient volume only down 21%.'},
+  {name:'WhatsApp Welcome Flow', severity:'red',
+   recipWk:388, recipAvg:33.3, recipDelta:1065,
+   revWk:0, revAvg:0, revDelta:0,
+   note:'Live but functionally broken: 0% of this week\'s 388 recipients were actually delivered a message (0.7% delivery over the trailing 90 days too — only 3 of 428). This is a channel/template issue in Klaviyo\'s WhatsApp setup, not a targeting problem.'},
+  {name:'WhatsApp Abandoned Cart Flow', severity:'red',
+   recipWk:0, recipAvg:0.16, recipDelta:0,
+   revWk:0, revAvg:0, revDelta:0,
+   note:'Effectively dead — only 2 recipients total in the entire trailing 90 days, 0 delivered.'},
+  {name:'SMS Welcome Series', severity:'green',
+   recipWk:648, recipAvg:140.2, recipDelta:362,
+   revWk:327.10, revAvg:97.85, revDelta:235,
+   note:'Recipient volume up 362% and revenue up 235% vs. its own 90-day average — a real positive signal, but confirm it\'s a genuine signup surge (not a tag or sync issue) before treating it as durable upside.'},
+  {name:'[PM] Welcome 15% Off', severity:'green',
+   recipWk:195, recipAvg:180.2, recipDelta:8,
+   revWk:154.07, revAvg:171.14, revDelta:-10,
+   note:'Tracking close to its own average on both volume and revenue — healthy, no action needed.'},
+  {name:'[PM] Abandoned Checkout', severity:'yellow',
+   recipWk:49, recipAvg:63.7, recipDelta:-23,
+   revWk:106.90, revAvg:174.35, revDelta:-39,
+   note:'Recipients and revenue both below average this week, but not by an alarming margin at this flow\'s typical volume — worth a glance, not urgent.'},
+];
+
+const EML_SEGMENTS = [
+  {name:'Truly Engaged (clickers + buyers)', total:2104, added:4037, removed:1933, flag:'good'},
+  {name:'Openers, no clicks (phantom engagement)', total:19732, added:23940, removed:4208, flag:'bad'},
+  {name:'Lapsed Customers (90 days)', total:9414, added:1038, removed:2503, flag:'warn'},
+  {name:'[PM] VIP Customers', total:969, added:98, removed:216, flag:'warn'},
+  {name:'Repeat Customers / Repeat Buyers', total:1365, added:107, removed:306, flag:'warn'},
+  {name:'Potential Purchasers', total:560, added:1176, removed:1127, flag:'info'},
+  {name:'First-Time Customers', total:490, added:814, removed:820, flag:'info'},
+  {name:'[PM] Haven\'t Purchased Last 30 Days', total:219, added:841, removed:914, flag:'info'},
+  {name:'[PM] Bounced 4x', total:257, added:243, removed:31, flag:'bad'},
+  {name:'[Exclude]{SUPPRESS} Bounced', total:113, added:142, removed:46, flag:'warn'},
+];
+
+const EML_FLOW_FIXES = [
+  {title:'Fix the two WhatsApp flows before anything else', body:'Welcome Flow and Abandoned Cart Flow are both live but delivering to 0%/0.7% of recipients — this reads as a broken WhatsApp Business API connection or message-template issue in Klaviyo, not a targeting problem. Check the WhatsApp channel setup first.'},
+  {title:'Investigate the Abandoned Added to Cart zero-revenue week', body:'Recipients were only down 21% but revenue dropped to $0 — the largest dollar-impact anomaly this week. Check for a recently changed discount step or send-timing test.'},
+  {title:'Decide the fate of 9 flows with zero sends in 90 days', body:'Gymnema, Kids Line, Papaya, Graviola, and Guayusa Leaf Story series, plus HG Birthday, Work Anniversary, HG Employee Onboarding, and Friend Received Referral–Standard are all marked "live" but haven\'t fired once in 90 days. Fix the entry trigger or archive them.'},
+  {title:'Push harder on the phantom-engagement sunset flow', body:'19,732 contacts (the single largest segment in the account) open but never click — only about 5,332 of them have flowed through the "Phantom re-engagement & sunset" flow in 90 days. This is the biggest deliverability drag in the account and most of it isn\'t being actively worked yet.'},
+  {title:'Verify the SMS Welcome Series surge is real', body:'Recipients up 362% and revenue up 235% vs. the 90-day average is a genuinely good signal, but confirm it traces to a real signup event (a promo, a new opt-in placement) before budgeting around it as a new baseline.'},
+];
+
+const EML_NEWSLETTER_IDEAS = [
+  {title:'Keep the twice-weekly cadence', body:'Both sends this week (Aug 11 and Aug 13) landed reasonable opens (29–55%) — the format is working, keep it running.'},
+  {title:'Build out the webinar countdown format', body:'"Two Weeks Out" performed as a low-key reminder (11.4% opens, small list) — a good, low-cost pattern to reuse for future webinars and launches ("One Week To Go" is already in rotation).'},
+  {title:'Give the new Retailer Monthly Newsletter list its first real send', body:'A dedicated retailer list now exists but hasn\'t had a substantive send yet — worth a proper first newsletter once list volume supports reporting on it.'},
+  {title:'Turn the 9 dormant flow series into newsletter content instead', body:'The Leaf Story series (Gymnema, Kids Line, Papaya, Graviola, Guayusa, Guava, Bamboo) are written but not reaching anyone via automation — repurpose as a recurring "Meet Your Ingredients" newsletter segment.'},
+  {title:'Address the growing "[PM] Bounced 4x" segment before it spreads', body:'Up 212 net in 90 days — worth a dedicated re-permission or suppression pass before it starts affecting broader sender reputation.'},
+];
+
+function renderEmailAnalytics(){
+  const totalNlRev = EML_NEWSLETTERS.reduce((s,n)=>s+n.revenue,0);
+  const totalNlRecip = EML_NEWSLETTERS.reduce((s,n)=>s+n.recipients,0);
+  const totalNlConv = EML_NEWSLETTERS.reduce((s,n)=>s+n.conversions,0);
+
+  document.getElementById('emlNlCount').textContent = EML_NEWSLETTERS.length;
+  document.getElementById('emlNlSub').textContent = totalNlRecip.toLocaleString()+' total recipients across both sends';
+  document.getElementById('emlNlRev').textContent = fmtMoney(totalNlRev);
+  document.getElementById('emlNlRevSub').textContent = totalNlConv+' orders attributed, Aug 10–16';
+  document.getElementById('emlTotalRev').textContent = fmtMoney(totalNlRev + EML_FLOW_REVENUE_THIS_WEEK);
+
+  document.getElementById('emlNlRows').innerHTML = EML_NEWSLETTERS.map(n=>`
+    <tr>
+      <td class="metric-name">${n.name}</td>
+      <td>${n.sent}</td>
+      <td class="num">${n.recipients.toLocaleString()}</td>
+      <td class="num">${n.openRate.toFixed(1)}%</td>
+      <td class="num">${n.clickRate.toFixed(2)}%</td>
+      <td class="num">${n.conversions}</td>
+      <td class="num">${fmtMoney(n.revenue)}</td>
+    </tr>`).join('');
+
+  document.getElementById('anomalyGrid').innerHTML = EML_ANOMALIES.map(a=>{
+    const tagCls = a.severity==='red' ? 'bad' : a.severity==='yellow' ? 'warn' : 'good';
+    const tagText = a.severity==='red' ? 'needs a look' : a.severity==='yellow' ? 'mixed signal' : 'trending up';
+    return `
+    <div class="anomaly-card">
+      <div class="ac-head"><h4>${a.name}</h4><span class="tag ${tagCls}">${tagText}</span></div>
+      <div class="ac-row"><span>Recipients (wk vs. 90d avg)</span><span><b>${a.recipWk}</b> vs ${a.recipAvg.toFixed(1)}/wk<span class="delta ${a.recipDelta>=0?'up':'down'}">${a.recipDelta>=0?'+':''}${a.recipDelta}%</span></span></div>
+      <div class="ac-row"><span>Revenue (wk vs. 90d avg)</span><span><b>${fmtMoney(a.revWk)}</b> vs ${fmtMoney(a.revAvg)}/wk<span class="delta ${a.revDelta>=0?'up':'down'}">${a.revDelta>=0?'+':''}${a.revDelta}%</span></span></div>
+      ${a.openWk!==undefined?`<div class="ac-row"><span>Open rate (wk vs. 90d avg)</span><span><b>${a.openWk.toFixed(1)}%</b> vs ${a.openAvg.toFixed(1)}%<span class="delta ${a.openDelta>=0?'up':'down'}">${a.openDelta>=0?'+':''}${a.openDelta}%</span></span></div>`:''}
+      ${a.convWk!==undefined?`<div class="ac-row"><span>Conversion rate (wk vs. 90d avg)</span><span><b>${a.convWk.toFixed(2)}%</b> vs ${a.convAvg.toFixed(2)}%<span class="delta up">+${a.convDelta}%</span></span></div>`:''}
+      <div class="ac-note">${a.note}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('segRows').innerHTML = EML_SEGMENTS.map(s=>{
+    const net = s.added - s.removed;
+    const color = s.flag==='good' ? 'var(--good)' : s.flag==='bad' ? 'var(--danger)' : s.flag==='warn' ? 'var(--warn)' : 'var(--text)';
+    return `
+    <tr>
+      <td class="metric-name">${s.name}</td>
+      <td class="num">${s.total.toLocaleString()}</td>
+      <td class="num">+${s.added.toLocaleString()}</td>
+      <td class="num">−${s.removed.toLocaleString()}</td>
+      <td class="num" style="color:${color};font-weight:600;">${net>=0?'+':''}${net.toLocaleString()}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('flowFixGrid').innerHTML = EML_FLOW_FIXES.map((f,i)=>`
+    <div class="idea-card"><div class="idea-num">${i+1}</div><div><b>${f.title}</b><span>${f.body}</span></div></div>`).join('');
+
+  document.getElementById('newsletterIdeaGrid').innerHTML = EML_NEWSLETTER_IDEAS.map((f,i)=>`
+    <div class="idea-card"><div class="idea-num">${i+1}</div><div><b>${f.title}</b><span>${f.body}</span></div></div>`).join('');
+}
+renderEmailAnalytics();
+</script>
+</body>
+</html>
