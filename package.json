@@ -1,9 +1,22 @@
 {
   "name": "herbal-goodness-command-center",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Static host for the Herbal Goodness Command Center dashboard",
+  "description": "Herbal Goodness Command Center dashboard with ShipStation integration",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "start": "npx --yes serve -s . -l ${PORT:-3000}"
-  }
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "dashboard",
+    "shipstation",
+    "ecommerce"
+  ],
+  "author": "Herbal Goodness",
+  "license": "ISC"
 }
+
