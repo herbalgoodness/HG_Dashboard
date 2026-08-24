@@ -1,0 +1,342 @@
+    </div>
+
+    <div class="progress-header">
+      <div class="progress-ring">
+        <svg width="74" height="74">
+          <circle cx="37" cy="37" r="31" stroke="rgba(255,255,255,0.08)" stroke-width="7" fill="none"/>
+          <circle id="ringProgress" cx="37" cy="37" r="31" stroke="url(#ringGrad)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="194.7" stroke-dashoffset="194.7"/>
+          <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#698805"/><stop offset="100%" stop-color="#d8c832"/>
+          </linearGradient></defs>
+        </svg>
+        <div class="pct" id="progressPct">0%</div>
+      </div>
+      <div class="progress-text">
+        <h3 id="progressHeadline">0 of 10 complete this week</h3>
+        <p>Recomputes the instant you check an item — nothing to save or submit.</p>
+      </div>
+      <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+    </div>
+
+    <div class="spine-wrap">
+      <div class="spine-line"></div>
+      <div class="spine-fill" id="spineFill"></div>
+      <div id="todoList"></div>
+    </div>
+
+    <section class="block">
+      <h3>Top 10 customer-facing metrics, by channel</h3>
+      <p class="desc">Side-by-side Amazon vs. Shopify. Where a metric genuinely isn't retrievable from either platform's current connection, it's marked as such rather than filled with a guess.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>Metric</th><th>Amazon</th><th>Shopify</th></tr></thead>
+          <tbody id="csMetricRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Zendesk ticket detail — week of Aug 17–23, 2026</h3>
+      <p class="desc">Full breakdown behind the three Zendesk KPI cards on the Overview tab. Pulled live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, for the trailing 7 days ending Aug 24, 2026.</p>
+      <div class="detail-grid">
+        <div class="card">
+          <h3 style="margin:0 0 14px;font-size:15px;">Volume &amp; resolution time</h3>
+          <table>
+            <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+            <tbody id="zendeskRows"></tbody>
+          </table>
+          <div class="note-box info" style="margin-top:14px;">All times above are wall-clock/calendar time, not business-hours-adjusted.</div>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 14px;font-size:15px;">CSAT — the gap, explained</h3>
+          <p style="margin:0 0 12px;font-size:13px;color:var(--text-dim);line-height:1.6;">Checked fresh again this run: satisfaction ratings count and ratings list both returned <b style="color:var(--text);">zero</b>, and Zendesk's own Guide Surveys endpoint confirms <b style="color:var(--text);">zero surveys configured</b> on the account. Same gap as every prior week — re-verified, not assumed.</p>
+          <div class="note-box">This does <b>not</b> mean customers rated service poorly — it means CSAT surveys aren't currently configured to go out. If the owner wants this data flowing, check Zendesk's Satisfaction Rating settings: Admin Center → Objects and rules → Business rules → Satisfaction Reason, or Channels → Talk/Messaging depending on setup. This has now persisted across multiple weekly runs — worth a direct check rather than waiting for it to self-resolve.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PRODUCT INTELLIGENCE ============ -->
+  <div class="page" id="page-products">
+    <div class="page-head">
+      <span class="eyebrow">94 active Shopify products · 250+ active Amazon listings · 2,520 QuickBooks items</span>
+      <h2>Every item has a status. Twenty-five of them are carrying the business.</h2>
+      <p>The ladder below is a traffic light for inventory risk, not popularity. The table beneath it is the top 25 SKUs by revenue across all three channels — click any column to sort.</p>
+    </div>
+
+    <div class="ladder">
+      <div class="ladder-col">
+        <div class="ladder-head red"><span>🔴 Stop &amp; fix</span><span id="countRed">0</span></div>
+        <div class="ladder-body" id="ladderRed"></div>
+      </div>
+      <div class="ladder-col">
+        <div class="ladder-head yellow"><span>🟡 Watch closely</span><span id="countYellow">0</span></div>
+        <div class="ladder-body" id="ladderYellow"></div>
+      </div>
+      <div class="ladder-col">
+        <div class="ladder-head green"><span>🟢 Healthy</span><span id="countGreen">0</span></div>
+        <div class="ladder-body" id="ladderGreen"></div>
+      </div>
+    </div>
+
+    <section class="block">
+      <h3>Top 25 SKUs by revenue, all channels</h3>
+      <p class="desc">Each row keeps its own reporting window (Amazon = 13 weeks, Shopify = 91 days, QuickBooks = July close) rather than forcing mismatched periods into one false total — the window is shown on every row.</p>
+      <div class="table-wrap">
+        <table id="skuTable">
+          <thead>
+            <tr>
+              <th data-key="rank">#<span class="arrow">↕</span></th>
+              <th data-key="name">Product<span class="arrow">↕</span></th>
+              <th data-key="channel">Channel<span class="arrow">↕</span></th>
+              <th data-key="window">Window<span class="arrow">↕</span></th>
+              <th data-key="revenue" class="num">Revenue<span class="arrow">↕</span></th>
+              <th data-key="velocity" class="num">Velocity<span class="arrow">↕</span></th>
+              <th data-key="stock">Stock status<span class="arrow">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="skuRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ MARKETING ============ -->
+  <div class="page" id="page-marketing">
+    <div class="page-head">
+      <span class="eyebrow">Paid, organic &amp; retention signal</span>
+      <h2>The growth math, and where it's straining</h2>
+      <p>Blended ROAS, conversion, and traffic pulled straight from Amazon Ads and Shopify analytics, set against DTC/supplement-industry benchmarks pulled from public research — clearly separated from your own confirmed numbers.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:20px;">
+      <div class="kpi"><span class="eyebrow">Blended ROAS · trailing full week</span><div class="val">~2.8x</div><div class="sub">SP+SB+SD combined, Aug 17–23, provisional (week not fully settled)</div><span class="tag warn">vs. 7.0x internal target</span></div>
+      <div class="kpi"><span class="eyebrow">Amazon TACoS · trailing full week</span><div class="val">~12.1%</div><div class="sub">$5,823 ad spend ÷ ~$48,154 Amazon sales (provisional)</div><span class="tag good">inside 8–15% healthy range</span></div>
+      <div class="kpi"><span class="eyebrow">Shopify conversion · trailing 91d</span><div class="val">0.34–0.45%</div><div class="sub">Sessions → completed checkout, weekly range this pull (0.36% 91-day avg.)</div><span class="tag bad">well below 2.4–3.2% benchmark</span></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card chart-card">
+        <div class="chart-title"><h4>Blended ROAS — last 13 weeks</h4><span class="muted">weeks 22–34, 2026 (last 3 weeks: no data — see footer)</span></div>
+        <svg class="chart" id="chartRoas"></svg>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-title"><h4>Shopify sessions — last 13 weeks</h4><span class="muted">weeks starting Jun 1 – Aug 17</span></div>
+        <svg class="chart" id="chartSessions"></svg>
+      </div>
+    </div>
+
+    <section class="block">
+      <h3>Retention &amp; lifetime-value signal</h3>
+      <p class="desc">Shopify's tools don't expose a true cohort LTV figure for this store, so rather than fabricate one precise number, here's the honest proxy picture.</p>
+      <div class="three-col">
+        <div class="kpi"><span class="eyebrow">Repeat customer rate</span><div class="val">~30%</div><div class="sub">91-day avg. 30.16%, weekly range 28.1%–38.6%</div><span class="tag info">proxy for LTV, not LTV itself</span></div>
+        <div class="kpi"><span class="eyebrow">Repeat-buyer spend sample</span><div class="val">$135–$3,761</div><div class="sub">Carried from last pull — not reverified this run (needs a dedicated cohort query)</div><span class="tag info">stale estimate</span></div>
+        <div class="kpi"><span class="eyebrow">Active discount codes</span><div class="val">250+ active</div><div class="sub">Confirmed floor via pagination (more pages remained) — a mix of legacy evergreen affiliate/referral codes and a continuous stream of automated cart-recovery/loyalty codes, several dozen generated in the 24 hours before this pull</div><span class="tag bad">needs a cleanup pass</span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Industry &amp; competitor benchmarks</h3>
+      <p class="desc">External research, not Herbal Goodness data — every row cites its source. Use this to judge whether a metric above is actually a problem or just how the category runs.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="bench-table">
+          <thead><tr><th>Metric</th><th>Herbal Goodness (confirmed)</th><th>Industry benchmark</th><th>Read</th><th>Source</th></tr></thead>
+          <tbody id="benchRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>PPC &amp; SEO signal — quick read</h3>
+      <p class="desc">Full breakdown of GA4 channel performance, live Meta Ads performance, the Google Ads data gap, and Ahrefs/SEMrush keyword research lives on its own tab now. Headline numbers only below.</p>
+      <div class="three-col" style="margin-bottom:16px;">
+        <div class="kpi highlight-kpi"><span class="eyebrow">GA4 · this week vs. prior week</span><div class="val">+31.0% sessions</div><div class="sub">Sessions 34,997 vs. 26,723; but conversions actually fell 11.1% (503 vs. 566) despite the traffic surge — engagement rate improved sharply (65.07% vs. 47.70%). A mixed signal, not a clean win.</div><span class="tag warn">traffic up, conversions down</span></div>
+        <div class="kpi"><span class="eyebrow">Google Ads live account</span><div class="val">No data</div><div class="sub">API quota exhausted (429, Basic tier, ~3.8hr retry window) — still unresolved, same gap as recent pulls</div><span class="tag bad">gap</span></div>
+        <div class="kpi"><span class="eyebrow">Meta Ads &middot; trailing 7 days</span><div class="val">5.67x ROAS</div><div class="sub">$781.77 spend &middot; $4,432.76 attributed revenue &middot; 25 purchases (Aug 17&ndash;23) &mdash; up sharply from 2.74x last pull</div><span class="tag good">up sharply from 2.74x last pull</span></div>
+      </div>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Keyword opportunity</th><th class="num">Search volume</th><th class="num">Current position</th><th>Paid presence</th></tr></thead>
+          <tbody>
+            <tr><td>mullein tea bags</td><td class="num">—</td><td class="num">6 (up from 16)</td><td><span class="flag warn">not in paid — biggest mover this pull</span></td></tr>
+            <tr><td>mullein tea</td><td class="num">49,500</td><td class="num">8</td><td><span class="flag warn">not in paid</span></td></tr>
+            <tr><td>soursop bitters</td><td class="num">60,500–107,000</td><td class="num">5–10</td><td><span class="flag warn">not in paid — largest single traffic driver</span></td></tr>
+            <tr><td>soursop bitters benefits</td><td class="num">14,000</td><td class="num">25 (up from 37)</td><td><span class="flag warn">not in paid</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">All are proven organic winners today with little-to-no paid spend behind them (Google Ads' own account remains a data gap this pull). See the <b>PPC &amp; SEO Intelligence</b> tab for the full GA4 breakdown, Meta Ads campaign detail, Ahrefs vs. SEMrush domain overview, top keywords, referring domains, and the full action lists.</div>
+    </section>
+
+    <section class="block">
+      <h3>Platform Performance</h3>
+      <p class="desc">Windows vary by platform and are noted per row — Amazon Ads and Meta Ads reflect this pull's trailing windows, GSC is trailing 28 days ending Aug 21. Each platform shows only the metrics that are genuinely measurable for it today — dashes mean the metric is not applicable to that platform or not available through any connected API, not zero. Hover a dash for why.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="platform-table">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>AOV / Avg Selling Price</th>
+              <th>Conversion Rate</th>
+              <th>ROAS / ACoS&ndash;TACoS</th>
+              <th>CTR / CPC</th>
+              <th>Bounce Rate</th>
+              <th>Avg Session Duration</th>
+              <th>Returning Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Shopify (DTC site) <span class="muted">last full week, Aug 17–23</span></td>
+              <td>$93.42 AOV</td>
+              <td>0.440% <span class="muted">(114 orders ÷ 21,382 sessions)</span></td>
+              <td><span class="muted" title="Not applicable — the DTC site itself has no ad spend/ROAS; see the Meta and Google Ads rows.">—</span></td>
+              <td><span class="muted" title="Not applicable — Shopify is the destination site, not an ad placement with its own CTR/CPC.">—</span></td>
+              <td><span class="muted" title="Not re-pulled this run — not included in this cycle's GA4/Shopify data collection.">—</span></td>
+              <td><span class="muted" title="Not re-pulled this run.">—</span></td>
+              <td>28.1% (this wk) / 30.16% (91d avg.)</td>
+            </tr>
+            <tr>
+              <td>Amazon <span class="muted">(168 products, trailing 91 days)</span></td>
+              <td><span class="muted" title="Not cleanly computable this pull — Lisa's order-basis revenue ($108,856.10, 30d) and posting/settlement-basis revenue ($255,716.44, 30d) disagree by ~2.3x, reflecting the same settlement-lag pattern flagged elsewhere on this dashboard. Per-SKU average price is available for individual top sellers in the Product Intelligence tab.">—</span></td>
+              <td><span class="muted" title="Not available — session-level conversion rate is not exposed via any connected Amazon API (Ads, Catalog, Finance, Inventory, Ranking, Fulfillment).">—</span></td>
+              <td>ACoS ~35.9%, blended ROAS ~2.78x <span class="muted" title="Trailing full week, Aug 17-23: $5,823 spend, $16,208 sales, blended SP+SB+SD.">(trailing wk, provisional)</span></td>
+              <td><span class="muted" title="Many of the highest-spend campaign rows return null campaign_name/type this pull — a clean CTR/CPC split by SP/SB/SD isn't derivable from this connection.">—</span></td>
+              <td><span class="muted" title="Not available — Amazon does not expose page-level bounce-rate analytics to sellers via API.">—</span></td>
+              <td><span class="muted" title="Not available — Amazon does not expose on-listing session-duration analytics to sellers via API.">—</span></td>
+              <td><span class="muted" title="Not available — Amazon does not expose per-customer purchase history/identity to sellers via any connected API (structural limitation).">—</span></td>
+            </tr>
+            <tr>
+              <td>Meta Ads <span class="muted">trailing 7 days, Aug 17–23</span></td>
+              <td><span class="muted" title="Not applicable — Meta Ads has no order/AOV concept, only attributed purchase value.">—</span></td>
+              <td><span class="muted" title="Not tracked as a conversion rate here — see the Meta Ads detail card on this tab and the PPC &amp; SEO tab for purchases/spend.">—</span></td>
+              <td>ROAS 5.67x <span class="muted">($781.77 spend, live)</span></td>
+              <td>CTR 2.11%, CPC $0.594</td>
+              <td><span class="muted" title="Not applicable — Meta reports ad engagement, not on-site bounce rate.">—</span></td>
+              <td><span class="muted" title="Not applicable — not a site-analytics metric for an ad platform.">—</span></td>
+              <td><span class="muted" title="Not applicable — Meta does not expose repeat-customer identity to advertisers.">—</span></td>
+            </tr>
+            <tr>
+              <td>Google Ads</td>
+              <td><span class="muted" title="GAP — API quota exhausted this pull (see PPC &amp; SEO tab).">—</span></td>
+              <td><span class="muted" title="GAP — API quota exhausted this pull (see PPC &amp; SEO tab).">—</span></td>
+              <td><span class="flag bad">GAP — API quota exhausted</span> <span class="muted">(see PPC &amp; SEO tab)</span></td>
+              <td><span class="muted" title="GAP — API quota exhausted this pull (see PPC &amp; SEO tab).">—</span></td>
+              <td><span class="muted" title="Not applicable — not a site-analytics metric for an ad platform.">—</span></td>
+              <td><span class="muted" title="Not applicable — not a site-analytics metric for an ad platform.">—</span></td>
+              <td><span class="muted" title="Not applicable — Google Ads does not expose repeat-customer identity to advertisers.">—</span></td>
+            </tr>
+            <tr>
+              <td>Organic / Search (GSC) <span class="muted">trailing 28 days, ending Aug 21</span></td>
+              <td><span class="muted" title="Not applicable — Search Console measures search visibility, not transactions.">—</span></td>
+              <td><span class="muted" title="Not applicable — Search Console does not track on-site conversion.">—</span></td>
+              <td><span class="muted" title="Not applicable — organic search carries no ad spend.">—</span></td>
+              <td>CTR 0.92%, avg position 8.58</td>
+              <td><span class="muted" title="Not applicable here — GA4 site-wide bounce rate wasn't re-pulled this run.">—</span></td>
+              <td><span class="muted" title="Not re-pulled this run.">—</span></td>
+              <td><span class="muted" title="Not applicable — Search Console does not track user identity.">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:10px;">Each platform shows only the metrics that are genuinely measurable for it today — dashes are disclosed gaps or not-applicable combinations, not zeros.</p>
+    </section>
+
+    <section class="block">
+      <h3>Unit Economics — Blended Company View</h3>
+      <p class="desc">Blended across channels where the underlying data allows; several figures are proxies/estimates due to platform limitations — see notes.</p>
+      <div class="mini-stat-grid">
+        <div class="mini-stat">
+          <span class="mini-eyebrow">AOV</span>
+          <div class="mini-val">$91.71 <span class="mini-val2" style="font-size:11px;">(avg, last 3 full Shopify weeks)</span></div>
+          <div class="mini-val2">Weekly range this pull: $89.39–$93.42</div>
+          <div class="mini-note">Shown as Shopify-only — a clean Amazon average-selling-price figure wasn't computable this pull (order-basis vs. settlement-basis revenue disagree ~2.3x, see Platform Performance note). Blending incompatible Amazon/Shopify unit bases into one AOV would mask that gap rather than disclose it.</div>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-eyebrow">CAC</span>
+          <div class="mini-val">~$9.53</div>
+          <div class="mini-val2">Meta spend (7d, $781.77) ÷ 82 new Shopify customers, closest full week — see Overview card note on window mismatch</div>
+          <div class="mini-note">A true cross-channel blended CAC isn't computable: Amazon exposes no customer-identity data via any connected API, so Amazon-acquired customers can't be counted in a shared denominator with Shopify's. Google Ads spend also excluded (quota gap).</div>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-eyebrow">POAS</span>
+          <div class="mini-val">Gap — needs COGS from QuickBooks</div>
+          <div class="mini-note">QuickBooks' P&amp;L report failed to return COGS/OpEx line items again this pull (same row-cap issue on the account's 2,500+ item chart of accounts — 4th+ consecutive week this has recurred, and this run it also returned two conflicting Total Income figures in the same response), so profit-based POAS still can't be computed. Fix: trim the account's income-account list in QuickBooks, or provide a target gross-margin % to use as a stand-in.</div>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-eyebrow">CLV (12-month proxy)</span>
+          <div class="mini-val">$131.72 <span class="mini-val2" style="font-size:11px;">per customer (carried figure)</span></div>
+          <div class="mini-note">Carried from the last pull that ran a trailing-12-month Shopify query — not reverified this run (this cycle's data collection used a 91-day Shopify window instead). Amazon CLV remains not computable at all: Amazon does not expose per-customer purchase history/identity to sellers via any API.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ EMAIL ANALYTICS ============ -->
+  <div class="page" id="page-email">
+    <div class="page-head">
+      <span class="eyebrow">Klaviyo · email channel · live via connected integration</span>
+      <h2>Newsletters, flows, and where automated revenue is leaking</h2>
+      <p>This week's newsletter sends and their revenue, every live flow measured against its own 90-day weekly average (not a generic benchmark), and concrete suggestions for what to fix and what to send next.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:20px;">
+      <div class="kpi"><span class="eyebrow">Newsletters sent · this week</span><div class="val" id="emlNlCount">—</div><div class="sub" id="emlNlSub">—</div><span class="tag info">excludes internal test sends</span></div>
+      <div class="kpi"><span class="eyebrow">Newsletter revenue · this week</span><div class="val" id="emlNlRev">—</div><div class="sub" id="emlNlRevSub">—</div><span class="tag good">Shopify "Placed Order", send-date attribution</span></div>
+      <div class="kpi"><span class="eyebrow">Total email-attributed revenue</span><div class="val" id="emlTotalRev">—</div><div class="sub">Newsletters + all live flows, this week</div><span class="tag info">Klaviyo Reporting API</span></div>
+    </div>
+
+    <section class="block">
+      <h3>This week's newsletter sends</h3>
+      <p class="desc">Aug 18–24, 2026, send-date attribution (matches the Klaviyo UI). No internal test sends went out this week — every send above is a real campaign; two are non-consumer sends (a webinar reminder and the first Retailer Monthly Newsletter), labeled rather than dropped.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Campaign</th><th>Sent</th><th class="num">Recipients</th><th class="num">Open rate</th><th class="num">Click rate</th><th class="num">Conversions</th><th class="num">Revenue</th></tr></thead>
+          <tbody id="emlNlRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Flow anomalies — this week vs. each flow's own 90-day weekly average</h3>
+      <p class="desc">Every live flow with meaningful volume, compared against itself over the trailing 90 days (divided into weekly averages) — not against a generic industry benchmark. Flows sending under ~15 recipients/week aren't included; at that volume, one order swings the numbers too much to call anything an anomaly.</p>
+      <div class="anomaly-grid" id="anomalyGrid"></div>
+      <div class="note-box info">Two WhatsApp flows (Welcome, Abandoned Cart) are live but delivering to 0–0.7% of recipients — a channel/template problem, not a revenue anomaly, and worth fixing before anything else on this tab. [PM] Abandoned Added to Cart converted $0 this week on largely normal volume — the biggest real dollar-impact anomaly. SMS Welcome Series is up sharply on both volume and revenue, a genuine positive worth verifying rather than taking at face value.</div>
+    </section>
+
+    <section class="block">
+      <h3>Audience segmentation — 90-day membership churn by segment</h3>
+      <p class="desc">This run's Klaviyo pull surfaced fresh membership/churn data rather than the open/click/revenue-per-recipient breakdown shown in prior weeks — the shape of this table has changed accordingly, and is arguably more actionable: it shows which audiences are growing, shrinking, or actively hurting deliverability.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table>
+          <thead><tr><th>Segment / list</th><th class="num">Total members</th><th class="num">Added (90d)</th><th class="num">Removed (90d)</th><th class="num">Net change</th></tr></thead>
+          <tbody id="segRows"></tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:10px;">"Openers, no clicks (phantom engagement)" is the largest segment in the account at 19,739 members — bigger than every other segment combined — and only ~5,332 of them have flowed through the sunset flow in 90 days (564 this week alone, up 32% vs. its own average). "[PM] Bounced 4x" is smaller (257) but growing fast (+212 net) and worth watching as an early deliverability signal.</div>
+    </section>
+
+    <section class="block">
+      <h3>Suggested flow fixes</h3>
+      <p class="desc">Ranked by dollar impact and how directly the fix is suggested by the data above — not a generic best-practices list.</p>
+      <div class="idea-grid" id="flowFixGrid"></div>
+    </section>
+
+    <section class="block">
+      <h3>Suggested newsletters &amp; content</h3>
+      <p class="desc">Built from the 90-day send-name history and the gaps this week's data surfaced.</p>
+      <div class="idea-grid" id="newsletterIdeaGrid"></div>
+    </section>
+  </div>
+
+  <!-- ============ PPC & SEO INTELLIGENCE ============ -->
+  <div class="page" id="page-ppcseo">
+    <div class="page-head">
+      <span class="eyebrow">GA4 (live) &middot; Ahrefs (live) &middot; SEMrush (live) &middot; Meta Ads (live) &middot; Google Ads (gap) &middot; LinkedIn (gap) &middot; YouTube (partial) &middot; TikTok (not connected)</span>
+      <h2>Where the paid and organic growth engines actually stand</h2>
+      <p>GA4 week-over-week performance, live Meta Ads account performance (trailing 7 days), the Google Ads account gap, LinkedIn's permission-scope gap, YouTube's lifetime-only stats, TikTok's not-connected status, and the full Ahrefs/SEMrush organic keyword picture — with the honest gaps called out, not filled in.</p>
+    </div>
+
+    <div class="three-col" style="margin-bottom:24px;">
+      <div class="kpi highlight-kpi"><span class="eyebrow">GA4 · this week vs. prior week</span><div class="val">+31.0% sessions</div><div class="sub">34,997 vs. 26,723 sessions; conversions −11.1% (503 vs. 566); engagement rate +17.4pt (65.07% vs. 47.70%) — traffic surged but didn't convert proportionally</div><span class="tag warn">mixed signal</span></div>
