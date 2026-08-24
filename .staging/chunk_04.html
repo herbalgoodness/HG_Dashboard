@@ -1,0 +1,357 @@
+  {text:'Decide the fate of 5 Klaviyo "Leaf Story" flows (Gymnema, Kids Line, Papaya, Graviola, Guayusa) still at zero sends in 90 days, and the Customer Winback flow still converting $0 across 676 recipients — unresolved for 15 days now since first flagged Aug 9', meta:'Due Aug 27 · Klaviyo, overdue', tag:'Marketing', done:false},
+  {text:'Investigate [PM] Abandoned Added to Cart — revenue dropped from a ~$99/week baseline to $0 this week despite normal recipient volume (127 recipients); check for a broken discount step or timing change', meta:'Due Aug 28 · Klaviyo, new this run', tag:'Marketing', done:false},
+  {text:'Follow up with GNC Holdings on the $20,925.86 balance 1–90 days past due (of $81,851.30 billed YTD)', meta:'Due Aug 25 · AR follow-up', tag:'Finance', done:false},
+  {text:'Reconcile QuickBooks\' Sales-by-Customer ($2.95M YTD) vs. Sales-by-Product ($8.82M YTD) — the two reports still disagree by ~$5.9M, unresolved for 3+ consecutive weekly pulls now', meta:'Due Aug 28 · QBO data quality, overdue', tag:'Data quality', done:false},
+  {text:'Ask the bookkeeping/Synder team why the 2026 Budget Model sheet still hasn\'t advanced past week 31 (Jul 30–31) even though weeks 32–33 have fully closed — this dashboard is now filling that gap directly from Amazon\'s Sales API and QuickBooks each week instead of waiting on the sheet', meta:'Due Aug 29 · budget-sheet data quality', tag:'Data quality', done:false},
+];
+function renderTodos(){
+  const list = document.getElementById('todoList');
+  list.innerHTML = TODOS.map((t,i)=>`
+    <div class="todo-item ${t.done?'done':''}" data-i="${i}">
+      <div class="todo-node">${t.done? '✓' : (i+1)}</div>
+      <div class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="#0d0f08" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg></div>
+      <div class="todo-body"><strong>${t.text}</strong><span>${t.meta}</span></div>
+      <div class="todo-meta"><span class="pill" style="background:rgba(255,255,255,0.08);color:var(--text-dim);">${t.tag}</span></div>
+    </div>`).join('');
+  updateProgress();
+}
+function updateProgress(){
+  const done = TODOS.filter(t=>t.done).length;
+  const pct = Math.round(done/TODOS.length*100);
+  document.getElementById('progressHeadline').textContent = `${done} of ${TODOS.length} complete this week`;
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+  document.getElementById('spineFill').style.height = pct+'%';
+  const circumference = 194.7;
+  document.getElementById('ringProgress').style.strokeDashoffset = circumference - (circumference*pct/100);
+}
+document.getElementById('todoList').addEventListener('click', e=>{
+  const item = e.target.closest('.todo-item');
+  if(!item) return;
+  const i = +item.dataset.i;
+  TODOS[i].done = !TODOS[i].done;
+  renderTodos();
+});
+renderTodos();
+
+/* ---------------- CS METRIC TABLE ---------------- */
+const CS_METRICS = [
+  ['Return rate', '6 returns Aug 3–23, mostly "undeliverable/unknown" reason, all sellable disposition — low volume, nothing systemic', 'Not re-checked this pull'],
+  ['Buy Box / checkout ownership', 'Not re-checked this pull', 'N/A (single-seller storefront)'],
+  ['Listing quality scan', '105 error · 25 warning (130 SKUs sampled) — 58 SKUs branded "Herbal Papaya," 11 "Herbal Graviola" instead of "Herbal Goodness"', 'Not available via connected tools'],
+  ['Overall star rating', 'Not exposed — review tool only returns topic-level sentiment, not an aggregate star rating', 'Not exposed by connected tools (see Loox figure on Overview)'],
+  ['Stockouts right now', '2 top-revenue SKUs at 0 fulfillable units, no inbound relief (down from 3 last run — 2 others partially restocked); 22 stockout-primary SKUs flagged catalog-wide', '250+ active codes total (see Active promotions); Soursop Leaf Graviola 12oz oversold −10 units, several teas/bundles at 0'],
+  ['Conversion rate', 'N/A (marketplace, not applicable)', '0.34%–0.45% this pull (0.36% trailing 91d) — unchanged from the 0.28–0.48% band'],
+  ['Repeat/returning rate', 'Not exposed by connected tools', '30.16% (91d avg.), weekly range 28.1%–38.6%'],
+  ['Top negative review theme', '"Value For Money" (too expensive) on the #1 ASIN; "does not work" + high-sugar complaints on the #2 liquid extract', 'Not exposed by connected tools'],
+  ['Active promotions', 'Managed via Amazon Ads, see Marketing tab', '250+ active codes confirmed (more pages remained unenumerated) — mix of legacy evergreen affiliate codes and a continuous stream of automated cart-recovery/loyalty codes'],
+  ['CS response time', 'Not exposed by connected tools', 'See Zendesk detail below (12.3 hrs avg. first resolution)'],
+];
+document.getElementById('csMetricRows').innerHTML = CS_METRICS.map(r=>`
+  <tr><td class="metric-name">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+/* ---------------- CS: ZENDESK DETAIL (live via Composio MCP, trailing 7 days ending Aug 24 2026) ---------------- */
+const ZENDESK_METRICS = [
+  ['New tickets logged', '33'],
+  ['Solved', '29'],
+  ['Closed', '0'],
+  ['Open / pending right now', '4 open / 0 pending'],
+  ['Reopened at least once', '5 of 33 (8 reopen events total)'],
+  ['Total replies across all tickets', '29 (~0.9 / ticket — many single-touch resolutions)'],
+  ['Avg. time to first reply', '14.2 hrs (851.4 min, 24 of 33 tickets had a recorded reply time)'],
+  ['Avg. time to first resolution', '12.3 hrs (737.3 min, 30 of 33 tickets)'],
+  ['Avg. time to full resolution', '15.8 hrs (947.3 min, 29 of 33 tickets — excludes the 4 still-open tickets)'],
+];
+document.getElementById('zendeskRows').innerHTML = ZENDESK_METRICS.map(r=>`
+  <tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
+
+/* ---------------- PRODUCT INTELLIGENCE ---------------- */
+function renderLadderAndTable(){
+  const red = TOP_SKUS.filter(s=>s.stockFlag==='critical');
+  const yellow = TOP_SKUS.filter(s=>s.stockFlag==='warn');
+  const green = TOP_SKUS.filter(s=>s.stockFlag==='ok');
+  document.getElementById('countRed').textContent = red.length;
+  document.getElementById('countYellow').textContent = yellow.length;
+  document.getElementById('countGreen').textContent = green.length;
+  const item = s => `<div class="ladder-item"><b>${s.name}</b><div class="meta">${s.channel} · ${fmtMoney(s.revenue)} · ${s.stock}</div></div>`;
+  document.getElementById('ladderRed').innerHTML = red.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+  document.getElementById('ladderYellow').innerHTML = yellow.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+  document.getElementById('ladderGreen').innerHTML = green.map(item).join('') || '<div class="ladder-item muted">None right now.</div>';
+}
+renderLadderAndTable();
+
+let sortState = {key:'rank', asc:true};
+function renderSkuTable(){
+  const rows = [...TOP_SKUS].sort((a,b)=>{
+    let av=a[sortState.key], bv=b[sortState.key];
+    if(typeof av === 'string') av = av.toLowerCase();
+    if(typeof bv === 'string') bv = bv.toLowerCase();
+    if(av===null||av===undefined) av = -Infinity;
+    if(bv===null||bv===undefined) bv = -Infinity;
+    if(av<bv) return sortState.asc? -1:1;
+    if(av>bv) return sortState.asc? 1:-1;
+    return 0;
+  });
+  document.getElementById('skuRows').innerHTML = rows.map(s=>`
+    <tr>
+      <td class="num">${s.rank}</td>
+      <td>${s.name}</td>
+      <td>${s.channel}</td>
+      <td class="muted">${s.window}</td>
+      <td class="num">${fmtMoney(s.revenue)}</td>
+      <td class="num">${s.velocity||'—'}</td>
+      <td><span class="stock-dot ${s.stockFlag}"></span>${s.stock}</td>
+    </tr>`).join('');
+}
+document.getElementById('skuTable').querySelector('thead').addEventListener('click', e=>{
+  const th = e.target.closest('th[data-key]');
+  if(!th) return;
+  const key = th.dataset.key;
+  if(sortState.key === key) sortState.asc = !sortState.asc;
+  else { sortState.key = key; sortState.asc = true; }
+  renderSkuTable();
+});
+renderSkuTable();
+
+/* ---------------- MARKETING CHARTS ---------------- */
+function drawBarChart(svgId, data, opts){
+  const svg = document.getElementById(svgId);
+  const w = svg.clientWidth || 560, h = 150;
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  const vals = data.map(d=>d===null||d===undefined?0:d);
+  const max = Math.max(...vals, opts && opts.min ? opts.min : 0) * 1.15 || 1;
+  const barW = w / data.length;
+  let svgHtml = '';
+  data.forEach((v,i)=>{
+    const val = v===null||v===undefined? 0 : v;
+    const bh = max? (val/max)*(h-24) : 0;
+    const x = i*barW + barW*0.18;
+    const bw = barW*0.64;
+    const color = (v===null||v===undefined) ? 'rgba(255,255,255,0.08)' : (opts && opts.benchmark && v < opts.benchmark ? '#ff6f61' : 'url(#barGrad)');
+    svgHtml += `<rect x="${x}" y="${h-20-bh}" width="${bw}" height="${bh}" rx="2" fill="${color}"></rect>`;
+  });
+  svgHtml += `<defs><linearGradient id="barGrad" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%" stop-color="#698805"/><stop offset="100%" stop-color="#d8c832"/></linearGradient></defs>`;
+  if(opts && opts.benchmark){
+    const by = h-20-(opts.benchmark/max)*(h-24);
+    svgHtml += `<line x1="0" y1="${by}" x2="${w}" y2="${by}" stroke="#f2c94c" stroke-width="1" stroke-dasharray="4,3"/>`;
+  }
+  svg.innerHTML = svgHtml;
+}
+const roasWindow = ROAS_ACTUAL.slice(21,34); // weeks 22-34 (last 3 weeks are null — no weekly ROAS split available, see footer)
+drawBarChart('chartRoas', roasWindow, {benchmark:7});
+
+const SESSIONS_13WK = [22501,19123,19719,23210,20659,21334,19858,19387,17887,20942,23567,19704,21382];
+drawBarChart('chartSessions', SESSIONS_13WK);
+
+/* ---------------- BENCHMARK TABLE ---------------- */
+const BENCH = [
+  ['Gross margin', '50.2% (Jul 2026, stale — COGS suppressed again this pull)', '60–78% (DTC/supplement brands)', 'below', 'Eightx, "Average Ecommerce Profit Margins"'],
+  ['OpEx ratio', '36.1% (Jul 2026, stale — same COGS gap)', '<35% internal target', 'above', 'internal target, cross-referenced vs. Eightx DTC Profitability 2026'],
+  ['Blended ROAS', '~2.8x (Amazon Ads, trailing wk, provisional)', '3–6x general DTC; Amazon Health & Household ~2.95–3.34x actual', 'below', 'based.marketing Ecommerce ROAS Benchmarks 2026'],
+  ['Amazon TACoS', '~12.1% (trailing wk, provisional — week not fully settled)', '8–15% "healthy" range', 'in range', 'IG PPC / Keywords.am TACoS guides'],
+  ['Shopify conversion rate', '0.34–0.45% this pull (0.36% 91d avg.)', '2.4–3.2% (Nutrition & Supplements)', 'below', 'Craftberry, "Average Conversion Rate for Shopify Stores 2025"'],
+  ['Return rate', '6 returns Aug 3–23 (low volume; % not recomputed this pull)', '~7% (5–10%) for Supplements & Vitamins', 'below (favorable)', 'Eightx, "Average Ecommerce Return Rate 2026"'],
+  ['Repeat purchase / customer', '~30% weekly returning rate (30.16% 91d avg.)', '37.7% category avg. repurchase rate', 'below', 'CommerceCatalyst 2026 DTC Benchmarks'],
+];
+document.getElementById('benchRows').innerHTML = BENCH.map(r=>{
+  const cls = r[3]==='below'? 'status-miss' : (r[3]==='above'? 'status-miss' : 'status-hit');
+  const clsFixed = (r[0]==='Return rate' || r[0]==='OpEx ratio') ? (r[3]==='below (favorable)'?'status-hit':(r[0]==='OpEx ratio'?'status-miss':'status-hit')) : cls;
+  return `<tr><td>${r[0]}</td><td>${r[1]}</td><td class="muted">${r[2]}</td><td class="${clsFixed}">${r[3]}</td><td class="muted">${r[4]}</td></tr>`;
+}).join('');
+
+/* ---------------- MARKETPLACE HEALTH (live via Lisa: Amazon SP-API + Walmart API) ---------------- */
+const MP_PULLED_AT = 'Aug 24, 2026 · 7:12am UTC';
+const MP_SALES = {
+  period_label: 'Jul 26 – Aug 24, 2026 (rolling 30 days) vs. prior 30 days. Amazon and Walmart from Lisa WellProof\'s unified orders table (order-basis); Amazon\'s own native Sales API connector is now also enabled this run and is used for Overview/Product Intelligence instead — the two sources are shown side by side, not blended, and won't tie exactly. Amazon\'s prior-period figure below looks anomalously low (a likely gap in Lisa's historical sync, not a real 15x swing) — see footer.',
+  total: {revenue: 112844.99, deltaPct: 1016.2, orders: 3868, units: 4291},
+  amazon: {revenue: 108856.10, deltaPct: 1537.9},
+  walmart: {revenue: 3988.89, deltaPct: 15.2},
+};
+const AMZ_HEALTH = {
+  score: 40, label: 'At Risk', color: 'red',
+  metrics: [
+    {key:'odr', label:'Order Defect Rate', rate:0.87, status:'warn', warn:0.75, fail:1, note:'chargebacks + ≤3-star reviews, trailing 60 days — approaching the 1.0% fail threshold, up slightly from 0.79% last pull'},
+    {key:'cancellation', label:'Pre-fulfillment Cancellation Rate', rate:8.76, status:'critical', warn:2, fail:2.5, note:'trailing 7 days — still ~3.5x the fail threshold, though Amazon\'s own weekly sales-velocity data shows the underlying cancellation trend improving 5 weeks straight (16.53%→9.01%)'},
+    {key:'late_shipment', label:'Late Shipment Rate', rate:18.18, status:'critical', warn:3, fail:4, note:'merchant-fulfilled only — 2 of 11 MFN orders, a thin denominator but still Amazon-visible'},
+    {key:'return_rate', label:'Return Rate', rate:0.21, status:'good', warn:8, fail:10, note:'trailing 30 days — improved from 0.31% last pull'},
+  ],
+  alerts: [
+    {label:'Pre-fulfillment Cancellation Rate', message:'8.76% — exceeds Amazon\'s 2.5% fail threshold. Suspension risk, though the underlying weekly trend has improved 5 weeks straight.'},
+    {label:'Late Shipment Rate', message:'18.18% — exceeds Amazon\'s 4.0% fail threshold. Suspension risk (small sample: 2 of 11 MFN orders).'},
+  ],
+};
+const WALMART_STATUS = {
+  connection_state:'connected', status:'healthy', last_sync: MP_PULLED_AT, endpoints_healthy:6, endpoints_total:6,
+};
+
+function renderMarketplaceHealth(){
+  const trendHtml = (pct) => `<span class="trend ${pct>=0?'up':'down'}">${pct>=0?'▲':'▼'} ${Math.abs(pct).toFixed(1)}% vs. prior 91d</span>`;
+  document.getElementById('mpTotalRev').textContent = fmtMoney(MP_SALES.total.revenue);
+  document.getElementById('mpTotalSub').textContent = `${MP_SALES.total.orders.toLocaleString()} orders · ${MP_SALES.total.units.toLocaleString()} units · ${MP_SALES.period_label}`;
+  document.getElementById('mpTotalTrend').outerHTML = trendHtml(MP_SALES.total.deltaPct).replace('<span class="trend', '<span id="mpTotalTrend" class="trend');
+
+  document.getElementById('mpAmzRev').textContent = fmtMoney(MP_SALES.amazon.revenue);
+  document.getElementById('mpAmzSub').textContent = `Order/unit split by channel not available this pull — see combined total above`;
+  document.getElementById('mpAmzTrend').outerHTML = trendHtml(MP_SALES.amazon.deltaPct).replace('<span class="trend', '<span id="mpAmzTrend" class="trend');
+
+  document.getElementById('mpWmtRev').textContent = fmtMoney(MP_SALES.walmart.revenue);
+  document.getElementById('mpWmtSub').textContent = `Order/unit split by channel not available this pull — see combined total above`;
+  document.getElementById('mpWmtTrend').outerHTML = trendHtml(MP_SALES.walmart.deltaPct).replace('<span class="trend', '<span id="mpWmtTrend" class="trend');
+
+  document.getElementById('healthScoreBadge').innerHTML = `
+    <div class="health-score-ring ${AMZ_HEALTH.color}">${AMZ_HEALTH.score}</div>
+    <div><h4>${AMZ_HEALTH.label}</h4><p>Overall suspension-risk score out of 100, computed from the four metrics below vs. Amazon's published thresholds.</p></div>`;
+
+  document.getElementById('healthAlerts').innerHTML = AMZ_HEALTH.alerts.map(a=>`
+    <div class="alert-banner"><span class="ico">⚠️</span><span><b>${a.label}:</b> ${a.message}</span></div>`).join('');
+
+  document.getElementById('healthMetrics').innerHTML = AMZ_HEALTH.metrics.map(m=>{
+    const scaleMax = m.fail*1.5;
+    const widthPct = Math.min(m.rate/scaleMax*100, 100);
+    const threshPct = Math.min(m.fail/scaleMax*100, 100);
+    const barClass = m.status==='critical'?'critical':(m.status==='warn'?'warn':'good');
+    const pillClass = m.status==='critical'?'bad':(m.status==='warn'?'warn':'good');
+    const statusText = m.status==='critical'?'critical':(m.status==='warn'?'watch':'healthy');
+    return `<div class="health-metric">
+      <div class="health-metric-head"><span>${m.label}</span><span class="tag ${pillClass}" style="margin-top:0;">${statusText}</span></div>
+      <div class="health-bar-outer">
+        <div class="health-bar-inner ${barClass}" style="width:${widthPct}%;"></div>
+        <div class="health-threshold-mark" style="left:${threshPct}%;" title="Amazon fail threshold: ${m.fail}%"></div>
+      </div>
+      <div class="health-metric-sub">${m.rate}% actual · warn ≥${m.warn}% · fail ≥${m.fail}% · ${m.note}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('walmartStatusCard').innerHTML = `
+    <div class="walmart-status-row"><span class="k">Connection state</span><span class="v" style="color:var(--good);">${WALMART_STATUS.connection_state}</span></div>
+    <div class="walmart-status-row"><span class="k">Status</span><span class="v" style="color:var(--good);">${WALMART_STATUS.status}</span></div>
+    <div class="walmart-status-row"><span class="k">Endpoints healthy</span><span class="v">${WALMART_STATUS.endpoints_healthy} of ${WALMART_STATUS.endpoints_total}</span></div>
+    <div class="walmart-status-row"><span class="k">Last synced</span><span class="v">${WALMART_STATUS.last_sync}</span></div>`;
+}
+renderMarketplaceHealth();
+
+/* ---------------- EMAIL ANALYTICS (live via Klaviyo Reporting API) ---------------- */
+const EML_NEWSLETTERS = [
+  {name:'August 18th NL Blog + Bundle + Webinar', sent:'Aug 18, 2026', recipients:35007, openRate:29.5, clickRate:0.129, conversions:5, revenue:2305.82},
+  {name:'August 20th NL Back to school', sent:'Aug 20, 2026', recipients:20194, openRate:52.3, clickRate:0.124, conversions:6, revenue:355.26},
+  {name:'One Week To Go Aug 20th (webinar reminder, Facebook Webinar Leads list)', sent:'Aug 20, 2026', recipients:206, openRate:9.41, clickRate:0, conversions:0, revenue:0},
+  {name:'Retailer Monthly Newsletter (new B2B/wholesale list)', sent:'Aug 19, 2026', recipients:192, openRate:36.65, clickRate:1.57, conversions:0, revenue:0},
+];
+const EML_FLOW_REVENUE_THIS_WEEK = 311.85; // [PM] Abandoned Checkout $127.22 + [PM] Welcome 15% Off $184.63; every other live email flow converted $0 this week (SMS/WhatsApp flows shown separately, not counted here)
+
+const EML_ANOMALIES = [
+  {name:'[PM] Abandoned Added to Cart', severity:'red',
+   recipWk:127, recipAvg:136.8, recipDelta:-7,
+   revWk:0, revAvg:99.29, revDelta:-100,
+   note:'Largest dollar impact this week — normally converts close to $99/week and dropped to zero despite recipient volume only down 7%. New this run — wasn\'t flagged last pull.'},
+  {name:'[PM] Customer Winback', severity:'red',
+   recipWk:43, recipAvg:52.6, recipDelta:-18,
+   revWk:0, revAvg:0, revDelta:0,
+   note:'Still converting $0 — 0 conversions across 676 recipients over the trailing 90 days. Unresolved for 15 days since first flagged Aug 9.'},
+  {name:'Welcome series Flow', severity:'red',
+   recipWk:27, recipAvg:60.2, recipDelta:-55,
+   revWk:0, revAvg:28.59, revDelta:-100,
+   note:'Recipient volume down 55% vs. its own 90-day average, and revenue with it — worth checking whether the entry trigger has partially stalled, similar to the dormant Leaf Story series.'},
+  {name:'SMS Welcome Series', severity:'green',
+   recipWk:281, recipAvg:140.7, recipDelta:100,
+   revWk:120.60, revAvg:102.16, revDelta:18,
+   note:'Recipient volume roughly doubled and revenue up 18% vs. its own 90-day average — a real positive signal, but confirm it\'s a genuine signup surge before treating it as a durable baseline.'},
+  {name:'[PM] Welcome 15% Off', severity:'green',
+   recipWk:179, recipAvg:180.6, recipDelta:-1,
+   revWk:184.63, revAvg:169.12, revDelta:9,
+   note:'Tracking almost exactly to its own average on volume, with revenue up 9% — healthy, no action needed.'},
+  {name:'[PM] Abandoned Checkout', severity:'yellow',
+   recipWk:45, recipAvg:62.9, recipDelta:-28,
+   revWk:127.22, revAvg:147.75, revDelta:-14,
+   note:'Recipients and revenue both below average this week, but not by an alarming margin at this flow\'s typical volume — worth a glance, not urgent.'},
+];
+
+const EML_SEGMENTS = [
+  {name:'Truly Engaged (clickers + buyers)', total:2108, added:4037, removed:1933, flag:'good'},
+  {name:'Openers, no clicks (phantom engagement)', total:19739, added:23940, removed:4208, flag:'bad'},
+  {name:'Lapsed Customers (90 days)', total:9414, added:1038, removed:2503, flag:'warn'},
+  {name:'[PM] VIP Customers', total:969, added:98, removed:216, flag:'warn'},
+  {name:'Repeat Customers / Repeat Buyers', total:1365, added:107, removed:306, flag:'warn'},
+  {name:'Potential Purchasers', total:560, added:1176, removed:1127, flag:'info'},
+  {name:'First-Time Customers', total:490, added:814, removed:820, flag:'info'},
+  {name:'[PM] Haven\'t Purchased Last 30 Days', total:219, added:841, removed:914, flag:'info'},
+  {name:'[PM] Bounced 4x', total:257, added:243, removed:31, flag:'bad'},
+  {name:'[Exclude]{SUPPRESS} Bounced', total:113, added:142, removed:46, flag:'warn'},
+];
+
+const EML_FLOW_FIXES = [
+  {title:'Investigate the new Abandoned Added to Cart zero-revenue week', body:'Recipients were only down 7% but revenue dropped to $0 — the largest dollar-impact anomaly this week, and a new finding (not present last pull). Check for a recently changed discount step or send-timing test.'},
+  {title:'Decide the fate of 5 dormant Leaf Story flows and Customer Winback — now 15 days unresolved', body:'Gymnema, Kids Line, Papaya, Graviola, and Guayusa Leaf Story series are still at zero sends in 90 days, and Customer Winback is still converting $0 across 676 recipients. First flagged Aug 9 — this needs a decision (fix the trigger or archive), not another week of monitoring.'},
+  {title:'Check whether Welcome series Flow\'s entry trigger has partially stalled', body:'Recipient volume is down 55% vs. its own 90-day average this week — smaller in dollar terms than the dormant flows above, but worth confirming it isn\'t heading the same direction.'},
+  {title:'Push harder on the phantom-engagement sunset flow', body:'19,739 contacts (the single largest segment in the account) open but never click — this remains the biggest deliverability drag in the account.'},
+  {title:'Verify the SMS Welcome Series surge is real', body:'Recipients roughly doubled and revenue up 18% vs. the 90-day average is a genuinely good signal, but confirm it traces to a real signup event before budgeting around it as a new baseline.'},
+];
+
+const EML_NEWSLETTER_IDEAS = [
+  {title:'Keep the twice-weekly cadence', body:'Both consumer sends this week (Aug 18 and Aug 20) landed reasonable opens (29.5%–52.3%) — the format is working, keep it running.'},
+  {title:'Build out the webinar countdown format', body:'"One Week To Go" performed as a low-key reminder (9.4% opens, small 209-person list) — a good, low-cost pattern to reuse for future webinars and launches.'},
+  {title:'Follow up on the Retailer Monthly Newsletter\'s first real send', body:'The new B2B/wholesale list (192 recipients) got its first substantive newsletter this week — 36.65% opens and 1.57% clicks, the highest click rate of any send this week. Worth a second send to confirm it\'s not a one-off.'},
+  {title:'Turn the 5 dormant Leaf Story flows into newsletter content instead', body:'Gymnema, Kids Line, Papaya, Graviola, and Guayusa are written but not reaching anyone via automation — repurpose as a recurring "Meet Your Ingredients" newsletter segment while the flow trigger issue gets fixed.'},
+  {title:'Clean up the 4 duplicate "Placed Order" metrics in the account', body:'Shopify, Wix, Celery, and Amazon Buy-with-Prime versions all exist from prior integrations — a one-time cleanup would reduce the risk of a future pull using the wrong one.'},
+];
+
+function renderEmailAnalytics(){
+  const totalNlRev = EML_NEWSLETTERS.reduce((s,n)=>s+n.revenue,0);
+  const totalNlRecip = EML_NEWSLETTERS.reduce((s,n)=>s+n.recipients,0);
+  const totalNlConv = EML_NEWSLETTERS.reduce((s,n)=>s+n.conversions,0);
+
+  document.getElementById('emlNlCount').textContent = EML_NEWSLETTERS.length;
+  document.getElementById('emlNlSub').textContent = totalNlRecip.toLocaleString()+' total recipients across both sends';
+  document.getElementById('emlNlRev').textContent = fmtMoney(totalNlRev);
+  document.getElementById('emlNlRevSub').textContent = totalNlConv+' orders attributed, Aug 18–24';
+  document.getElementById('emlTotalRev').textContent = fmtMoney(totalNlRev + EML_FLOW_REVENUE_THIS_WEEK);
+
+  document.getElementById('emlNlRows').innerHTML = EML_NEWSLETTERS.map(n=>`
+    <tr>
+      <td class="metric-name">${n.name}</td>
+      <td>${n.sent}</td>
+      <td class="num">${n.recipients.toLocaleString()}</td>
+      <td class="num">${n.openRate.toFixed(1)}%</td>
+      <td class="num">${n.clickRate.toFixed(2)}%</td>
+      <td class="num">${n.conversions}</td>
+      <td class="num">${fmtMoney(n.revenue)}</td>
+    </tr>`).join('');
+
+  document.getElementById('anomalyGrid').innerHTML = EML_ANOMALIES.map(a=>{
+    const tagCls = a.severity==='red' ? 'bad' : a.severity==='yellow' ? 'warn' : 'good';
+    const tagText = a.severity==='red' ? 'needs a look' : a.severity==='yellow' ? 'mixed signal' : 'trending up';
+    return `
+    <div class="anomaly-card">
+      <div class="ac-head"><h4>${a.name}</h4><span class="tag ${tagCls}">${tagText}</span></div>
+      <div class="ac-row"><span>Recipients (wk vs. 90d avg)</span><span><b>${a.recipWk}</b> vs ${a.recipAvg.toFixed(1)}/wk<span class="delta ${a.recipDelta>=0?'up':'down'}">${a.recipDelta>=0?'+':''}${a.recipDelta}%</span></span></div>
+      <div class="ac-row"><span>Revenue (wk vs. 90d avg)</span><span><b>${fmtMoney(a.revWk)}</b> vs ${fmtMoney(a.revAvg)}/wk<span class="delta ${a.revDelta>=0?'up':'down'}">${a.revDelta>=0?'+':''}${a.revDelta}%</span></span></div>
+      ${a.openWk!==undefined?`<div class="ac-row"><span>Open rate (wk vs. 90d avg)</span><span><b>${a.openWk.toFixed(1)}%</b> vs ${a.openAvg.toFixed(1)}%<span class="delta ${a.openDelta>=0?'up':'down'}">${a.openDelta>=0?'+':''}${a.openDelta}%</span></span></div>`:''}
+      ${a.convWk!==undefined?`<div class="ac-row"><span>Conversion rate (wk vs. 90d avg)</span><span><b>${a.convWk.toFixed(2)}%</b> vs ${a.convAvg.toFixed(2)}%<span class="delta up">+${a.convDelta}%</span></span></div>`:''}
+      <div class="ac-note">${a.note}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('segRows').innerHTML = EML_SEGMENTS.map(s=>{
+    const net = s.added - s.removed;
+    const color = s.flag==='good' ? 'var(--good)' : s.flag==='bad' ? 'var(--danger)' : s.flag==='warn' ? 'var(--warn)' : 'var(--text)';
+    return `
+    <tr>
+      <td class="metric-name">${s.name}</td>
+      <td class="num">${s.total.toLocaleString()}</td>
+      <td class="num">+${s.added.toLocaleString()}</td>
+      <td class="num">−${s.removed.toLocaleString()}</td>
+      <td class="num" style="color:${color};font-weight:600;">${net>=0?'+':''}${net.toLocaleString()}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('flowFixGrid').innerHTML = EML_FLOW_FIXES.map((f,i)=>`
+    <div class="idea-card"><div class="idea-num">${i+1}</div><div><b>${f.title}</b><span>${f.body}</span></div></div>`).join('');
+
+  document.getElementById('newsletterIdeaGrid').innerHTML = EML_NEWSLETTER_IDEAS.map((f,i)=>`
+    <div class="idea-card"><div class="idea-num">${i+1}</div><div><b>${f.title}</b><span>${f.body}</span></div></div>`).join('');
+}
+renderEmailAnalytics();
+</script>
+</body>
+</html>
