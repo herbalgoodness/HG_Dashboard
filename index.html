@@ -391,6 +391,7 @@
     <button data-page="marketing">Marketing</button>
     <button data-page="email">Email Analytics</button>
     <button data-page="ppcseo">PPC &amp; SEO</button>
+    <button data-page="shipstation-digest">Weekly Digest</button>
   </nav>
   <div class="status-chip"><span class="dot"></span><span id="lastUpdated">—</span></div>
 </div>
@@ -1033,6 +1034,212 @@
     </section>
   </div>
 
+    <!-- ============ SHIPSTATION WEEKLY DIGEST ============ -->
+  <div class="page" id="page-shipstation-digest">
+    <div class="page-head">
+      <span class="eyebrow">ShipStation Weekly Digest</span>
+      <h2 id="digestTitle">Weekly Performance Summary</h2>
+      <p id="digestSubtitle">Orders, revenue, and shipping metrics for this week vs. last week</p>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi highlight-kpi">
+        <span class="eyebrow">Current Week Orders</span>
+        <div class="val" id="currentOrders">—</div>
+        <div class="sub" id="ordersTrend"><span id="ordersChange">—</span></div>
+        <div id="ordersTag"></div>
+      </div>
+      <div class="kpi highlight-kpi">
+        <span class="eyebrow">Current Week Shipments</span>
+        <div class="val" id="currentShipments">—</div>
+        <div class="sub" id="shipmentsTrend"><span id="shipmentsChange">—</span></div>
+        <div id="shipmentsTag"></div>
+      </div>
+      <div class="kpi highlight-kpi">
+        <span class="eyebrow">Current Week Revenue</span>
+        <div class="val" id="currentRevenue">—</div>
+        <div class="sub" id="revenueTrend"><span id="revenueChange">—</span></div>
+        <div id="revenueTag"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 30px;">
+      <h3 style="margin-top: 0;">Weekly Comparison</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align: left;">Metric</th>
+            <th class="num" id="prevWeekHeader">Previous Week</th>
+            <th class="num" id="currWeekHeader">Current Week</th>
+            <th class="num">Week-over-Week</th>
+          </tr>
+        </thead>
+        <tbody id="comparisonTableBody">
+          <tr><td colspan="4" style="text-align: center; color: var(--text-dim);">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3 style="margin-top: 0;">Domestic Metrics</h3>
+        <table>
+          <tbody>
+            <tr><td class="metric-name">Orders<span id="domesticOrdersPrev"></span></td><td class="num" id="domesticOrdersCurr">—</td><td class="num" id="domesticOrdersChange">—</td></tr>
+            <tr><td class="metric-name">Revenue<span id="domesticRevenuePrev"></span></td><td class="num" id="domesticRevenueCurr">—</td><td class="num" id="domesticRevenueChange">—</td></tr>
+            <tr><td class="metric-name">Shipments<span id="domesticShipmentsPrev"></span></td><td class="num" id="domesticShipmentsCurr">—</td><td class="num" id="domesticShipmentsChange">—</td></tr>
+            <tr><td class="metric-name">Shipping Cost<span id="domesticCostPrev"></span></td><td class="num" id="domesticCostCurr">—</td><td class="num" id="domesticCostChange">—</td></tr>
+            <tr><td class="metric-name">Cost/Shipment<span id="domesticCostPerPrev"></span></td><td class="num" id="domesticCostPerCurr">—</td><td class="num" id="domesticCostPerChange">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top: 0;">International Metrics</h3>
+        <table>
+          <tbody>
+            <tr><td class="metric-name">Orders<span id="intlOrdersPrev"></span></td><td class="num" id="intlOrdersCurr">—</td><td class="num" id="intlOrdersChange">—</td></tr>
+            <tr><td class="metric-name">Revenue<span id="intlRevenuePrev"></span></td><td class="num" id="intlRevenueCurr">—</td><td class="num" id="intlRevenueChange">—</td></tr>
+            <tr><td class="metric-name">Shipments<span id="intlShipmentsPrev"></span></td><td class="num" id="intlShipmentsCurr">—</td><td class="num" id="intlShipmentsChange">—</td></tr>
+            <tr><td class="metric-name">Shipping Cost<span id="intlCostPrev"></span></td><td class="num" id="intlCostCurr">—</td><td class="num" id="intlCostChange">—</td></tr>
+            <tr><td class="metric-name">Cost/Shipment<span id="intlCostPerPrev"></span></td><td class="num" id="intlCostPerCurr">—</td><td class="num" id="intlCostPerChange">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 30px;">
+      <h3 style="margin-top: 0;">Year-to-Date (2026)</h3>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div><div style="font-size: 12px; color: var(--text-dim); margin-bottom: 4px;">Total Orders</div><div style="font-size: 22px; font-weight: 700; color: #fff;" id="ytdOrders">—</div></div>
+        <div><div style="font-size: 12px; color: var(--text-dim); margin-bottom: 4px;">Total Shipments</div><div style="font-size: 22px; font-weight: 700; color: #fff;" id="ytdShipments">—</div></div>
+        <div><div style="font-size: 12px; color: var(--text-dim); margin-bottom: 4px;">Total Revenue</div><div style="font-size: 22px; font-weight: 700; color: #fff;" id="ytdRevenue">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  async function initShipStationDigest() {
+    const client = new ShipStationClient();
+    try {
+      const digest = await client.getCurrentDigest();
+      const { currentWeek, previousWeek, comparison } = digest;
+
+      document.getElementById('digestTitle').textContent = `Week of ${currentWeek.start} to ${currentWeek.end}`;
+      document.getElementById('digestSubtitle').textContent = `Compared to previous week (${previousWeek.start} to ${previousWeek.end})`;
+
+      document.getElementById('currentOrders').textContent = ShipStationClient.formatNumber(currentWeek.metrics.totalOrders);
+      document.getElementById('currentShipments').textContent = ShipStationClient.formatNumber(currentWeek.metrics.totalShipments);
+      document.getElementById('currentRevenue').textContent = ShipStationClient.formatCurrency(currentWeek.metrics.totalRevenue);
+
+      const orderChange = comparison.totalOrders.change;
+      const shipmentChange = comparison.totalShipments.change;
+      const revenueChange = comparison.totalRevenue.change;
+
+      document.getElementById('ordersChange').textContent = `${comparison.totalOrders.previous} last week → ${orderChange}% change`;
+      document.getElementById('ordersTag').innerHTML = ShipStationClient.getChangeBadge(orderChange);
+
+      document.getElementById('shipmentsChange').textContent = `${comparison.totalShipments.previous} last week → ${shipmentChange}% change`;
+      document.getElementById('shipmentsTag').innerHTML = ShipStationClient.getChangeBadge(shipmentChange);
+
+      document.getElementById('revenueChange').textContent = `${ShipStationClient.formatCurrency(comparison.totalRevenue.previous)} last week → ${revenueChange}% change`;
+      document.getElementById('revenueTag').innerHTML = ShipStationClient.getChangeBadge(revenueChange);
+
+      document.getElementById('prevWeekHeader').textContent = `${previousWeek.start.split('-').slice(1).join('/')}-${previousWeek.end.split('-')[2]}`;
+      document.getElementById('currWeekHeader').textContent = `${currentWeek.start.split('-').slice(1).join('/')}-${currentWeek.end.split('-')[2]}`;
+
+      const rows = [
+        { label: 'Domestic Orders', key: 'domesticOrders' },
+        { label: 'Intl Orders', key: 'intlOrders' },
+        { label: 'Total Orders', key: 'totalOrders' },
+        { label: 'Domestic Revenue', key: 'domesticRevenue', format: 'currency' },
+        { label: 'Intl Revenue', key: 'intlRevenue', format: 'currency' },
+        { label: 'Total Revenue', key: 'totalRevenue', format: 'currency' },
+        { label: 'Domestic Shipments', key: 'domesticShipments' },
+        { label: 'Intl Shipments', key: 'intlShipments' },
+        { label: 'Total Shipments', key: 'totalShipments' },
+        { label: 'Domestic Shipping Cost', key: 'domesticShippingCost', format: 'currency' },
+        { label: 'Intl Shipping Cost', key: 'intlShippingCost', format: 'currency' },
+        { label: 'Total Shipping Cost', key: 'totalShippingCost', format: 'currency' },
+        { label: 'Domestic Cost/Shipment', key: 'domesticCostPerShipment', format: 'currency' },
+        { label: 'Intl Cost/Shipment', key: 'intlCostPerShipment', format: 'currency' },
+        { label: 'Cost/Shipment', key: 'costPerShipment', format: 'currency' }
+      ];
+
+      const tableBody = document.getElementById('comparisonTableBody');
+      tableBody.innerHTML = rows.map(row => {
+        const comp = comparison[row.key];
+        const format = row.format === 'currency' ? v => ShipStationClient.formatCurrency(v) : v => ShipStationClient.formatNumber(v);
+        const change = parseFloat(comp.change);
+        const changeClass = change > 0 ? 'good' : change < 0 ? 'bad' : 'info';
+        return `<tr><td>${row.label}</td><td class="num">${format(comp.previous)}</td><td class="num">${format(comp.current)}</td><td class="num"><span class="tag ${changeClass}">${change > 0 ? '+' : ''}${comp.change}%</span></td></tr>`;
+      }).join('');
+
+      document.getElementById('domesticOrdersCurr').textContent = ShipStationClient.formatNumber(comparison.domesticOrders.current);
+      document.getElementById('domesticOrdersPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.domesticOrders.previous}</span>`;
+      document.getElementById('domesticOrdersChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticOrders.change);
+
+      document.getElementById('domesticRevenueCurr').textContent = ShipStationClient.formatCurrency(comparison.domesticRevenue.current);
+      document.getElementById('domesticRevenuePrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.domesticRevenue.previous)}</span>`;
+      document.getElementById('domesticRevenueChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticRevenue.change);
+
+      document.getElementById('domesticShipmentsCurr').textContent = ShipStationClient.formatNumber(comparison.domesticShipments.current);
+      document.getElementById('domesticShipmentsPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.domesticShipments.previous}</span>`;
+      document.getElementById('domesticShipmentsChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticShipments.change);
+
+      document.getElementById('domesticCostCurr').textContent = ShipStationClient.formatCurrency(comparison.domesticShippingCost.current);
+      document.getElementById('domesticCostPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.domesticShippingCost.previous)}</span>`;
+      document.getElementById('domesticCostChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticShippingCost.change);
+
+      document.getElementById('domesticCostPerCurr').textContent = ShipStationClient.formatCurrency(comparison.domesticCostPerShipment.current);
+      document.getElementById('domesticCostPerPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.domesticCostPerShipment.previous)}</span>`;
+      document.getElementById('domesticCostPerChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticCostPerShipment.change);
+
+      document.getElementById('intlOrdersCurr').textContent = ShipStationClient.formatNumber(comparison.intlOrders.current);
+      document.getElementById('intlOrdersPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.intlOrders.previous}</span>`;
+      document.getElementById('intlOrdersChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlOrders.change);
+
+      document.getElementById('intlRevenueCurr').textContent = ShipStationClient.formatCurrency(comparison.intlRevenue.current);
+      document.getElementById('intlRevenuePrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.intlRevenue.previous)}</span>`;
+      document.getElementById('intlRevenueChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlRevenue.change);
+
+      document.getElementById('intlShipmentsCurr').textContent = ShipStationClient.formatNumber(comparison.intlShipments.current);
+      document.getElementById('intlShipmentsPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.intlShipments.previous}</span>`;
+      document.getElementById('intlShipmentsChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlShipments.change);
+
+      document.getElementById('intlCostCurr').textContent = ShipStationClient.formatCurrency(comparison.intlShippingCost.current);
+      document.getElementById('intlCostPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.intlShippingCost.previous)}</span>`;
+      document.getElementById('intlCostChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlShippingCost.change);
+
+      document.getElementById('intlCostPerCurr').textContent = ShipStationClient.formatCurrency(comparison.intlCostPerShipment.current);
+      document.getElementById('intlCostPerPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.intlCostPerShipment.previous)}</span>`;
+      document.getElementById('intlCostPerChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlCostPerShipment.change);
+
+      const yearData = await client.getYearDigest();
+      if (yearData.weeks && yearData.weeks.length > 0) {
+        const ytdOrders = yearData.weeks.reduce((sum, w) => sum + w.metrics.totalOrders, 0);
+        const ytdShipments = yearData.weeks.reduce((sum, w) => sum + w.metrics.totalShipments, 0);
+        const ytdRevenue = yearData.weeks.reduce((sum, w) => sum + w.metrics.totalRevenue, 0);
+        document.getElementById('ytdOrders').textContent = ShipStationClient.formatNumber(ytdOrders);
+        document.getElementById('ytdShipments').textContent = ShipStationClient.formatNumber(ytdShipments);
+        document.getElementById('ytdRevenue').textContent = ShipStationClient.formatCurrency(ytdRevenue);
+      }
+    } catch (error) {
+      console.error('Failed to load digest:', error);
+      document.getElementById('comparisonTableBody').innerHTML = `<tr><td colspan="4" style="color: var(--danger);">Error: ${error.message}</td></tr>`;
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabNav = document.getElementById('tabNav');
+      if (tabNav) tabNav.addEventListener('click', (e) => { if (e.target.dataset.page === 'shipstation-digest') initShipStationDigest(); });
+    });
+  } else {
+    const tabNav = document.getElementById('tabNav');
+    if (tabNav) tabNav.addEventListener('click', (e) => { if (e.target.dataset.page === 'shipstation-digest') initShipStationDigest(); });
+  }
+  </script>
 </main>
 
 <footer>
