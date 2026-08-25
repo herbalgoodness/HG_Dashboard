@@ -432,6 +432,7 @@
         </table>
         <div id="weekNote"></div>
         <div class="note-box info" style="margin-top:10px;">Heads up on methodology: in the source budget sheet, the Bearish-model column auto-fills with the actual result once a week closes — so elapsed weeks will always show ~0% variance here by construction. The real forward-looking budget test is the YTD pacing KPI at the top of this page, and the true forecast only diverges from actuals for weeks that haven't happened yet.</div>
+        <div class="note-box" style="margin-top:10px;">Channels now shown individually rather than lumped together. GNC is tracked in <b>units sold</b> (from the GNC sell-through sheet, see the Marketplace Health tab), not dollars — QuickBooks doesn't attribute GNC revenue weekly, only YTD/QTD/MTD (see Channel Performance below). Online Retail Wholesaler has no weekly source either — QBO confirms it at $0 for all of Q3 so far. Faire's weekly figures now come from Faire's own weekly tracking sheet rather than QBO's Synder feed. Week 31's "Other" figure includes a &minus;$160,000 one-time reclassification entry — this dashboard previously netted it against a matching +$160,000 GNC-dollar anomaly in a combined row; now that GNC is shown separately (and in units), that offset no longer appears, so the raw &minus;$160,000 is shown here as QuickBooks reported it rather than smoothed away.</div>
       </div>
       <div class="card">
         <h3 style="margin:0 0 14px;font-size:15px;">Spend &amp; efficiency, same week</h3>
@@ -442,6 +443,40 @@
         <div id="weekSpendNote"></div>
       </div>
     </div>
+
+    <section class="block" style="margin-top:20px;">
+      <h3>Channel performance — executive summary</h3>
+      <p class="desc">Every dollar figure pulled live from QuickBooks' Sales by Customer report (as of Aug 24, 2026), under the QBO customer names. "Shopify" combines Shopify Synder (which already rolls up its Shopify 2026 sub-account) and Shopify Synder (CAD) per standing instruction. QTD/MTD are necessarily partial periods (Q3 is ~60% elapsed, August is 24 of 31 days) compared against a full prior period — their Status columns will read sharply negative by construction, not because of an actual collapse; the Last-3-vs-Prior-3-weeks columns are the only true apples-to-apples comparison here and are the better trend signal.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table" style="min-width:1400px;">
+          <thead><tr>
+            <th>Channel</th><th class="num">YTD Sales</th><th class="num">% Revenue</th><th class="num">% var. Budget</th>
+            <th class="num">QTD Sales</th><th class="num">QoQ Status</th><th class="num">Last Month</th><th class="num">MTD Sales</th><th class="num">MoM Status</th>
+            <th class="num">Prior 3wk</th><th class="num">Prior 2wk</th><th class="num">Last 3wk</th><th class="num">WoW Status</th>
+          </tr></thead>
+          <tbody id="channelPerfRows"></tbody>
+        </table>
+      </div>
+      <div class="note-box" style="margin-top:12px;">Amazon's Last-3-weeks figure is inflated relative to Prior-3-weeks because Prior-3 includes week 31's confirmed &minus;$72 GNC-reclassification anomaly (see footer) — treat Amazon's WoW as roughly flat, not a real 136% acceleration. Shopify's % variance from Budget compares the Shopify Synder feed only (budget model doesn't separately track the CAD sub-feed) against the weekly Bearish-model rollup, and the two don't tie exactly to QBO's fresh pull — directional, not precise. GNC's weekly columns are in <b>units sold</b>, not dollars (see note below the Weeks 1&ndash;52 table); no weekly $ breakdown exists. Online Retail Wholesaler and TikTok have no weekly figures at all — QBO confirms both at $0 for all of Q3 to date.</div>
+
+      <h3 style="margin-top:24px;">AI summary — % of channel performance</h3>
+      <div id="channelAiSummary"></div>
+    </section>
+
+    <section class="block" style="margin-top:20px;">
+      <h3>Top 10 products by channel</h3>
+      <p class="desc">Amazon: trailing 30 days by total ordered sales (agentcentral Sales &amp; Traffic Business Reports; Aug 21&ndash;24 not yet loaded due to the ~72hr reporting lag, so this skews slightly toward the first 26 of the 30 days). Shopify: trailing 30 days by gross sales (ShopifyQL). Walmart and TikTok are not shown — neither has a connected data source that reports sales by individual product; only channel-level totals are available for them (see Marketplace Health and the executive summary above).</p>
+      <div class="detail-grid">
+        <div class="card">
+          <h3 style="margin:0 0 12px;font-size:15px;">Amazon — top 10 by revenue (trailing 30d)</h3>
+          <table><thead><tr><th>Product</th><th class="num">Units</th><th class="num">Revenue</th></tr></thead><tbody id="topProductsAmazon"></tbody></table>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 12px;font-size:15px;">Shopify — top 10 by gross sales (trailing 30d)</h3>
+          <table><thead><tr><th>Product</th><th class="num">Orders</th><th class="num">Revenue</th></tr></thead><tbody id="topProductsShopify"></tbody></table>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ============ MARKETPLACE HEALTH ============ -->
@@ -488,6 +523,60 @@
         </table>
       </div>
       <div class="note-box info" style="margin-top:12px;">Largest single lot: 42 expired units of Organic Guava Leaf Tea 24 Bags at fulfillment center SAT2 — worth a disposal/removal-order check. "ASINs affected" counts distinct products with at least one unfulfillable unit in that category; the same ASIN can turn up at more than one fulfillment center, so the underlying per-FC line counts run higher (18 / 10 / 5 for Expired / Warehouse Damaged / Defective respectively).</div>
+    </section>
+
+    <section class="block">
+      <h3>GNC — retail sell-through detail</h3>
+      <p class="desc">From GNC's own SPS Analytics sell-through report (Google Sheet, saved as the standing weekly source — see footer). This tracks 5 SKUs currently monitored in GNC's retail program; it reports <b>units sold at retail</b>, not dollars, and is a different measure from the "GNC Holdings" wholesale-invoice revenue QuickBooks tracks (shown in the Channel Performance table on the Overview tab) — the two won't tie together and aren't meant to.</p>
+      <div class="detail-grid">
+        <div class="card">
+          <h3 style="margin:0 0 12px;font-size:15px;">2026 YTD units by SKU (all GNC stores)</h3>
+          <table>
+            <thead><tr><th>SKU</th><th class="num">YTD units (Wk1&ndash;34)</th></tr></thead>
+            <tbody>
+              <tr><td>Mullein Leaf Extract 1oz</td><td class="num">3,215</td></tr>
+              <tr><td>Soursop Bitter Extract 1oz</td><td class="num">3,527</td></tr>
+              <tr><td>Oil of Oregano 2oz</td><td class="num">2,115</td></tr>
+              <tr><td>Moringa Leaf Extract 1oz</td><td class="num">731</td></tr>
+              <tr><td>Soursop Graviola Extract 1oz</td><td class="num"><span class="muted" title="Not yet stocked for most of the year — only a handful of units appear, in weeks 40-41">negligible</span></td></tr>
+            </tbody>
+          </table>
+          <div class="note-box info" style="margin-top:12px;">Weekly unit trend, last 6 weeks (all 5 SKUs combined): Wk29 280 &middot; Wk30 235 &middot; Wk31 261 &middot; Wk32 270 &middot; Wk33 258 &middot; Wk34 240 &mdash; roughly flat, no clear trend either direction.</div>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 12px;font-size:15px;">Stores with recent sales history but zero current stock</h3>
+          <table>
+            <thead><tr><th>Store</th><th class="num">Units sold (period)</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>09006 - El Dorado Commons</td><td class="num">12</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>05507 - Cross Creek Mall</td><td class="num">11</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>08606 - Shoppes of Navarre</td><td class="num">8</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>09778 - GSI Commerce</td><td class="num">8</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>01028 - Greenbriar Mall</td><td class="num">8</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>06801 - The Commons @ Dexter Lake</td><td class="num">7</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>01845 - Tropicana Centre</td><td class="num">6</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>06322 - Jersey Gardens</td><td class="num">5</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>06993 - Dudley Farms Plaza</td><td class="num">5</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>08776 - Autumn Wood Place</td><td class="num">4</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>03897 - Three Rivers Plaza</td><td class="num">4</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>02775 - Perry Creek Plaza</td><td class="num">3</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+              <tr><td>00440 - East Village Square</td><td class="num">3</td><td><span class="tag bad">OOS, sales history</span></td></tr>
+            </tbody>
+          </table>
+          <div class="note-box" style="margin-top:12px;">13 stores carry sales history for these SKUs but show 0 units on-hand + in-transit — real stockout risk at the shelf, not just a low-stock warning. Restocking these (or accepting the lost sell-through) is a decision for the GNC account manager, not something this dashboard can resolve on its own.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Faire — marketplace health</h3>
+      <p class="desc">From the Faire weekly sales &amp; metrics tracking sheet (Google Sheet, saved as the standing weekly source — see footer), which is separate from QuickBooks' Faire Wholesale customer record used in the Channel Performance table on the Overview tab. The two sources disagree on Faire's YTD total ($35,955 here on a Wk1&ndash;34 sheet basis vs. QBO's $29,308.51) — a known, disclosed reconciliation gap between Faire's own tracker and what's landed in the books, not a data error either source can resolve alone.</p>
+      <div class="three-col" style="margin-bottom:20px;">
+        <div class="kpi channel-kpi"><span class="eyebrow">Faire sheet YTD (Wk1&ndash;34, 2026)</span><div class="val">$35,955</div><div class="sub">vs. $39,230.90 pace target (34 wks &times; $1,153.85/wk)</div><span class="tag bad">8.4% behind weekly target</span></div>
+        <div class="kpi channel-kpi"><span class="eyebrow">Last 3 weeks (Wk32&ndash;34)</span><div class="val">$1,323</div><div class="sub">Wk32 $301 &middot; Wk33 $1,022 &middot; Wk34 $0</div><span class="tag bad">down 35.0% vs. prior 3 weeks ($2,036)</span></div>
+        <div class="kpi channel-kpi"><span class="eyebrow">2025 same-period comparison</span><div class="val">n/a</div><div class="sub">2025 weekly actuals exist in the sheet but weren't reconciled to a comparable YTD figure this pull</div><span class="tag info">not computed this run</span></div>
+      </div>
+      <div class="note-box info">Faire order volume is lumpy by nature (a handful of wholesale reorders can swing a week from $0 to $5,500+, as Wk14 shows) — a single down week isn't necessarily a trend. Worth re-checking after another 2-3 weeks of data before treating the recent dip as a real slowdown.</div>
     </section>
   </div>
 
@@ -1132,130 +1221,154 @@
         <div><div style="font-size: 12px; color: var(--text-dim); margin-bottom: 4px;">Total Shipments</div><div style="font-size: 22px; font-weight: 700; color: #fff;" id="ytdShipments">—</div></div>
         <div><div style="font-size: 12px; color: var(--text-dim); margin-bottom: 4px;">Total Revenue</div><div style="font-size: 22px; font-weight: 700; color: #fff;" id="ytdRevenue">—</div></div>
       </div>
+      <div class="note-box info" style="margin-top:14px;">ShipStation's digest only exposes a lifetime packages-shipped counter, not YTD orders/revenue totals — those two are marked "not provided" rather than estimated.</div>
+    </div>
+
+    <div class="card" style="margin-top: 30px;">
+      <h3 style="margin-top: 0;">Top Stores — week of Aug 16–22, 2026</h3>
+      <table>
+        <thead><tr><th>Store</th><th>Channel</th><th class="num">Orders</th><th class="num">Revenue</th></tr></thead>
+        <tbody id="topStoresBody"></tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top: 30px;">
+      <h3 style="margin-top: 0;">Top Customers — week of Aug 16–22, 2026</h3>
+      <table>
+        <thead><tr><th>Customer</th><th class="num">Orders</th><th class="num">Revenue</th></tr></thead>
+        <tbody id="topCustomersBody"></tbody>
+      </table>
+      <div class="note-box info" style="margin-top:14px;">The top two rows came through with no customer name in ShipStation's export — almost certainly the aggregated Amazon FBM and Amazon FBA-Cin7 buyers (Amazon doesn't pass individual buyer identity to sellers), shown here as-is rather than guessing a name.</div>
     </div>
   </div>
 
   <script>
-  async function initShipStationDigest() {
-    const client = new ShipStationClient();
-    try {
-      const digest = await client.getCurrentDigest();
-      const { currentWeek, previousWeek, comparison } = digest;
+  const SHIPSTATION_DIGEST = {
+    currentWeek: { label: 'Aug 16–22, 2026', metrics: { totalOrders: 1075, totalShipments: 153, totalRevenue: 61937 } },
+    previousWeek: { label: 'Aug 9–15, 2026' },
+    comparison: {
+      domesticOrders: { previous: 994, current: 1067, change: 7.3 },
+      intlOrders: { previous: 9, current: 8, change: -11.1 },
+      totalOrders: { previous: 1003, current: 1075, change: 7.2 },
+      domesticRevenue: { previous: 55674, current: 61191, change: 9.9 },
+      intlRevenue: { previous: 1534, current: 746, change: -51.4 },
+      totalRevenue: { previous: 57208, current: 61937, change: 8.3 },
+      domesticShipments: { previous: 153, current: 147, change: -3.9 },
+      intlShipments: { previous: 5, current: 6, change: 20.0 },
+      totalShipments: { previous: 158, current: 153, change: -3.2 },
+      domesticShippingCost: { previous: 1001, current: 1020, change: 1.9 },
+      intlShippingCost: { previous: 150, current: 127, change: -15.3 },
+      totalShippingCost: { previous: 1152, current: 1147, change: -0.4 },
+      domesticCostPerShipment: { previous: 6.54, current: 6.94, change: 6.1 },
+      intlCostPerShipment: { previous: 30.09, current: 21.23, change: -29.4 },
+      costPerShipment: { previous: 7.29, current: 7.50, change: 2.9 }
+    },
+    ytdPackagesShipped: 4113,
+    topStores: [
+      { store: 'Amazon FBM Channel', channel: 'Amazon', orders: 673, revenue: 36634.41 },
+      { store: 'Amazon FBA - Cin7', channel: 'DearSystems', orders: 355, revenue: 21437.17 },
+      { store: 'Herbal Goodness Shopify Store', channel: 'Shopify', orders: 32, revenue: 3442.64 },
+      { store: 'Walmart Store', channel: 'Walmart', orders: 11, revenue: 215.07 },
+      { store: 'TikTok Store', channel: 'TikTok Shop US', orders: 4, revenue: 207.41 }
+    ],
+    topCustomers: [
+      { name: '(not provided — Amazon FBM buyer)', orders: 670, revenue: 36558.59 },
+      { name: '(not provided — Amazon FBA buyer)', orders: 191, revenue: 10498.93 },
+      { name: 'Leigh Erin Connealy', orders: 1, revenue: 1953.00 },
+      { name: 'brett Merritt', orders: 1, revenue: 383.43 },
+      { name: 'Karen Marfise', orders: 1, revenue: 345.86 },
+      { name: 'Laurianne Levert-Gauthier', orders: 1, revenue: 251.80 },
+      { name: 'brett Merritt', orders: 2, revenue: 219.11 },
+      { name: 'Edward Stratton', orders: 1, revenue: 215.00 },
+      { name: 'Robert Fast', orders: 1, revenue: 215.00 },
+      { name: 'James Walsh', orders: 1, revenue: 206.85 }
+    ]
+  };
 
-      document.getElementById('digestTitle').textContent = `Week of ${currentWeek.start} to ${currentWeek.end}`;
-      document.getElementById('digestSubtitle').textContent = `Compared to previous week (${previousWeek.start} to ${previousWeek.end})`;
-
-      document.getElementById('currentOrders').textContent = ShipStationClient.formatNumber(currentWeek.metrics.totalOrders);
-      document.getElementById('currentShipments').textContent = ShipStationClient.formatNumber(currentWeek.metrics.totalShipments);
-      document.getElementById('currentRevenue').textContent = ShipStationClient.formatCurrency(currentWeek.metrics.totalRevenue);
-
-      const orderChange = comparison.totalOrders.change;
-      const shipmentChange = comparison.totalShipments.change;
-      const revenueChange = comparison.totalRevenue.change;
-
-      document.getElementById('ordersChange').textContent = `${comparison.totalOrders.previous} last week → ${orderChange}% change`;
-      document.getElementById('ordersTag').innerHTML = ShipStationClient.getChangeBadge(orderChange);
-
-      document.getElementById('shipmentsChange').textContent = `${comparison.totalShipments.previous} last week → ${shipmentChange}% change`;
-      document.getElementById('shipmentsTag').innerHTML = ShipStationClient.getChangeBadge(shipmentChange);
-
-      document.getElementById('revenueChange').textContent = `${ShipStationClient.formatCurrency(comparison.totalRevenue.previous)} last week → ${revenueChange}% change`;
-      document.getElementById('revenueTag').innerHTML = ShipStationClient.getChangeBadge(revenueChange);
-
-      document.getElementById('prevWeekHeader').textContent = `${previousWeek.start.split('-').slice(1).join('/')}-${previousWeek.end.split('-')[2]}`;
-      document.getElementById('currWeekHeader').textContent = `${currentWeek.start.split('-').slice(1).join('/')}-${currentWeek.end.split('-')[2]}`;
-
-      const rows = [
-        { label: 'Domestic Orders', key: 'domesticOrders' },
-        { label: 'Intl Orders', key: 'intlOrders' },
-        { label: 'Total Orders', key: 'totalOrders' },
-        { label: 'Domestic Revenue', key: 'domesticRevenue', format: 'currency' },
-        { label: 'Intl Revenue', key: 'intlRevenue', format: 'currency' },
-        { label: 'Total Revenue', key: 'totalRevenue', format: 'currency' },
-        { label: 'Domestic Shipments', key: 'domesticShipments' },
-        { label: 'Intl Shipments', key: 'intlShipments' },
-        { label: 'Total Shipments', key: 'totalShipments' },
-        { label: 'Domestic Shipping Cost', key: 'domesticShippingCost', format: 'currency' },
-        { label: 'Intl Shipping Cost', key: 'intlShippingCost', format: 'currency' },
-        { label: 'Total Shipping Cost', key: 'totalShippingCost', format: 'currency' },
-        { label: 'Domestic Cost/Shipment', key: 'domesticCostPerShipment', format: 'currency' },
-        { label: 'Intl Cost/Shipment', key: 'intlCostPerShipment', format: 'currency' },
-        { label: 'Cost/Shipment', key: 'costPerShipment', format: 'currency' }
-      ];
-
-      const tableBody = document.getElementById('comparisonTableBody');
-      tableBody.innerHTML = rows.map(row => {
-        const comp = comparison[row.key];
-        const format = row.format === 'currency' ? v => ShipStationClient.formatCurrency(v) : v => ShipStationClient.formatNumber(v);
-        const change = parseFloat(comp.change);
-        const changeClass = change > 0 ? 'good' : change < 0 ? 'bad' : 'info';
-        return `<tr><td>${row.label}</td><td class="num">${format(comp.previous)}</td><td class="num">${format(comp.current)}</td><td class="num"><span class="tag ${changeClass}">${change > 0 ? '+' : ''}${comp.change}%</span></td></tr>`;
-      }).join('');
-
-      document.getElementById('domesticOrdersCurr').textContent = ShipStationClient.formatNumber(comparison.domesticOrders.current);
-      document.getElementById('domesticOrdersPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.domesticOrders.previous}</span>`;
-      document.getElementById('domesticOrdersChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticOrders.change);
-
-      document.getElementById('domesticRevenueCurr').textContent = ShipStationClient.formatCurrency(comparison.domesticRevenue.current);
-      document.getElementById('domesticRevenuePrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.domesticRevenue.previous)}</span>`;
-      document.getElementById('domesticRevenueChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticRevenue.change);
-
-      document.getElementById('domesticShipmentsCurr').textContent = ShipStationClient.formatNumber(comparison.domesticShipments.current);
-      document.getElementById('domesticShipmentsPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.domesticShipments.previous}</span>`;
-      document.getElementById('domesticShipmentsChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticShipments.change);
-
-      document.getElementById('domesticCostCurr').textContent = ShipStationClient.formatCurrency(comparison.domesticShippingCost.current);
-      document.getElementById('domesticCostPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.domesticShippingCost.previous)}</span>`;
-      document.getElementById('domesticCostChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticShippingCost.change);
-
-      document.getElementById('domesticCostPerCurr').textContent = ShipStationClient.formatCurrency(comparison.domesticCostPerShipment.current);
-      document.getElementById('domesticCostPerPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.domesticCostPerShipment.previous)}</span>`;
-      document.getElementById('domesticCostPerChange').innerHTML = ShipStationClient.getChangeBadge(comparison.domesticCostPerShipment.change);
-
-      document.getElementById('intlOrdersCurr').textContent = ShipStationClient.formatNumber(comparison.intlOrders.current);
-      document.getElementById('intlOrdersPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.intlOrders.previous}</span>`;
-      document.getElementById('intlOrdersChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlOrders.change);
-
-      document.getElementById('intlRevenueCurr').textContent = ShipStationClient.formatCurrency(comparison.intlRevenue.current);
-      document.getElementById('intlRevenuePrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.intlRevenue.previous)}</span>`;
-      document.getElementById('intlRevenueChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlRevenue.change);
-
-      document.getElementById('intlShipmentsCurr').textContent = ShipStationClient.formatNumber(comparison.intlShipments.current);
-      document.getElementById('intlShipmentsPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${comparison.intlShipments.previous}</span>`;
-      document.getElementById('intlShipmentsChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlShipments.change);
-
-      document.getElementById('intlCostCurr').textContent = ShipStationClient.formatCurrency(comparison.intlShippingCost.current);
-      document.getElementById('intlCostPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.intlShippingCost.previous)}</span>`;
-      document.getElementById('intlCostChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlShippingCost.change);
-
-      document.getElementById('intlCostPerCurr').textContent = ShipStationClient.formatCurrency(comparison.intlCostPerShipment.current);
-      document.getElementById('intlCostPerPrev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${ShipStationClient.formatCurrency(comparison.intlCostPerShipment.previous)}</span>`;
-      document.getElementById('intlCostPerChange').innerHTML = ShipStationClient.getChangeBadge(comparison.intlCostPerShipment.change);
-
-      const yearData = await client.getYearDigest();
-      if (yearData.weeks && yearData.weeks.length > 0) {
-        const ytdOrders = yearData.weeks.reduce((sum, w) => sum + w.metrics.totalOrders, 0);
-        const ytdShipments = yearData.weeks.reduce((sum, w) => sum + w.metrics.totalShipments, 0);
-        const ytdRevenue = yearData.weeks.reduce((sum, w) => sum + w.metrics.totalRevenue, 0);
-        document.getElementById('ytdOrders').textContent = ShipStationClient.formatNumber(ytdOrders);
-        document.getElementById('ytdShipments').textContent = ShipStationClient.formatNumber(ytdShipments);
-        document.getElementById('ytdRevenue').textContent = ShipStationClient.formatCurrency(ytdRevenue);
-      }
-    } catch (error) {
-      console.error('Failed to load digest:', error);
-      document.getElementById('comparisonTableBody').innerHTML = `<tr><td colspan="4" style="color: var(--danger);">Error: ${error.message}</td></tr>`;
-    }
+  function ssFmtNum(v){ return v.toLocaleString('en-US'); }
+  function ssFmtMoney(v){ return v.toLocaleString('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function ssBadge(change){
+    const cls = change > 0 ? 'good' : change < 0 ? 'bad' : 'info';
+    return `<span class="tag ${cls}">${change > 0 ? '+' : ''}${change}%</span>`;
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      const tabNav = document.getElementById('tabNav');
-      if (tabNav) tabNav.addEventListener('click', (e) => { if (e.target.dataset.page === 'shipstation-digest') initShipStationDigest(); });
-    });
-  } else {
-    const tabNav = document.getElementById('tabNav');
-    if (tabNav) tabNav.addEventListener('click', (e) => { if (e.target.dataset.page === 'shipstation-digest') initShipStationDigest(); });
+  function renderShipStationDigest() {
+    const { currentWeek, previousWeek, comparison, ytdPackagesShipped, topStores, topCustomers } = SHIPSTATION_DIGEST;
+
+    document.getElementById('digestTitle').textContent = `Week of ${currentWeek.label}`;
+    document.getElementById('digestSubtitle').textContent = `Compared to previous week (${previousWeek.label})`;
+
+    document.getElementById('currentOrders').textContent = ssFmtNum(currentWeek.metrics.totalOrders);
+    document.getElementById('currentShipments').textContent = ssFmtNum(currentWeek.metrics.totalShipments);
+    document.getElementById('currentRevenue').textContent = ssFmtMoney(currentWeek.metrics.totalRevenue);
+
+    document.getElementById('ordersChange').textContent = `${ssFmtNum(comparison.totalOrders.previous)} last week → ${comparison.totalOrders.change}% change`;
+    document.getElementById('ordersTag').innerHTML = ssBadge(comparison.totalOrders.change);
+
+    document.getElementById('shipmentsChange').textContent = `${ssFmtNum(comparison.totalShipments.previous)} last week → ${comparison.totalShipments.change}% change`;
+    document.getElementById('shipmentsTag').innerHTML = ssBadge(comparison.totalShipments.change);
+
+    document.getElementById('revenueChange').textContent = `${ssFmtMoney(comparison.totalRevenue.previous)} last week → ${comparison.totalRevenue.change}% change`;
+    document.getElementById('revenueTag').innerHTML = ssBadge(comparison.totalRevenue.change);
+
+    document.getElementById('prevWeekHeader').textContent = previousWeek.label;
+    document.getElementById('currWeekHeader').textContent = currentWeek.label;
+
+    const rows = [
+      { label: 'Domestic Orders', key: 'domesticOrders' },
+      { label: 'Intl Orders', key: 'intlOrders' },
+      { label: 'Total Orders', key: 'totalOrders' },
+      { label: 'Domestic Revenue', key: 'domesticRevenue', format: 'currency' },
+      { label: 'Intl Revenue', key: 'intlRevenue', format: 'currency' },
+      { label: 'Total Revenue', key: 'totalRevenue', format: 'currency' },
+      { label: 'Domestic Shipments', key: 'domesticShipments' },
+      { label: 'Intl Shipments', key: 'intlShipments' },
+      { label: 'Total Shipments', key: 'totalShipments' },
+      { label: 'Domestic Shipping Cost', key: 'domesticShippingCost', format: 'currency' },
+      { label: 'Intl Shipping Cost', key: 'intlShippingCost', format: 'currency' },
+      { label: 'Total Shipping Cost', key: 'totalShippingCost', format: 'currency' },
+      { label: 'Domestic Cost/Shipment', key: 'domesticCostPerShipment', format: 'currency' },
+      { label: 'Intl Cost/Shipment', key: 'intlCostPerShipment', format: 'currency' },
+      { label: 'Cost/Shipment', key: 'costPerShipment', format: 'currency' }
+    ];
+
+    document.getElementById('comparisonTableBody').innerHTML = rows.map(row => {
+      const comp = comparison[row.key];
+      const format = row.format === 'currency' ? ssFmtMoney : ssFmtNum;
+      return `<tr><td>${row.label}</td><td class="num">${format(comp.previous)}</td><td class="num">${format(comp.current)}</td><td class="num">${ssBadge(comp.change)}</td></tr>`;
+    }).join('');
+
+    const wireMetric = (prefix, key, format) => {
+      const comp = comparison[key];
+      document.getElementById(prefix + 'Curr').textContent = format(comp.current);
+      document.getElementById(prefix + 'Prev').innerHTML = `<span style="display: block; font-weight: 400; font-size: 11px; color: var(--text-faint); margin-top: 2px;">${format(comp.previous)}</span>`;
+      document.getElementById(prefix + 'Change').innerHTML = ssBadge(comp.change);
+    };
+    wireMetric('domesticOrders', 'domesticOrders', ssFmtNum);
+    wireMetric('domesticRevenue', 'domesticRevenue', ssFmtMoney);
+    wireMetric('domesticShipments', 'domesticShipments', ssFmtNum);
+    wireMetric('domesticCost', 'domesticShippingCost', ssFmtMoney);
+    wireMetric('domesticCostPer', 'domesticCostPerShipment', ssFmtMoney);
+    wireMetric('intlOrders', 'intlOrders', ssFmtNum);
+    wireMetric('intlRevenue', 'intlRevenue', ssFmtMoney);
+    wireMetric('intlShipments', 'intlShipments', ssFmtNum);
+    wireMetric('intlCost', 'intlShippingCost', ssFmtMoney);
+    wireMetric('intlCostPer', 'intlCostPerShipment', ssFmtMoney);
+
+    document.getElementById('ytdOrders').textContent = 'Not provided';
+    document.getElementById('ytdShipments').textContent = ssFmtNum(ytdPackagesShipped);
+    document.getElementById('ytdRevenue').textContent = 'Not provided';
+
+    document.getElementById('topStoresBody').innerHTML = topStores.map(s =>
+      `<tr><td>${s.store}</td><td>${s.channel}</td><td class="num">${ssFmtNum(s.orders)}</td><td class="num">${ssFmtMoney(s.revenue)}</td></tr>`
+    ).join('');
+
+    document.getElementById('topCustomersBody').innerHTML = topCustomers.map(c =>
+      `<tr><td>${c.name}</td><td class="num">${ssFmtNum(c.orders)}</td><td class="num">${ssFmtMoney(c.revenue)}</td></tr>`
+    ).join('');
   }
+
+  renderShipStationDigest();
   </script>
 </main>
 
@@ -1263,7 +1376,7 @@
   <div class="prov-grid">
     <div>
       <b>Data pulled</b><br>
-      QuickBooks Online and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. Amazon is back on its native Seller Central + Ads connector (agentcentral) this run, re-enabled after being unavailable for the prior two weekly firings (Aug 9 and the blocked Aug 21/Aug 24 attempts) — it's now the source for Overview, Product Intelligence, and the weekly channel-revenue strip. Lisa WellProof remains the dedicated, independently-sourced data feed for the Marketplace Health tab specifically (by design — see that tab's note), and is Walmart's only source everywhere else. The 2026 Budget Model Google Sheet was re-pulled in full — it still hasn't advanced past week 31 (see Data-Lag Re-check below), so weeks 32–34's channel revenue on the Overview week-strip were sourced directly from Amazon's Sales API and QuickBooks' Sales-by-Customer report instead of waiting on the sheet. Klaviyo's Reporting API, live as of Aug 24, 2026 (week of Aug 18–24). Zendesk ticket metrics (Overview KPI cards + Customer Service tab detail) pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, trailing 7 days ending Aug 24. The PPC &amp; SEO Intelligence tab pulls GA4 data live from Google Analytics 4 (property 269389709), Google Search Console, organic keyword/domain/backlink data live from Ahrefs and SEMrush, Meta Ads account/campaign performance live from the Ads Manager API (account act_1909407616148345), and YouTube (lifetime-stats-only) via Composio — LinkedIn and TikTok remain gaps (see below). Google Ads remains a gap this pull (API quota exhausted). Each source refreshes on its own cadence, so figures won't always tie exactly across tabs.
+      QuickBooks Online and Shopify Admin — live via connected integrations on <span id="footDate">—</span>. Amazon is back on its native Seller Central + Ads connector (agentcentral) this run, re-enabled after being unavailable for the prior two weekly firings (Aug 9 and the blocked Aug 21/Aug 24 attempts) — it's now the source for Overview, Product Intelligence, and the weekly channel-revenue strip. Lisa WellProof remains the dedicated, independently-sourced data feed for the Marketplace Health tab specifically (by design — see that tab's note), and is Walmart's only source everywhere else. The 2026 Budget Model Google Sheet was re-pulled in full — it still hasn't advanced past week 31 (see Data-Lag Re-check below), so weeks 32–34's channel revenue on the Overview week-strip were sourced directly from Amazon's Sales API and QuickBooks' Sales-by-Customer report instead of waiting on the sheet. Klaviyo's Reporting API, live as of Aug 24, 2026 (week of Aug 18–24). Zendesk ticket metrics (Overview KPI cards + Customer Service tab detail) pull live from Zendesk (herbalpapaya.zendesk.com) via the Composio MCP connector, trailing 7 days ending Aug 24. The PPC &amp; SEO Intelligence tab pulls GA4 data live from Google Analytics 4 (property 269389709), Google Search Console, organic keyword/domain/backlink data live from Ahrefs and SEMrush, Meta Ads account/campaign performance live from the Ads Manager API (account act_1909407616148345), and YouTube (lifetime-stats-only) via Composio — LinkedIn and TikTok remain gaps (see below). Google Ads remains a gap this pull (API quota exhausted). ShipStation has no connected server or plugin in this environment — the Weekly Digest tab this run was entered from figures the owner pasted in directly (week of Aug 16&ndash;22, 2026), not pulled live; a real ShipStation connection is still needed for this to update on its own. Two new standing weekly sources as of this run, saved for every future pull: the <a href="https://docs.google.com/spreadsheets/d/1ifVagZWKamF8_yyC2_TzzTJ_eQ6J_E-qvGvZNYo_NBs/edit" target="_blank" rel="noopener">GNC SPS Analytics sell-through sheet</a> (units by SKU/store, feeds the Overview week-strip's GNC row and the Marketplace Health GNC section) and the <a href="https://docs.google.com/spreadsheets/d/1TmxSJ23NoLItW5mdTtCaF29ZHfYIzJ06/edit" target="_blank" rel="noopener">Faire weekly sales &amp; metrics sheet</a> (feeds the Overview week-strip's Faire row and the Marketplace Health Faire section) — both replace what QBO's Synder feed was previously used for on those two channels. Each source refreshes on its own cadence, so figures won't always tie exactly across tabs.
     </div>
     <div>
       <b>Confirmed vs. estimated</b><br>
@@ -1284,8 +1397,13 @@ const REV_ACTUAL_TOTAL = [72158.79, 71015.14, 115437.3, 65123.07, 76178.02, 6785
 const REV_ACTUAL_AMAZON = [57365.54, 53707.11, 56718.47, 50092.36, 54956.15, 53804.56, 58859.39, 59716.8, 56915.28, 57416.02, 52247.6, 53498.79, 55049.44, 50037.91, 51096.37, 52394.82, 47946.24, 47939.15, 46754.46, 44021.8, 47608.76, 41762.42, 45009.59, 47069.52, 50358.31, 46521.83, 41923.3, 43992.14, 40531.9, 12133.11, -72.37, 47981.48, 50036.41, 26148.26];
 const REV_ACTUAL_SHOPIFY = [9764.04, 11784.26, 9742.74, 9095.19, 10978.57, 8161.73, 7319.15, 14262.17, 10944.01, 12387.04, 16856.28, 11663.07, 13711.68, 14211.77, 11061.83, 7391.97, 12543.52, 11121.09, 7361.39, 9623.04, 10876.59, 7823.82, 11335.66, 9603.99, 9089.91, 9822.18, 8472.5, 7640.49, 10135.6, 7457.51, 1994.35, 9518.77, 11466.76, 3850.46];
 const REV_ACTUAL_WALMART = [3880.98, 3606.99, 4259.81, 4317.72, 5414.24, 5096.84, 4054.02, 3376.44, 4134.35, 4315.06, 3013.3, 2779.94, 3155.13, 2699.35, 1980.37, 1922.96, 2000.64, 2058.05, 1711.96, 2085.46, 2361.85, 2358.88, 2796.09, 3800.0, 2928.66, 3365.91, 3561.4, 3939.36, 3104.62, 3923.64, 760.19, 3491.23, 2763.12, 1499.33];
-const REV_ACTUAL_FAIRE = [1148.23, 1916.78, 2326.15, 1617.8, 523.35, 759.27, 499.63, 1259.32, 131.5, 1538.43, null, 5624.35, 585.5, 1504.55, null, 351.23, 1568.37, 268.74, 248.39, null, 967.66, 581.34, 1678.29, 1343.09, 1472.16, 68.83, 320.8, 178.63, 823.85, null, null, 0.0, 0.0, 0.0];
-const REV_ACTUAL_GNC = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 160000.0, 0.0, 0.0, 4553.92];
+// Faire: replaced with weekly actuals from the Faire tracking sheet (weeks 1-34, 2026) per standing instruction — see FAIRE_SHEET_URL below.
+const REV_ACTUAL_FAIRE = [1128, 1486, 3760, 2337, 522, 0, 741, 1288, 1422, 90, 1511, 976, 0, 5560, 576, 1958, 0, 1353, 836, 482, 0, 964, 564, 2530, 1925, 62, 360, 165, 1085, 310, 641, 301, 1022, 0];
+const REV_ACTUAL_GNC = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 280, 235, 261, 270, 258, 240];
+// GNC is tracked in UNITS sold (SPS Analytics sell-through report), not dollars — QBO doesn't attribute GNC revenue on a weekly basis. See GNC_SHEET_URL below.
+const REV_ACTUAL_GNC_IS_UNITS = true;
+const REV_ACTUAL_ONLINE_RETAILER = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+// Online Retailer Wholesaler isn't tracked at weekly grain anywhere — QBO confirms $0 for all of Q3 so far (see Channel Performance table); YTD/QTD/MTD figures there are the only granularity available for this channel.
 const REV_ACTUAL_TIKTOK = [null, null, null, null, null, 35.95, 34.43, 30.2, 30.2, null, null, null, null, null, null, null, null, null, null, null, null, 32.95, 99.9, null, 57.36, 30.4, null, null, null, null, null, 0.0, 0.0, 0.0];
 const REV_ACTUAL_OTHER = [-0.0, -0.0, 42390.13, -0.0, 4305.71, 0.0, -0.0, 293.77, 8217.15, 219.26, 28842.64, 308.74, -0.0, -15.52, 16020.72, -44.26, 20930.94, 18215.68, -0.0, -0.0, 398.86, 13523.13, 13661.76, 546.42, 5441.97, -0.0, 9107.84, 0.0, -0.0, 42861.76, -160000.0, 297.8, 159.9, 0.0];
 const ADV_MKTG_ACTUAL = [12619.39, 14784.58, 14224.15, 15638.73, 11918.43, 12779.26, 12461.41, 12556.59, null, 18402.36, 10153.81, 11759.28, null, 22074.1, 11935.47, 11551.09, 7735.51, null, 9050.72, 11097.15, 12817.93, 8380.0, 12163.15, 9453.86, 11533.17, 10243.47, 9733.72, 8585.03, 6992.98, 8220.36, 6461.64, null, null, null];
@@ -1385,18 +1503,23 @@ function selectWeek(n){
 
   const rows = [
     {label:'Amazon', actual: hasActual||isPartial? REV_ACTUAL_AMAZON[idx] : null, budget: REV_BUDGET_AMAZON[idx]},
-    {label:'Shopify', actual: hasActual||isPartial? REV_ACTUAL_SHOPIFY[idx] : null, budget: REV_BUDGET_SHOPIFY[idx]},
     {label:'Walmart', actual: hasActual||isPartial? REV_ACTUAL_WALMART[idx] : null, budget: REV_BUDGET_WALMART[idx]},
-    {label:'GNC / Faire / Other', actual: hasActual||isPartial? sumSafe([REV_ACTUAL_GNC[idx],REV_ACTUAL_FAIRE[idx],REV_ACTUAL_TIKTOK[idx],REV_ACTUAL_OTHER[idx]]) : null, budget: null},
+    {label:'Shopify', actual: hasActual||isPartial? REV_ACTUAL_SHOPIFY[idx] : null, budget: REV_BUDGET_SHOPIFY[idx]},
+    {label:'GNC (units sold)', actual: hasActual||isPartial? REV_ACTUAL_GNC[idx] : null, budget: null, isUnits: true},
+    {label:'Faire', actual: hasActual||isPartial? REV_ACTUAL_FAIRE[idx] : null, budget: null},
+    {label:'Online Retail Wholesaler', actual: hasActual||isPartial? REV_ACTUAL_ONLINE_RETAILER[idx] : null, budget: null},
+    {label:'TikTok', actual: hasActual||isPartial? REV_ACTUAL_TIKTOK[idx] : null, budget: null},
+    {label:'Other (individual wholesale/direct customers)', actual: hasActual||isPartial? REV_ACTUAL_OTHER[idx] : null, budget: null},
     {label:'Total', actual: hasActual||isPartial? REV_ACTUAL_TOTAL[idx] : null, budget: REV_BUDGET_TOTAL[idx], strong:true},
   ];
   document.getElementById('weekChannelRows').innerHTML = rows.map(r=>{
     const variance = (r.actual!==null && r.actual!==undefined && r.budget!==null && r.budget!==undefined) ? r.actual - r.budget : null;
     const varPct = (variance!==null && r.budget) ? (variance/r.budget*100) : null;
     const varColor = variance===null? 'var(--text-faint)' : (variance>=0? 'var(--good)':'var(--danger)');
+    const fmtActual = v => r.isUnits ? v.toLocaleString('en-US')+' units' : fmtMoney(v);
     return `<tr${r.strong?' style="font-weight:700;"':''}>
       <td>${r.label}</td>
-      <td class="num">${r.actual===null? '<span class=\"muted\">no data yet</span>' : fmtMoney(r.actual)}</td>
+      <td class="num">${r.actual===null? '<span class=\"muted\">no data yet</span>' : fmtActual(r.actual)}</td>
       <td class="num">${r.budget===null?'<span class="muted">n/a</span>':fmtMoney(r.budget)}</td>
       <td class="num" style="color:${varColor};">${variance===null?'—':(variance>=0?'+':'')+fmtMoney(variance)+(varPct!==null?' ('+(varPct>=0?'+':'')+varPct.toFixed(1)+'%)':'')}</td>
     </tr>`;
@@ -1426,6 +1549,95 @@ function selectWeek(n){
   document.getElementById('weekSpendNote').innerHTML = (n>31)? '<div class="note-box info">Weekly OpEx and ROAS actuals aren\'t available for future weeks — only revenue is budgeted week-by-week in the Bearish model.</div>' : '';
 }
 function sumSafe(arr){ const vals = arr.filter(v=>v!==null && v!==undefined); if(!vals.length) return null; return vals.reduce((a,b)=>a+b,0); }
+
+/* ---------------- CHANNEL PERFORMANCE — EXECUTIVE SUMMARY (QBO Sales by Customer, pulled Aug 24, 2026) ---------------- */
+const COMPANY_YTD_TOTAL = 2962174.64;
+function fmtPct(v, digits){ if(v===null||v===undefined) return null; return (v>=0?'+':'')+v.toFixed(digits===undefined?1:digits)+'%'; }
+function statusCell(pct, opts){
+  opts = opts || {};
+  if(pct===null||pct===undefined) return '<span class="muted">n/a</span>';
+  const color = pct>=0? 'var(--good)':'var(--danger)';
+  return `<span style="color:${color};font-weight:600;">${fmtPct(pct)}</span>`;
+}
+const CHANNEL_PERF = [
+  { name:'Amazon', ytd:1613874.87, budgetVar:-2.79, qtd:278814.28, lastQ:620227.19, lastMonth:201370.87, mtd:77443.41, prior3:52592.64, prior2:12060.74, last3:124166.15 },
+  { name:'Walmart', ytd:109506.08, budgetVar:1.20, qtd:26691.14, lastQ:31900.78, lastMonth:15809.50, mtd:10881.64, prior3:7788.45, prior2:4683.83, last3:7753.68 },
+  { name:'Shopify', ytd:332614.24, budgetVar:-6.03, qtd:70787.78, lastQ:128566.19, lastMonth:38456.87, mtd:32330.91, prior3:19587.46, prior2:9451.86, last3:24835.99 },
+  { name:'GNC Holdings', ytd:213634.15, budgetVar:null, qtd:56523.52, lastQ:86336.26, lastMonth:51969.60, mtd:4553.92, prior3:776, prior2:496, last3:768, weeklyIsUnits:true },
+  { name:'Faire', ytd:29308.51, budgetVar:null, qtd:1323.28, lastQ:10052.65, lastMonth:1323.28, mtd:0, prior3:2036, prior2:951, last3:1323 },
+  { name:'Online Retail Wholesaler', ytd:16446.59, budgetVar:null, qtd:0, lastQ:2333.57, lastMonth:0, mtd:0, prior3:null, prior2:null, last3:null },
+  { name:'TikTok', ytd:352.51, budgetVar:null, qtd:0, lastQ:221.73, lastMonth:0, mtd:0, prior3:null, prior2:null, last3:0 },
+  { name:'Other (individual wholesale/direct customers)', ytd:646437.69, budgetVar:null, qtd:null, lastQ:null, lastMonth:null, mtd:null, prior3:null, prior2:null, last3:null, otherRow:true },
+];
+document.getElementById('channelPerfRows').innerHTML = CHANNEL_PERF.map(c=>{
+  const pctRev = c.ytd/COMPANY_YTD_TOTAL*100;
+  const qoq = (c.qtd!==null && c.lastQ) ? (c.qtd-c.lastQ)/c.lastQ*100 : null;
+  const mom = (c.mtd!==null && c.lastMonth) ? (c.mtd-c.lastMonth)/c.lastMonth*100 : (c.mtd===0 && c.lastMonth===0 ? null : null);
+  const wow = (c.last3!==null && c.prior3) ? (c.last3-c.prior3)/c.prior3*100 : null;
+  const unitSuffix = c.weeklyIsUnits ? ' u' : '';
+  const fmtWeekly = v => v===null ? '<span class="muted">n/a</span>' : (c.weeklyIsUnits ? v.toLocaleString('en-US')+' units' : fmtMoney(v));
+  return `<tr${c.otherRow?' style="color:var(--text-dim);"':''}>
+    <td>${c.name}</td>
+    <td class="num">${fmtMoney(c.ytd)}</td>
+    <td class="num">${pctRev.toFixed(2)}%</td>
+    <td class="num">${c.budgetVar===null?'<span class="muted">no target</span>':statusCell(c.budgetVar)}</td>
+    <td class="num">${c.qtd===null?'<span class="muted">n/a</span>':fmtMoney(c.qtd)}</td>
+    <td class="num">${statusCell(qoq)}</td>
+    <td class="num">${c.lastMonth===null?'<span class="muted">n/a</span>':fmtMoney(c.lastMonth)}</td>
+    <td class="num">${c.mtd===null?'<span class="muted">n/a</span>':fmtMoney(c.mtd)}</td>
+    <td class="num">${statusCell(mom)}</td>
+    <td class="num">${fmtWeekly(c.prior3)}</td>
+    <td class="num">${fmtWeekly(c.prior2)}</td>
+    <td class="num">${fmtWeekly(c.last3)}</td>
+    <td class="num">${statusCell(wow)}</td>
+  </tr>`;
+}).join('');
+
+const CHANNEL_AI_SUMMARY = [
+  {name:'Amazon', pct:54.5, text:"By far the largest channel at 54.5% of YTD revenue. The Last-3-vs-Prior-3-weeks jump (+136%) is an artifact of the week-31 near-zero anomaly sitting in Prior-3, not real acceleration — treat this channel as roughly flat week-to-week. Running about 2.8% behind its rolled-up weekly budget model YTD."},
+  {name:'Shopify', pct:11.2, text:"11.2% of YTD revenue (Shopify Synder + CAD). The real 3-week trend is genuinely positive (+26.8%), the strongest organic momentum of the major channels. Tracking about 6% behind its budget model, though that comparison and QBO's fresh YTD figure for this channel don't fully reconcile (~$17K gap) — a known cross-tab tie-out gap, not a data error."},
+  {name:'GNC Holdings', pct:7.2, text:"7.2% of YTD revenue, the #3 channel and the only major wholesale account. Sell-through units are roughly flat over the last 3 weeks (-1.0%) vs. the prior 3. No weekly dollar figure exists for this channel and no budget target is set for it specifically."},
+  {name:'Walmart', pct:3.7, text:"3.7% of YTD revenue. Essentially flat week-over-week (-0.5%) and tracking almost exactly to its budget model (+1.2%) — the most predictable channel this pull."},
+  {name:'Faire', pct:1.0, text:"1.0% of YTD revenue. Down 35% over the last 3 weeks vs. the prior 3 — worth watching, though Faire's absolute dollars are small enough that one or two wholesale orders swing the percentage substantially."},
+  {name:'Online Retail Wholesaler', pct:0.6, text:"0.6% of YTD revenue, and $0 in Q3 so far — this channel has gone quiet. No weekly breakdown exists to pinpoint exactly when it stopped."},
+  {name:'TikTok', pct:0.01, text:"Effectively a rounding error at 0.01% of YTD revenue ($352.51) and $0 this quarter — confirmed a non-factor channel currently, not a tracking gap."},
+  {name:'Other (~65 individual wholesale/direct customers)', pct:21.8, text:"A real, material 21.8% of YTD revenue collectively, spread across roughly 65 small wholesale and direct-buyer accounts (e.g. Apple Crate, Sunshine Health Foods, and dozens of individuals) — none large individually, but together too big to ignore as an \"other\" bucket."},
+];
+document.getElementById('channelAiSummary').innerHTML = '<ul style="margin:0;padding-left:20px;line-height:1.8;">' + CHANNEL_AI_SUMMARY.map(c =>
+  `<li><b>${c.name}</b> — ${c.text}</li>`
+).join('') + '</ul>';
+
+/* ---------------- TOP 10 PRODUCTS BY CHANNEL (Amazon: agentcentral Sales & Traffic, trailing 30d; Shopify: ShopifyQL, trailing 30d) ---------------- */
+const TOP_PRODUCTS_AMAZON = [
+  {name:'Papaya Leaf Extract Digestive Enzymes Capsules for Platelet', units:571, revenue:39343.03},
+  {name:'Papaya Leaf Extract Liquid, Platelet Supplement Boost 16oz', units:457, revenue:35339.77},
+  {name:'Soursop Graviola Liquid Drops Extract, Bitters 12Fl Oz', units:280, revenue:18160.00},
+  {name:'Papaya Leaf Blood Support Capsules, Platelet, 60/450mg', units:196, revenue:10363.45},
+  {name:'Papaya Leaf Extract, 60 Capsules, Blood Platelets Supplement', units:187, revenue:10253.65},
+  {name:'Organic Papaya Leaf Liquid Extract for Platelet - 1fl oz', units:212, revenue:8305.97},
+  {name:'Organic Papaya Seeds Extract Liquid 1oz, Digestive Enzymes', units:234, revenue:7644.35},
+  {name:'Organic Papaya Seeds Powder 60 Capsules, Papain', units:134, revenue:5353.30},
+  {name:'Organic Soursop Graviola Bitters Liquid, Guanabana Leaf 1oz', units:131, revenue:5016.44},
+  {name:'Organic Soursop 60 Capsules, Hojas de Guanabana, Graviola', units:173, revenue:4830.31},
+];
+const TOP_PRODUCTS_SHOPIFY = [
+  {name:'Papaya Leaf Extract Capsules 600mg | 10X Strength – Platelet Support', orders:66, revenue:10688.08},
+  {name:'Soursop Leaf Graviola Extract 15X Liquid | Organic Cell & Immunity', orders:78, revenue:6864.62},
+  {name:'Organic Papaya Leaf Extract 16oz | 15X Liquid – Best Value Size', orders:40, revenue:4852.06},
+  {name:'Mullein Leaf Organic 15X Liquid Extract | Respiratory & Lung Wellness', orders:45, revenue:3362.06},
+  {name:'Blood Platelet Plus Capsules 20X | 60ct – Advanced Platelet Formula', orders:35, revenue:3013.35},
+  {name:'Soursop Bitters 15X Liquid Extract | Organic Detox & Wellness Support', orders:15, revenue:1583.97},
+  {name:'Papaya Leaf Blood Support Capsules 10X | 60ct – Platelet Wellness', orders:2, revenue:1422.94},
+  {name:'Soursop Leaf Tea | Organic Graviola 24 Bags | Immunity & Wellness', orders:24, revenue:985.06},
+  {name:'Organic Papaya Leaf Tea | 24 Premium Bags – Caffeine-Free', orders:19, revenue:965.15},
+  {name:'Papaya Leaf Blood Support | Organic 15X Liquid Extract', orders:4, revenue:947.95},
+];
+document.getElementById('topProductsAmazon').innerHTML = TOP_PRODUCTS_AMAZON.map(p =>
+  `<tr><td>${p.name}</td><td class="num">${p.units.toLocaleString('en-US')}</td><td class="num">${fmtMoney(p.revenue)}</td></tr>`
+).join('');
+document.getElementById('topProductsShopify').innerHTML = TOP_PRODUCTS_SHOPIFY.map(p =>
+  `<tr><td>${p.name}</td><td class="num">${p.orders.toLocaleString('en-US')}</td><td class="num">${fmtMoney(p.revenue)}</td></tr>`
+).join('');
 
 weekStripEl.addEventListener('click', e=>{
   const btn = e.target.closest('.wk-btn');
