@@ -472,6 +472,23 @@
         <div class="note-box info" style="margin-top:16px;">Walmart Seller Center doesn't expose the same suspension-risk scorecard Amazon does through this connection — no equivalent health score is available yet, so we're showing connection health instead of fabricating one. If Walmart later exposes account-health metrics through this integration, they'll appear here.</div>
       </div>
     </div>
+
+    <section class="block">
+      <h3>Amazon unfulfillable inventory by category — this week</h3>
+      <p class="desc">Units currently unfulfillable across the FBA network, from Amazon's Inventory Ledger Summary (per-fulfillment-center disposition), snapshot dated Aug 24, 2026, synced via agentcentral. Only the three categories tracked here are shown; Amazon also reports Customer Damaged, Carrier Damaged, and Distributor Damaged as separate dispositions, not included in this card.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>Category</th><th class="num">Units</th><th class="num">ASINs affected</th></tr></thead>
+          <tbody>
+            <tr><td>Expired</td><td class="num">63</td><td class="num">13</td></tr>
+            <tr><td>Warehouse Damaged</td><td class="num">29</td><td class="num">6</td></tr>
+            <tr><td>Defective</td><td class="num">5</td><td class="num">4</td></tr>
+            <tr><td><b>Total</b></td><td class="num"><b>97</b></td><td class="num">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:12px;">Largest single lot: 42 expired units of Organic Guava Leaf Tea 24 Bags at fulfillment center SAT2 — worth a disposal/removal-order check. "ASINs affected" counts distinct products with at least one unfulfillable unit in that category; the same ASIN can turn up at more than one fulfillment center, so the underlying per-FC line counts run higher (18 / 10 / 5 for Expired / Warehouse Damaged / Defective respectively).</div>
+    </section>
   </div>
 
   <!-- ============ CUSTOMER SERVICE ============ -->
@@ -1326,7 +1343,9 @@ const staticKpis = [
   {eyebrow:'Repeat customer rate · Shopify', val:'~30%', sub:'91-day avg 30.16% (ShopifyQL), weekly range 28.1%–38.6% this pull', tag:'good', tagText:'in line with 37.7% category avg.'},
   {eyebrow:'Inventory health · top revenue SKUs', val:'16 of 25 healthy', sub:'Top 25 revenue SKUs (Amazon+Shopify): 4 critical (0 fulfillable/oversold, no relief) · 5 watch · 16 healthy. Good news this run: Papaya Leaf Blood Support Capsules and 2 others improved from critical to watch/healthy after partial restock. New this run: Dandelion Root Extract 12oz confirmed critical (resolves last pull\'s data-inconsistency flag), and Soursop Leaf Graviola 12oz found oversold by 10 units on Shopify — a real backorder risk on the #2 all-time revenue SKU.', tag:'warn', tagText:'4 SKUs need immediate attention'},
   {eyebrow:'Blended ROAS · this week', val:'~2.8x', sub:'Trailing full week (Aug 17–23): $5,823 Amazon Ads spend / $16,208 sales, blended SP+SB+SD. TACoS ≈12.1% — inside the 8–15% healthy range, but this week\'s sales figure is still provisional (~30% unsettled).', tag:'bad', tagText:'below 7.0x internal target'},
-  {eyebrow:'AR at risk · GNC Holdings', val: fmtMoney(20925.86), sub:'Overdue balance out of $81,851.30 billed YTD — mostly 1–30 days ($15,485.78) with $5,540.02 in 61–90 days. Total AR overdue company-wide: $19,038.03 (23.7% of $80,319.47 total receivables).', tag:'warn', tagText:'single-customer concentration'},
+  {eyebrow:'Accounts Payable · open bills (QBO, as of Aug 25)', val: fmtMoney(3058.85), sub:"1 open bill on the books — Davidsons Organics, $3,058.85, due Aug 1 (24 days past due, inside the 1–30 day bucket). 0 bills are overdue by more than 30 days. QBO's AP Aging Summary separately nets in 4 vendor-credit balances (Bulk Apothecary $320.79, Container and Packaging $174.63, Paramount Nutra by FLJ Nutra Consulting $16,816.92, Uintah Basin Herbals $8,242.98) as negative entries — those are credits owed to Herbal Goodness, not open bills, and are excluded from the figures above. Note: QuickBooks doesn't expose a separate Purchase Order aging report via this connection — this is QBO's Accounts Payable (open bills), the closest equivalent it tracks.", tag:'good', tagText:'0 bills over 30 days overdue'},
+  {eyebrow:'Accounts Receivable · open balances (QBO, as of Aug 25)', val: fmtMoney(80051.81), sub:'6 open customer/sync accounts total $80,051.81 billed; $23,377.90 (29.2%) is overdue. Only one is a real trade customer — GNC Holdings ($81,851.30 billed, $25,327.78 overdue). The other 5 (Amazon Synder, Shopify Synder, Shopify 2026, TikTok Synder) are marketplace settlement sync accounts carrying small negative/credit balances, not real receivables. Over 60 days: GNC Holdings $5,540.02 in the 61–90 day bucket — the only balance past 60 days; nothing in the 91+ bucket.', tag:'warn', tagText:'$5,540.02 over 60 days (GNC Holdings)'},
+  {eyebrow:'AR at risk · GNC Holdings', val: fmtMoney(25327.78), sub:'Overdue balance out of $81,851.30 billed YTD — $19,887.70 in 1–30 days and $5,540.02 in 61–90 days (the 31–60 bucket is a small -$99.94 credit). Total AR overdue company-wide: $23,377.90 (29.2% of $80,051.81 total receivables).', tag:'warn', tagText:'single-customer concentration'},
   {eyebrow:'Amazon stockouts · confirmed this run', val:'2 top-25 SKUs', sub:'0 fulfillable, no inbound relief: Papaya Leaf Blood Platelet Liquid 1oz, Dandelion Root Extract Liquid 12oz (newly confirmed this run). Two others (Papaya Leaf Extract 60 Caps, Papaya Seeds Powder Capsules) improved from critical to watch after partial restock. Amazon\'s own risk-triage tool flags 22 stockout-primary SKUs across the full 250+ SKU catalog, not just these top-25 revenue items.', tag:'bad', tagText:'22 flagged catalog-wide'},
   {eyebrow:'Zendesk Tickets (Last Wk)', val:'33', sub:'Resolved: 29 (29 solved / 0 closed) · Open: 4 · Reopened: 5 tickets (8 reopen events)', tag:'good', tagText:'88% resolved this week'},
   {eyebrow:'Avg Time to First Resolution', val:'12.3 hrs', sub:'Avg full resolution: 15.8 hrs', tag:'info', tagText:'wall-clock, not business-hours'},
