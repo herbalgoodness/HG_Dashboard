@@ -477,6 +477,38 @@
         </div>
       </div>
     </section>
+
+    <section class="block" style="margin-top:20px;">
+      <h3>PPC Action Plan — Amazon Ads</h3>
+      <p class="desc">Pulled live from agentcentral (Sponsored Products campaign/keyword/placement performance, Keyword Lab, budget pacing) and Helium10 (organic keyword coverage), Aug 24, 2026. Refreshed automatically every Sunday by a scheduled Claude routine — see the automation note at the bottom of this section.</p>
+      <div class="three-col" style="margin-bottom:20px;">
+        <div class="kpi channel-kpi"><span class="eyebrow">Blended SP ACOS · trailing 14 days</span><div class="val">38.2%</div><div class="sub">$10,586 spend / $27,713 sales (Aug 11&ndash;24)</div><span class="tag bad">25% target — 13.2pt gap</span></div>
+        <div class="kpi channel-kpi"><span class="eyebrow">vs. prior 14 days</span><div class="val">35.7%&rarr;38.2%</div><div class="sub">Sales fell 7.4% ($29,924&rarr;$27,713) on flat spend</div><span class="tag bad">worsening, not improving</span></div>
+        <div class="kpi channel-kpi"><span class="eyebrow">Realistic 3-week outlook</span><div class="val">Low-to-mid 30s%</div><div class="sub">25% is a stretch from 38.2% in 3 weeks even with full execution — this plan targets the biggest, fastest-payback fixes first</div><span class="tag warn">directional, not a guarantee</span></div>
+      </div>
+
+      <div class="note-box" style="margin-bottom:16px;"><b>Execution status: blocked.</b> This account's Lisa AI-permissions have PPC write actions (pause keyword, adjust bid, negate search term, harvest keyword, adjust placement) switched <b>off</b> at the org level. Every attempted change below returned a hard denial — <i>"Your org has disallowed &lt;action&gt;. Ask the owner to enable it on /settings/ai/permissions, or run it manually."</i> — not a pending-approval queue. Nothing listed below has been applied to the live account. To enable automatic execution, an admin needs to turn on the relevant marketing/PPC actions at Lisa's <code>/settings/ai/permissions</code>; otherwise, whoever manages the account can run these manually in Seller Central / Lisa using the IDs below.</div>
+
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>#</th><th>Action</th><th>Where</th><th>Why (real numbers)</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Pause keyword "guanabana leaves" (exact)</td><td>keyword 70465050885887</td><td>$81.41 spent, 0 orders</td></tr>
+            <tr><td>2</td><td>Pause "papaya leaf extract capsules" (3 instances: phrase &times;2, broad)</td><td>keywords 407937869228939, 126010865529139, 463896219334769</td><td>$86.85 combined spend, 0 orders across all three; account-wide this exact phrase has run up $236 for 1 order (342% ACOS)</td></tr>
+            <tr><td>3</td><td>Add 5 negative exact keywords</td><td>campaign 275762959372286 (top_10_products auto)</td><td>"organic papaya seeds" ($30.95/0 orders), "soursop leaves" ($23.31/0), "b08fxy7hj3" ($12.36/0, competitor ASIN), "b0dxclr9yz" ($11.79/0), "papaya leaves" ($11.65/0)</td></tr>
+            <tr><td>4</td><td>Add 5 negative exact keywords</td><td>campaign 318619911746780 (rest_of_portfolio auto)</td><td>"sarsaparilla to clean blood" ($45.66/0), "blood and parasite cleanse" ($26.14/0), "silica" ($23.79/0), "dried papaya seeds" ($23.70/0), "kids ashwagandha" ($16.45/0, irrelevant)</td></tr>
+            <tr><td>5</td><td>Increase Top-of-Search placement bid</td><td>5 biggest campaigns (275762959372286, 318619911746780, 531230743507271, 445050106162862, 454092817717061)</td><td>Top of Search converts 2&ndash;5x better everywhere measured, e.g. rest_of_portfolio: 12.5% CVR/29.5% ACOS at TOS vs. 6.1% CVR/62.3% ACOS in "Other"</td></tr>
+            <tr><td>6</td><td>Decrease Product-Page placement bid</td><td>campaigns 296911136915065, 445050106162862</td><td>Detail Page placement is running 102% ACOS (ROAS 0.98, a loss) and 59% ACOS respectively</td></tr>
+            <tr><td>7</td><td>Pause broad match "+herbal +goodness +papaya"</td><td>keyword 364699194306558, campaign 296911136915065</td><td>ACOS worsened 36.2%&rarr;90.1% in two weeks while sales fell</td></tr>
+            <tr><td>8</td><td>Harvest top 3 auto/broad search terms to exact match</td><td>"papaya leaf extract" &times;2 (campaigns 531230743507271 &amp; 426508175214482), "papaya seeds" (campaign 275762959372286)</td><td>Keyword Lab's own ready-to-graduate list, unacted on for 30+ days (graduated_30d: 0) — combined $3,075 spend, ~25% CPC savings estimated ($4.49/$3.92/$1.10 exact CPC vs. current $5.98/$7.53/$1.47)</td></tr>
+            <tr><td>9</td><td>Pause 6 standalone bleeder campaigns</td><td>264114774091082 (120% ACOS), 458048705604444 (125% ACOS), 10291969266785 (was 39%, now 140% ACOS), 2643712643120 ($62 spent, 0 orders), 27402980876713 (127.5% ACOS), 165283302261822 ($69 spent, 0 orders)</td><td>All active, all trending worse, none justify continued spend</td></tr>
+            <tr><td>10</td><td>Investigate "mullein leaf brand-defense" campaign</td><td>branded-defense campaign, ASIN family for Mullein Leaf</td><td>Cratered from 3.5% ACOS/12 orders/$427 sales to 25.7% ACOS/3 orders/$113 sales at similar spend in 2 weeks — check Buy Box ownership and stock status, not a targeting fix</td></tr>
+            <tr><td>11</td><td>"papaya pills": pause phrase match, cut exact match bid ~10%</td><td>pause keyword 116381276624073 (phrase, $12.25/0 orders); reduce keyword 75447521928701 (exact) bid to ~$1.94 from ~$2.16</td><td>Both current instances convert at 0 orders despite 813/mo organic search volume and a #4 organic rank on our best-seller — tighten rather than abandon</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box info" style="margin-top:12px;">Automation: a scheduled Claude routine ("Herbal Goodness Weekly Amazon Ads PPC Review") re-runs this full analysis every Sunday and republishes this section with that week's real numbers. It will not attempt to execute any Ads change while the org's AI-permissions remain off — it only updates this table with fresh findings.</div>
+    </section>
   </div>
 
   <!-- ============ MARKETPLACE HEALTH ============ -->
