@@ -370,6 +370,48 @@
     .topbar{flex-wrap:wrap; gap:10px;}
     main{padding:22px 16px 60px;}
   }
+
+  /* ============ OPERATIONS / PROJECTS additions ============ */
+  .pillar-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:18px;}
+  @media (max-width:900px){.pillar-grid{grid-template-columns:1fr;}}
+  .pillar-card{border-radius:var(--radius); padding:18px 18px 16px; border:1px solid var(--line-soft); background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));}
+  .pillar-card .pnum{font-family:var(--mono); font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; margin-bottom:6px;}
+  .pillar-card.p1 .pnum{color:var(--gold);} .pillar-card.p1{border-top:3px solid var(--gold);}
+  .pillar-card.p2 .pnum{color:var(--mint);} .pillar-card.p2{border-top:3px solid var(--olive);}
+  .pillar-card.p3 .pnum{color:#ff9f6f;} .pillar-card.p3{border-top:3px solid var(--danger);}
+  .pillar-card h4{margin:0 0 10px; font-size:15px; color:#fff;}
+  .pillar-card ul{margin:0; padding-left:18px; font-size:12.5px; color:var(--text-dim); line-height:1.7;}
+  .pillar-card ul li b{color:var(--text);}
+  .ipi-gauge{display:flex; align-items:baseline; gap:14px; margin-bottom:6px;}
+  .ipi-gauge .cur{font-size:40px; font-weight:800; color:#fff; font-family:var(--display);}
+  .ipi-gauge .arrow{color:var(--text-faint); font-size:20px;}
+  .ipi-gauge .tgt{font-size:40px; font-weight:800; color:var(--gold); font-family:var(--display);}
+  .ipi-bar-track{height:10px; border-radius:6px; background:rgba(255,255,255,0.06); overflow:hidden; margin:10px 0 4px;}
+  .ipi-bar-fill{height:100%; border-radius:6px; background:linear-gradient(90deg,var(--olive),var(--gold));}
+
+  .bar-chart{display:flex; flex-direction:column; gap:10px;}
+  .bar-row{display:grid; grid-template-columns:180px 1fr 34px; align-items:center; gap:10px;}
+  .bar-row .b-label{font-size:12.5px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .bar-row .b-track{height:16px; border-radius:5px; background:rgba(255,255,255,0.05); overflow:hidden;}
+  .bar-row .b-fill{height:100%; border-radius:5px; background:linear-gradient(90deg,var(--olive),var(--gold-deep));}
+  .bar-row .b-fill.hot{background:linear-gradient(90deg,#c94d3f,var(--danger));}
+  .bar-row .b-val{font-family:var(--mono); font-size:12px; color:var(--text-dim); text-align:right;}
+  @media (max-width:640px){.bar-row{grid-template-columns:120px 1fr 28px;}}
+
+  .dept-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:18px;}
+  @media (max-width:900px){.dept-grid{grid-template-columns:1fr;}}
+  .dept-card{border-radius:var(--radius); padding:18px; border:1px solid var(--line-soft); background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));}
+  .dept-card h4{margin:0 2px 2px; font-size:14.5px; color:#fff;}
+  .dept-card .who{font-family:var(--mono); font-size:10.5px; color:var(--text-faint); margin-bottom:12px;}
+  .dept-card .pct{font-size:30px; font-weight:800; color:#fff;}
+  .dept-card .pct-label{font-size:11px; color:var(--text-dim); margin-bottom:10px;}
+  .dept-card .off-track-list{margin:10px 0 0; padding-left:16px; font-size:12px; color:var(--text-dim); line-height:1.6;}
+  .proj-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:8px;}
+  @media (max-width:900px){.proj-grid{grid-template-columns:1fr;}}
+  .proj-card{border-radius:var(--radius); padding:16px 18px; border:1px solid var(--line-soft); background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012));}
+  .proj-card h4{margin:0 0 4px; font-size:14px; color:#fff;}
+  .proj-card .meta{font-family:var(--mono); font-size:10.5px; color:var(--text-faint); margin-bottom:8px;}
+  .proj-card p{margin:0; font-size:12.5px; color:var(--text-dim); line-height:1.6;}
 </style>
 </head>
 <body>
@@ -388,6 +430,8 @@
     <button data-page="products">Product Intelligence</button>
     <button data-page="marketing">Marketing</button>
     <button data-page="email">Email</button>
+    <button data-page="operations">Operations</button>
+    <button data-page="projects">Projects</button>
   </nav>
   <div class="status-chip"><span class="dot"></span><span id="lastUpdated">—</span></div>
 </div>
@@ -693,6 +737,281 @@
           <thead><tr><th>Segment</th><th class="num">Members</th></tr></thead>
           <tbody id="segRows"></tbody>
         </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ OPERATIONS ============ -->
+  <div class="page" id="page-operations">
+    <div class="page-head">
+      <span class="eyebrow">Amazon FBA (agentcentral) · Shopify · live pull Sep 22, 2026</span>
+      <h2>Inventory gaps across Amazon and Shopify, and the IPI plan to close them</h2>
+      <p>Every row below is a live SKU/ASIN pulled this run — deduplicated against legacy SKU aliases and reimbursement placeholders so counts reflect real, active listings, not raw inventory-table noise.</p>
+    </div>
+
+    <section class="block" style="margin-top:0;">
+      <h3>Amazon — zero fulfillable inventory</h3>
+      <p class="desc">11 active products are at 0 fulfillable FBA units right now. None currently have an inbound shipment covering the gap (the one exception, Guava Leaf Extract, has just 1 unit in the inbound pipeline — not enough to matter).</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>Product</th><th>ASIN / SKU</th><th class="num">Reserved</th><th class="num">Inbound</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="metric-name">Papaya Leaf Extract, 60 Capsules (Blood Platelets)<span>Also 0 on Shopify — same SKU, both channels dark</span></td><td>B0CRGYMKRB / 810128951951</td><td class="num">8</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Papaya Leaf Blood Support Capsules, 60/450mg</td><td>B00MSSXXYC / 798304282092 (+stickerless)</td><td class="num">8</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Papaya Leaf Tea, 24 Teabags (Case of 6)</td><td>B00HQPR7BC / 798304240191</td><td class="num">1</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Green Papaya Fruit Extract, 60 Capsules</td><td>B01N7FIH05 / 798304381849-FBA</td><td class="num">2</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Dandelion Root Extract Liquid, 12 fl oz</td><td>B0DY1XSD5B / 810128953221+FBA_v1</td><td class="num">36</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Avocado Leaf Tea Organic, 24 Teabags<span>85 units sitting unfulfillable alongside the 0 fulfillable — likely a damaged/mislabeled batch</span></td><td>B097C5D5FZ / 798304493375+FBA_v2</td><td class="num">1</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Papaya Leaf Extract Tea, 24 Tea Bags</td><td>B004VGJIFC / 798304173284+FBA_v1 (+1 alias)</td><td class="num">1–8</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Rooibos Tea, 8oz Loose Leaf</td><td>B0CYXKTXHW / 810128950893+FBA_v1</td><td class="num">1</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Bamboo Leaf Tea, 24 Bags<span>1 unit unfulfillable</span></td><td>B0182PAS74 / 798304348354_FBA</td><td class="num">0</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Guava Leaf Extract Liquid, 12oz</td><td>B09ZWNZH7Y / 850035852538-FBA (+1 alias)</td><td class="num">55</td><td class="num">1</td><td><span class="flag warn">negligible coverage</span></td></tr>
+            <tr><td class="metric-name">Organic Guava Leaf Tea, 24 Bags<span>1 unit unfulfillable; 83 reserved with nothing fulfillable is an unusual pattern worth a Seller Support case</span></td><td>B00MNFQNNS / 798304214161 (+stickerless)</td><td class="num">83</td><td class="num">0</td><td><span class="flag bad">no coverage</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Amazon — critical / high stockout risk (not yet zero)</h3>
+      <p class="desc">Days of supply = FBA fulfillable + inbound ÷ trailing-30-day sales velocity. These four are the next wave behind the zero-fulfillable list above.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>Product</th><th>ASIN / SKU</th><th class="num">Fulfillable</th><th class="num">Days of supply</th><th class="num">Inbound</th><th>Risk</th></tr></thead>
+          <tbody>
+            <tr><td class="metric-name">Guayusa Leaf Extract Liquid, 1oz</td><td>B07QGZMC7H / 798304451924-FBA</td><td class="num">1</td><td class="num">7.7</td><td class="num">0</td><td><span class="flag bad">High</span></td></tr>
+            <tr><td class="metric-name">Bamboo Leaf Extract Liquid, 1oz<span>90 units at AWD, not yet released to FBA — a transfer, not a reorder, would fix this one</span></td><td>B07QLW8C67 / 798304411805-FBA-stickerless</td><td class="num">30</td><td class="num">16.9</td><td class="num">0 FBA / 90 AWD</td><td><span class="flag bad">High</span></td></tr>
+            <tr><td class="metric-name">Rhodiola Root Extract Adaptogenic, 12oz Tincture</td><td>B0DY31Y78V / 810128953207+FBA_v1</td><td class="num">1</td><td class="num">14.3</td><td class="num">1</td><td><span class="flag bad">High</span></td></tr>
+            <tr><td class="metric-name">Lions Mane Mushroom Liquid, 1oz</td><td>B0DY223P4H / 810128953016+FBA_v1</td><td class="num">1</td><td class="num">20.0</td><td class="num">1</td><td><span class="flag warn">Medium</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Amazon — aged 180+ day inventory, excess, and unfulfillable</h3>
+      <p class="desc">22 SKUs currently carry units in the 180+ day age bucket; 72 SKUs carry a forward long-term-storage-fee (LTSF) charge &gt; $0 — a broader, more conservative flag than Amazon's own "Excess Inventory" report category, so treat this as a watch-list to cross-check in Seller Central rather than a literal excess count. Top offenders by units and by $ exposure below.</p>
+      <div class="detail-grid">
+        <div class="card">
+          <h3 style="margin:0 0 12px;font-size:15px;">Oldest stock (180+ days), by units</h3>
+          <table><thead><tr><th>ASIN / SKU</th><th class="num">180+ day units</th><th class="num">Next LTSF</th></tr></thead><tbody>
+            <tr><td>B07QDRKYDC / 798304451962-FBA-stickerless</td><td class="num">107</td><td class="num">$10.58</td></tr>
+            <tr><td>B0CG2LGYSG / 810128950916+FBA_v1</td><td class="num">22</td><td class="num">$2.64</td></tr>
+            <tr><td>B0CRGK5TZ8 / 810128951104</td><td class="num">3</td><td class="num">$0.08</td></tr>
+            <tr><td>B0CXF72HMR / 810128952859</td><td class="num">3</td><td class="num">$0.06</td></tr>
+            <tr><td>B0DY1Z5DPD / 810128953115+FBA_v1</td><td class="num">1</td><td class="num">$0.03</td></tr>
+            <tr><td>B0CVQVLYNB / 810128951128</td><td class="num">1</td><td class="num">$0.04</td></tr>
+            <tr><td>B0DY223P4H / 810128953016+FBA_v1</td><td class="num">1</td><td class="num">$0.00</td></tr>
+            <tr><td>B0CYXKTXHW / 810128950893+FBA_v1</td><td class="num">1</td><td class="num">—</td></tr>
+          </tbody></table>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 12px;font-size:15px;">Highest LTSF $ exposure (top of 72 flagged SKUs)</h3>
+          <table><thead><tr><th>ASIN / SKU</th><th class="num">On hand</th><th class="num">Next LTSF</th></tr></thead><tbody>
+            <tr><td>B005TK5MQI / 798304192766-FBA-stickerless (+1 alias)</td><td class="num">1,041</td><td class="num">$124.97 + $124.83</td></tr>
+            <tr><td>B01MXVQ3L0 / 798304395068-FBA-stickerless</td><td class="num">1,178</td><td class="num">$66.99</td></tr>
+            <tr><td>B06Y5LLFKV / 798304395136</td><td class="num">1,181</td><td class="num">$53.87</td></tr>
+            <tr><td>B0C4CDQ5YD / 850035852279+FBA_v1</td><td class="num">1,025</td><td class="num">$46.08</td></tr>
+            <tr><td>B0BM3WPZSH / 850035852385+FBA_v1</td><td class="num">1,390</td><td class="num">$26.08</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div class="note-box" style="margin-top:14px;"><b>Overstock flag:</b> Soursop Graviola Bitters (B07M7TCHN8, 615–693 units across SKU aliases) has had zero units sell in the trailing 30 days — flagged "high" overstock risk with 9999 days of cover. Either run a deal/coupon to move it or scale back the next PO.</div>
+    </section>
+
+    <section class="block">
+      <h3>Shopify — zero inventory</h3>
+      <p class="desc">Only 2 products are at zero across the whole Shopify store right now (down from 5 in last week's pull) — this channel is in good shape.</p>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>Product</th><th>SKUs (all variants at 0)</th></tr></thead>
+          <tbody>
+            <tr><td class="metric-name">Gymnema Leaf Tea Organic, 24 Bags</td><td>798304460827 (Unit) · 810128953986 (3-Units) · 798304460834 (Case of 6)</td></tr>
+            <tr><td class="metric-name">Blood Platelet Plus Capsules 20X, 60ct<span>The Unit SKU (810128951951) is the exact same SKU as the #1 Amazon zero-fulfillable item above — this product is out cross-channel</span></td><td>810128951951 (Unit) · 810128954129 (3-Units) · 810128952996 (Case of 12)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Top 10 recommended actions — inventory position, IPI, and account health</h3>
+      <div class="table-wrap card" style="padding:6px;">
+        <table class="cs-metric-table">
+          <thead><tr><th>#</th><th>Action</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Ship inbound replenishment now for the 2 highest-volume zero-fulfillable ASINs</td><td>Blood Platelets capsules (B0CRGYMKRB) and Papaya Leaf Blood Support (B00MSSXXYC) carry real monthly order volume (55–126 units/mo) and zero units in transit — these are losing sales today</td></tr>
+            <tr><td>2</td><td>Use Amazon's own recommended ship-in quantities when reordering, not round numbers</td><td>Amazon already computes a suggested restock quantity per SKU (e.g. 390, 549, 111, 143 units) from sell-through — using it avoids recreating excess right after restocking, which is one of the two levers hurting IPI</td></tr>
+            <tr><td>3</td><td>Open a Seller Support case on Avocado Leaf Tea's 85 unfulfillable units</td><td>B097C5D5FZ has 85 units marked unfulfillable sitting alongside 0 fulfillable — almost certainly a damaged or mislabeled inbound batch eligible for reimbursement</td></tr>
+            <tr><td>4</td><td>Investigate the Guava Leaf Tea reserved-but-zero pattern</td><td>B00MNFQNNS shows 83 reserved units with 0 fulfillable and 0 inbound — that combination usually means a stuck FC-processing or transfer hold, not a real stockout; worth a case before reordering unnecessarily</td></tr>
+            <tr><td>5</td><td>Transfer the 90 AWD units for Bamboo Leaf Extract into FBA rather than placing a new PO</td><td>B07QLW8C67 already has 90 units sitting upstream in AWD — releasing them is faster and cheaper than a fresh purchase order</td></tr>
+            <tr><td>6</td><td>Clear or liquidate the 107-unit, 180+-day-old Guayusa/tea batch (B07QDRKYDC)</td><td>It's the single largest aged-inventory position found this pull and is already accruing a $10.58 LTSF charge that only grows with time</td></tr>
+            <tr><td>7</td><td>Run a promotion (Lightning Deal / coupon) on Soursop Graviola Bitters or cut the next PO</td><td>615+ units on hand, zero sales in 30 days — flagged high-risk overstock and actively dragging down sell-through, one of IPI's two heaviest-weighted components</td></tr>
+            <tr><td>8</td><td>Assign real owners and dates to the 7 IPI-readiness tasks already sitting unassigned in the Pillar 2 Operations Asana board</td><td>"Build replenishment plan," "Set up weekly IPI monitoring cadence," "Audit current FBA inventory health," and 4 others exist as tasks but have no assignee or due date — the plan is written but nobody is driving it (see Projects tab)</td></tr>
+            <tr><td>9</td><td>Resolve the "Herbal Papaya" vs "Herbal Goodness" brand-attribute mismatch flagged in last week's listing-quality review</td><td>It's suppressing otherwise-sellable ASINs, which quietly depresses both the in-stock rate and sell-through components of IPI without showing up as a simple stockout</td></tr>
+            <tr><td>10</td><td>Review the remaining 72 LTSF-flagged SKUs against Seller Central's native Excess Inventory report</td><td>This pull's LTSF-based flag is broader than Amazon's own excess definition — a manual cross-check will separate genuine excess from SKUs that just happen to be well-stocked</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Amazon FBA IPI Management Plan <span class="flag info" style="margin-left:8px;">Target: 800</span></h3>
+      <p class="desc">Current score is sourced from Seller Central / Amazon Seller Support (not exposed via API) — treat as of the date shown and refresh manually until an automated source is available.</p>
+      <div class="card" style="margin-bottom:18px;">
+        <div class="ipi-gauge"><span class="cur">763</span><span class="arrow">&rarr;</span><span class="tgt">800</span></div>
+        <div class="ipi-bar-track"><div class="ipi-bar-fill" style="width:95.4%"></div></div>
+        <div class="sub" style="font-size:12px;color:var(--text-dim);">37 points below target (as of the most recent Seller Central check, Sep 2026)</div>
+      </div>
+      <div class="card" style="margin-bottom:18px;">
+        <h4 style="margin:0 0 8px;font-size:14.5px;color:#fff;">Root cause</h4>
+        <p style="margin:0 0 8px;font-size:13px;color:var(--text-dim);">Amazon weights sell-through and excess inventory heavily (~30% each) alongside in-stock rate. This pull's live data lines up with that read: 11 products at zero fulfillable plus 4 more at critical/high stockout risk — 19 SKU rows in total, the same order of magnitude as the "SKUs flagging for restock" figure behind the in-stock-rate component — while 72 SKUs simultaneously carry forward LTSF exposure on the excess side. The account is being penalized from both directions: too little stock on the fast movers, too much sitting idle on the slow ones.</p>
+      </div>
+      <div class="pillar-grid">
+        <div class="pillar-card p1">
+          <div class="pnum">P1 · Sell-through (+15–25 pts)</div>
+          <h4>Turn the idle stock</h4>
+          <ul>
+            <li>Clear/liquidate the <b>107-unit, 180+ day</b> Guayusa/tea batch and the other aged SKUs above</li>
+            <li>Deal or coupon the <b>615+ unit</b> Soursop Graviola Bitters position — zero sales in 30 days</li>
+            <li>Move to smaller, more frequent FBA shipments instead of large bulk sends</li>
+          </ul>
+        </div>
+        <div class="pillar-card p2">
+          <div class="pnum">P2 · In-stock rate (+10–15 pts)</div>
+          <h4>Restock the 11 zero-fulfillable SKUs</h4>
+          <ul>
+            <li>Prioritize <b>Blood Platelets capsules</b> and <b>Papaya Leaf Blood Support</b> — highest lost sales</li>
+            <li>Use Amazon's own recommended ship-in quantities, not round numbers</li>
+            <li>Assign an owner to the 7 unassigned IPI tasks already in the Pillar 2 Asana board</li>
+          </ul>
+        </div>
+        <div class="pillar-card p3">
+          <div class="pnum">P3 · Excess inventory (+5–10 pts)</div>
+          <h4>Resolve the anomalies, then the backlog</h4>
+          <ul>
+            <li>Case the <b>85-unit unfulfillable</b> Avocado Tea batch and the <b>83-reserved-zero-fulfillable</b> Guava Tea pattern</li>
+            <li>Cross-check the 72 LTSF-flagged SKUs against Seller Central's native Excess Inventory report</li>
+            <li>Set the weekly IPI monitoring cadence task (already drafted, unassigned) live</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PROJECTS ============ -->
+  <div class="page" id="page-projects">
+    <div class="page-head">
+      <span class="eyebrow">Asana · Herbal Goodness workspace · live pull Sep 22, 2026</span>
+      <h2>What the team's boards say is outstanding</h2>
+      <p>Members, overdue load, the 7 core boards, and Company Rocks Board completion by department.</p>
+    </div>
+
+    <section class="block" style="margin-top:0;">
+      <h3>Overdue tasks by member</h3>
+      <p class="desc">Workspace members with a company (@herbalgoodnessco.com) address, excluding shared/system inboxes and external contractors — shown separately below.</p>
+      <div class="card">
+        <div class="bar-chart">
+          <div class="bar-row"><div class="b-label">Amaka Ifeduba, PhD</div><div class="b-track"><div class="b-fill hot" style="width:34%"></div></div><div class="b-val">1</div></div>
+          <div class="bar-row"><div class="b-label">Unoma Okorafor, Ph.D.</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+          <div class="bar-row"><div class="b-label">Emmanuel Eresaba</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+          <div class="bar-row"><div class="b-label">Amaka Ifedinezi</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+          <div class="bar-row"><div class="b-label">Ejiro Okorogri-Shedrack</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+          <div class="bar-row"><div class="b-label">Joseph Alex Hussey</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+          <div class="bar-row"><div class="b-label">Joshua Egonmwan</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+          <div class="bar-row"><div class="b-label">Mmesoma Ilomuanya</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+          <div class="bar-row"><div class="b-label">Noble Nnamani</div><div class="b-track"><div class="b-fill" style="width:2%"></div></div><div class="b-val">0</div></div>
+        </div>
+      </div>
+      <div class="note-box info" style="margin-top:12px;">Two accounts sit outside this chart by design: <b>HG Warehouse</b> (a shared/system inbox, not a person) carries 5 overdue recurring cycle-count reminders — worth assigning to a real individual rather than the shared account. <b>keshi</b> (madhukeshi4@gmail.com, external bookkeeping contractor — flagged by email domain, not a confirmed Asana guest status) carries 2 overdue monthly reconciliation tasks. Both are genuine open items even though they're excluded from the member chart above. Four more tasks are due <i>today</i> (not yet overdue): 2 for Unoma, 1 for Mmesoma, 1 for Amaka.</div>
+    </section>
+
+    <section class="block">
+      <h3>Board summaries</h3>
+      <div class="proj-grid">
+        <div class="proj-card">
+          <h4>🌺 CEO Board — Dr. U. Tasks &amp; General Issues</h4>
+          <div class="meta">Owner: Unoma Okorafor · 20 open tasks</div>
+          <p>Mostly Unoma-owned. Several backlog items have no due date (Spreadsheets, AI Prompts) and could use grooming. Nearest due: voice-over for a video (Noble, Sep 23) and removing discontinued products from Walmart (Ejiro, Sep 25).</p>
+        </div>
+        <div class="proj-card">
+          <h4>🌺 Company: Issues &amp; TODO Board</h4>
+          <div class="meta">Owner: unassigned · 35 open tasks — largest board</div>
+          <p>A cluster of ~19 tasks all due Sep 28 across Unoma/Emmanuel/Amaka, consistent with a recent leadership meeting's action items. One urgent flag: "🔥 Tea Machine Part is Broken — Stalling tea production" due Sep 30. One item is already overdue (spreadsheet share, due Sep 21).</p>
+        </div>
+        <div class="proj-card">
+          <h4>💟 Pillar 1 — Leadership, Strategy &amp; Business Excellence</h4>
+          <div class="meta">Owner: Emmanuel Eresaba · 3 open tasks — lightest board</div>
+          <p>Hiring efforts, a performance-review summary/newsletter (due Oct 17), and a UPC-creation SOP with no due date.</p>
+        </div>
+        <div class="proj-card">
+          <h4>💟 Pillar 2 — Operations, Warehouse &amp; Manufacturing</h4>
+          <div class="meta">Owner: Amaka Ifeduba, PhD · 13 open tasks</div>
+          <p><b>7 of 13 are unassigned with no due date</b> — a full IPI-readiness checklist (replenishment plan, IPI training modules, weekly IPI monitoring cadence, FBA inventory audit, capacity review, inventory SOP) sitting untouched. Directly feeds the IPI Management Plan on the Operations tab. The 6 assigned items cover warehouse physical setup and QuickBooks product remapping.</p>
+        </div>
+        <div class="proj-card">
+          <h4>💟 Pillar 3 — Sales &amp; Marketing, E-commerce &amp; Digital Growth</h4>
+          <div class="meta">Owner: Amaka Ifeduba, PhD · 12 open tasks</div>
+          <p>Split across Ejiro, Amaka, Noble, Mmesoma, and Unoma — mostly listing-image/content work plus two "90 days check-in" milestones (Oct 23).</p>
+        </div>
+        <div class="proj-card">
+          <h4>💟 Pillar 4 — Financial Clarity &amp; Data Reporting</h4>
+          <div class="meta">Owner: Unoma Okorafor · 0 open tasks</div>
+          <p>Empty — either genuinely caught up or this board isn't being used as a working list day-to-day. Worth a quick check with Dr. U.</p>
+        </div>
+        <div class="proj-card">
+          <h4>🌺 Company: Rocks Board</h4>
+          <div class="meta">Owner: Emmanuel Eresaba · see department breakdown below</div>
+          <p>Quarterly OKR-style board (EOS "Rocks"). Full completion detail by department is broken out in the section below rather than repeated here.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Company Rocks Board — Q3 2026 completion by department</h3>
+      <p class="desc">"% Rock % Accomplished" averaged across each department's Q3 2026 rocks; unreported (blank) percentages are excluded from the average, not treated as 0.</p>
+      <div class="dept-grid">
+        <div class="dept-card">
+          <h4>Business Excellence</h4>
+          <div class="who">Emmanuel Eresaba · 7 rocks</div>
+          <div class="pct">72.9%</div>
+          <div class="pct-label">avg. accomplished · 5 on track</div>
+          <div class="ipi-bar-track"><div class="ipi-bar-fill" style="width:72.9%"></div></div>
+          <ul class="off-track-list">
+            <li>Hire Ops Lead, Finance &amp; Marketing Associate — <b>0%</b>, slightly off track</li>
+            <li>S&amp;OP automation (GNC demand planning) — <b>70%</b>, slightly off track</li>
+          </ul>
+        </div>
+        <div class="dept-card">
+          <h4>Business Development</h4>
+          <div class="who">Dr. Amaka Ifeduba · 8 rocks</div>
+          <div class="pct">82.5%</div>
+          <div class="pct-label">avg. accomplished (6 reporting) · 5 on track</div>
+          <div class="ipi-bar-track"><div class="ipi-bar-fill" style="width:82.5%"></div></div>
+          <ul class="off-track-list">
+            <li>Warehouse ops 100% transitioned to new manager — <b>25%</b>, off track</li>
+            <li>"Get our machines back on track" — no % reported, off track</li>
+            <li>Grant application research — no % reported, slightly off track</li>
+          </ul>
+        </div>
+        <div class="dept-card">
+          <h4>Management / Enterprise</h4>
+          <div class="who">Dr. Unoma Okorafor · 6 rocks</div>
+          <div class="pct">95.8%</div>
+          <div class="pct-label">avg. accomplished · 6 on track</div>
+          <div class="ipi-bar-track"><div class="ipi-bar-fill" style="width:95.8%"></div></div>
+          <ul class="off-track-list"><li style="color:var(--good);">No off-track rocks this quarter</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Reporting gaps &amp; other data points worth knowing</h3>
+      <div class="note-box info">
+        &bull; <b>IPI score</b> isn't exposed by the Amazon Ads/SP-API connector used here — the 763 figure is sourced from a manual Seller Central check, not a live pull. Worth checking whether Helium10 (also connected) surfaces it before repeating that manual step weekly.<br>
+        &bull; <b>Excess-inventory definitions differ</b>: this run's 72-SKU LTSF-flag figure is broader than Amazon's own "Excess Inventory" report category — reconcile against Seller Central directly before treating either number as final.<br>
+        &bull; <b>Asana search results cap at 100 rows per call.</b> The Rocks Board and Issues &amp; TODO Board may hold more historical items than shown; current-quarter (Q3 2026) figures above are complete, but full-history views could be undercounted.<br>
+        &bull; <b>No API-exposed "guest" flag</b> was available — the member/guest split above is inferred from email domain (@herbalgoodnessco.com vs. external), not Asana's actual guest-role setting. Confirm in Asana admin if this distinction matters elsewhere.<br>
+        &bull; <b>Cross-channel stockout:</b> the Blood Platelet Plus capsule SKU (810128951951) is out on <i>both</i> Amazon and Shopify simultaneously — the single highest-leverage restock on this whole page.
       </div>
     </section>
   </div>
