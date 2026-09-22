@@ -27,6 +27,8 @@ That URL is your shareable link — open it, and anyone you send it to sees the 
 
 Whenever you get a fresh copy of the dashboard (e.g. from the weekly automated regeneration), replace `index.html` in the GitHub repo — either drag-and-drop the new file on the repo's page (GitHub will prompt you to commit the replacement) or `git add . && git commit -m "weekly update" && git push` if using the command line. Railway auto-redeploys within a minute or two of any push — no need to touch Railway itself again.
 
+See `WEEKLY_REFRESH.md` for the tabs the weekly refresh rebuilds, including Operations and Projects, and the data source for each.
+
 ## Custom domain (optional)
 
 If you want something like `dashboard.herbalgoodnessco.com` instead of the `*.up.railway.app` address: in Railway's Networking settings, click **Custom Domain**, enter it, and add the CNAME record it gives you to your domain's DNS (wherever herbalgoodnessco.com is managed). Propagation usually takes a few minutes to a few hours.
