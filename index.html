@@ -443,7 +443,7 @@
     <div class="page-head">
       <span class="eyebrow">Week-over-week · vs. 2026 Bearish budget</span>
       <h2>The one screen that tells you how the week actually went</h2>
-      <p>Every number below came out of QuickBooks, Amazon, Shopify, Zendesk, or Klaviyo this week, or out of the Bearish-scenario budget model. Where a figure isn't available, it says so.</p>
+      <p>Every number below came out of QuickBooks, Amazon, Shopify, Lisa WellProof, or Klaviyo this week, or out of the Bearish-scenario budget model. Where a figure isn't available, it says so.</p>
     </div>
 
     <div class="kpi-grid" id="staticKpis"></div>
@@ -471,7 +471,7 @@
           <tbody id="weekChannelRows"></tbody>
         </table>
         <div id="weekNote"></div>
-        <div class="note-box info" style="margin-top:10px;">Methodology note: this run found and fixed a 1-week forward drift that had crept into the Bearish-budget series for weeks 27 onward (the dashboard's own budget row was one week ahead of the source sheet's ISO-labeled weeks — e.g. the dashboard's old "Wk32" value was actually the sheet's Wk31). Re-verified directly against the budget sheet's own "Wk27"…"Wk40" text labels cross-checked to calendar dates; the sheet itself has no mapping bug this run. Budget weeks 27–40 above are corrected; weeks 41–52 are re-derived from the same corrected offset. Weeks 1–26 are unchanged (already elapsed, not re-audited this run).</div>
+        <div class="note-box info" style="margin-top:10px;">Source note: agentcentral (the Amazon Sales API connector this convention was originally built around) was not enabled this session, so weeks 37–39's Amazon figures come from Helium 10's weekly sales series instead — see the data-lag panel for the resulting revisions. Shopify figures are unaffected (same ShopifyQL source as always).</div>
       </div>
       <div class="card">
         <h3 style="margin:0 0 14px;font-size:15px;">Data-lag re-check — trailing 3 completed weeks</h3>
@@ -479,25 +479,25 @@
           <thead><tr><th>Week</th><th class="num">Amazon revenue</th><th class="num">Finality</th></tr></thead>
           <tbody id="lagCheckRows"></tbody>
         </table>
-        <div class="note-box info" style="margin-top:10px;">Amazon's Sales API this run finalized weeks ending Sep 6 and Sep 13 — both revised down from last week's provisional figures (Wk36 -1.2%, Wk37 -5.3%; see Trailing-week revisions in the footer). The week ending Sep 20 is still <b>non-final</b> (only 1 of 7 days settled) — treat $47,604.19 as provisional; expect it to be re-verified next run. Shopify's Wk36/Wk37 gross-sales figures reconfirmed exactly unchanged this run.</div>
+        <div class="note-box info" style="margin-top:10px;">Source note: agentcentral (the native Amazon Sales API connector referenced in prior runs) was not enabled in this session, so Amazon revenue this run comes from Helium 10's weekly sales series, cross-checked against Lisa WellProof's order- and settlement-basis figures. All three trailing weeks disagree materially: Helium 10 is stable ($42.6K / $46.1K / $44.6K), Lisa's order-basis read runs 30–55% lower, and Lisa's settlement-basis figure swings from $77,455 (Wk37, likely a late catch-up batch) to $0 (Wk39, not yet posted) — confirming settlement lag is still real. Week 37's figure is a genuine revision from last run's $45,268.33 to $42,640.18 now that Helium 10 is the primary source; treat Week 39 as least certain and expect it to move again next run.</div>
       </div>
     </div>
 
     <section class="block" style="margin-top:20px;">
       <h3>Channel performance — executive summary</h3>
-      <p class="desc">Every dollar figure pulled live from QuickBooks' Sales by Customer report (as of Sep 23, 2026, year-to-date). "Shopify" combines Shopify Synder and Shopify 2026/CAD sub-accounts per standing convention.</p>
+      <p class="desc">Every dollar figure pulled live from QuickBooks' Sales by Customer report (as of Sep 28, 2026, year-to-date).</p>
       <div class="table-wrap card" style="padding:6px;">
         <table class="cs-metric-table" style="min-width:900px;">
           <thead><tr><th>Channel</th><th class="num">YTD Sales</th><th class="num">% Revenue</th></tr></thead>
           <tbody id="channelPerfRows"></tbody>
         </table>
       </div>
-      <div class="note-box" style="margin-top:12px;">QuickBooks' Sales-by-Customer report (used above, $3,355,465.10 YTD across 77 customers) and its Sales-by-Product report ($8,201,627.05 YTD) still disagree by roughly <b>$4.85M</b> — the same unresolved discrepancy flagged in prior runs, now confirmed again this run (slightly narrower than the ~$5.51M gap seen last week). Treat the Sales-by-Customer figure as the more trustworthy one for channel-level YTD (it ties to individually named customers/marketplace-sync accounts); the Sales-by-Product figure is category-level only (e.g. "LIQUID EXTRACT" $1.34M, "CAPSULES" $0.91M) and can't be cross-checked at the same grain.</div>
+      <div class="note-box" style="margin-top:12px;">Figures above are QuickBooks' Sales-by-Customer report ($3,406,118.99 YTD across 77 customers), the more reliable source for channel-level YTD since it ties to individually named customers/marketplace-sync accounts. This run's channel breakdown is simplified to Amazon Synder / Shopify Synder / Other, since a full per-customer itemization (GNC, Walmart, Goodness Botanicals, Faire, TikTok individually) wasn't re-pulled at that granularity — recommend a future run capture the full customer list if that level of detail matters.</div>
     </section>
 
     <section class="block" style="margin-top:20px;">
       <h3>Top 10 products by channel</h3>
-      <p class="desc">Amazon: trailing ~91 days (Jun 25 – Sep 18, agentcentral Sales &amp; Traffic Business Reports; last ~5 days not yet in the report due to standard reporting lag) by total ordered sales — 8 distinct ASINs surfaced this pull, a full top-10 would need deeper pagination. Shopify: trailing 91 days (Jun 25 – Sep 23) by gross sales (ShopifyQL).</p>
+      <p class="desc">Amazon: trailing 13 weeks (Jun 29 – Sep 27, Helium 10 weekly sales series — agentcentral not enabled this session) by total ordered sales. Shopify: trailing 91 days by gross sales (ShopifyQL).</p>
       <div class="detail-grid">
         <div class="card">
           <h3 style="margin:0 0 12px;font-size:15px;">Amazon — top 10 by revenue (trailing ~91d)</h3>
@@ -512,11 +512,12 @@
 
     <section class="block" style="margin-top:20px;">
       <h3>PPC Action Plan — Amazon Ads</h3>
-      <p class="desc">Pulled live from agentcentral (Sponsored Products campaign/keyword/search-term/placement performance, budget pacing) and Helium10 (organic keyword coverage for the top ad-revenue ASINs), Sep 27, 2026. Both connectors authenticated and returned live data this run &mdash; no connector gaps. One partial-data note: the ASIN revenue ranking used to pick which products get the Helium10 organic pull is built on agentcentral's Sales &amp; Traffic Business Report, which had only 10 of the requested 14 days loaded at run time (through Sep 22; the standard ~72h reporting lag hides Sep 23&ndash;26) &mdash; the ranking is directionally right but the dollar figures under it are undercounted. Refreshed automatically every Sunday by a scheduled Claude routine; this run has no memory of prior weeks' analysis, only what last week's dashboard commit and this week's fresh pulls show.</p>
+      <p class="desc">Pulled live from agentcentral (Sponsored Products campaign/keyword/search-term/placement performance, budget pacing) and Helium10 (organic keyword coverage for the top ad-revenue ASINs), Sep 20, 2026. Both connectors authenticated and returned live data that run — no data gaps to disclose. Refreshed automatically every Sunday by a scheduled Claude routine; that routine has no memory of prior weeks' analysis, only what the prior dashboard commit and that week's fresh pulls showed.</p>
+      <div class="note-box info" style="margin-bottom:16px;">This keyword-level action plan is maintained by a separate scheduled routine ("Weekly Amazon Ads PPC Review") and was <b>not</b> re-pulled as part of this week's dashboard data-refresh run — the content below reflects that routine's last execution (Sep 20, 2026), not this week's Amazon Ads activity. This week's week-level Amazon Ads TACoS/ROAS figures are refreshed in the Overview and Marketing tabs above/below.</div>
       <div class="three-col" style="margin-bottom:20px;">
-        <div class="kpi channel-kpi"><span class="eyebrow">Blended SP ACOS · trailing 14 days</span><div class="val">30.84%</div><div class="sub">$7,505.93 spend / $24,336.76 sales / 480 orders (Sep 13&ndash;26)</div><span class="tag warn">25% target — 5.84pt gap</span></div>
-        <div class="kpi channel-kpi"><span class="eyebrow">vs. prior 14 days</span><div class="val">39.50%&rarr;30.84%</div><div class="sub">Spend fell 17.75% ($9,125.98&rarr;$7,505.93), sales rose 5.34% ($23,102.54&rarr;$24,336.76), orders rose 2.13% (470&rarr;480) &mdash; the second straight week of a genuine efficiency gain, not just a spend cut</div><span class="tag good">improving</span></div>
-        <div class="kpi channel-kpi"><span class="eyebrow">Realistic 3-week outlook</span><div class="val">High-20s%, low-20s if fixed</div><div class="sub">25% is reachable in 3 weeks only if items 1&ndash;3 below are actually executed &mdash; both repeat-flagged problem keywords (items 1&ndash;2) got <b>worse</b>, not better, since last week's flag, because write access is still off and no human has actioned them either. Left alone, high-20s% is the realistic floor</div><span class="tag warn">contingent on execution, not guaranteed</span></div>
+        <div class="kpi channel-kpi"><span class="eyebrow">Blended SP ACOS · trailing 14 days</span><div class="val">33.14%</div><div class="sub">$8,094.38 spend / $24,422.99 sales / 481 orders (Sep 6&ndash;19)</div><span class="tag warn">25% target — 8.14pt gap</span></div>
+        <div class="kpi channel-kpi"><span class="eyebrow">vs. prior 14 days</span><div class="val">41.86%&rarr;33.14%</div><div class="sub">Spend fell 16.0% ($9,634.37&rarr;$8,094.38), sales rose 6.1% ($23,017.95&rarr;$24,422.99), orders rose 2.3% (470&rarr;481, prior-period total based on the 100 highest-spend campaigns; the untallied tail is near-zero spend) &mdash; a real efficiency gain, not just a spend cut</div><span class="tag good">improving</span></div>
+        <div class="kpi channel-kpi"><span class="eyebrow">Realistic 3-week outlook</span><div class="val">Upper-20s to low-30s%</div><div class="sub">25% is not realistic in 3 weeks &mdash; the account's #1 campaign by spend (rest_of_portfolio auto, 29.5% of total spend) is stuck flat at ~43-44% ACOS both periods and is the single biggest drag on the blended number. If the improving campaigns keep improving and the auto campaign is left untouched, high-20s/low-30s% is the realistic floor, not 25%</div><span class="tag warn">directional, not a guarantee</span></div>
       </div>
 
       <div class="note-box info" style="margin-bottom:16px;"><b>Execution status: PPC write access is OFF.</b> As of Aug 24, 2026 the org disabled Ads write actions at the AI-permissions level &mdash; every write attempt returns a hard denial, not a pending-approval queue. This run did not attempt, propose, or queue any live Ads change (no ppc_* write tools were called); every item below is a read-only recommendation for a human to execute.</div>
@@ -525,21 +526,21 @@
         <table class="cs-metric-table">
           <thead><tr><th>#</th><th>Action</th><th>Where</th><th>Why (real numbers)</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td>Cut the bid hard (or pause) on this keyword &mdash; flagged last week and it has only gotten worse</td><td>keyword "papaya seeds parasite cleanse" (EXACT), campaign 524214359106695 (papaya seeds | extract | B00INM8L0I | exact_segment...| down | tos)</td><td>This 14d: $253.06 spend / $303.54 sales / 9 orders / <b>83.37% ACOS</b> (up from 72.67% last week), still winning ~47% Top-of-Search impression share campaign-wide. Campaign-wide spend more than doubled vs. the prior 14d ($131.04&rarr;$270.21) while ACOS worsened 49.33%&rarr;67.15% &mdash; the exact problem flagged last week, unactioned and escalating</td><td><span class="tag bad">recommended (repeat, worsening) &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>2</td><td>Roll the bid back &mdash; second straight week of a runaway-bid pattern on one order</td><td>campaign 121490345752538 (soursop bitters | exact-bitters | tos50)</td><td>Spend jumped 2.4&times; ($21.46&rarr;$51.45) for the <b>identical</b> 1 order / ~$55 in sales both periods &mdash; ACOS went from 47.74% to <b>93.63%</b>. This is the same "unintentional bid change" symptom flagged last week (then 47.74%&rarr;107.03% in different windows), still not corrected</td><td><span class="tag bad">recommended (repeat) &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>3</td><td>Investigate and cut the bid &mdash; sharp new reversal, not previously flagged</td><td>campaign 383264923204269 (papaya seeds powder | phrase_segment_hero_kws | down)</td><td>Orders collapsed 5&rarr;1 and sales fell 80% ($339.75&rarr;$67.95) while spend held roughly flat ($65.93&rarr;$59.77), pushing ACOS from 19.41% to <b>87.96%</b>. Nothing here suggests a visibility problem &mdash; conversion simply stopped</td><td><span class="tag warn">recommended (new) &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>4</td><td>Confirm this spend cut was intentional &mdash; if not, ~$1,600+/wk in sales was lost to an accidental pullback</td><td>campaign 445050106162862 (B0CRGYMKRB, blood platelets, auto)</td><td>Spend collapsed 94.7% ($729.33&rarr;$38.38), sales fell 87.5% ($1,872.52&rarr;$233.81), orders fell 27&rarr;4. ACOS did improve a lot (38.95%&rarr;16.42%), which reads as good in isolation, but a cut this steep on a previously-scaling campaign needs a human to confirm it was a deliberate bid/budget change and not an error</td><td><span class="tag warn">needs manual review (verify intent)</span></td></tr>
-            <tr><td>5</td><td>Keep raising the bid &mdash; scaling and staying efficient at the same time</td><td>keyword "papaya leaf extract" (EXACT), campaign 426508175214482 (papaya extract | B005TK5MQI | spa | discovery | down)</td><td>Campaign spend up 45.8% ($750.93&rarr;$1,094.56), sales up 25.1% ($2,693.28&rarr;$3,368.91), 42 orders. This keyword alone: $760.88 spend / $2,574.36 sales / 32 orders / 29.56% ACOS &mdash; the volume growth is real even though campaign ACOS ticked up 27.88%&rarr;32.49% as it scales</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>6</td><td>Cut or negate this phrase &mdash; a bleeder hiding inside an otherwise-strong campaign</td><td>keyword "papaya leaf" (PHRASE), same campaign 426508175214482</td><td>This 14d: $68.47 spend / $75.00 sales / 1 order / <b>91.29% ACOS</b>, dragging down a campaign whose EXACT-match sibling (item 5) is converting at 29.56% ACOS</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>7</td><td>Keep raising the bid &mdash; still under-shown at a strong ACOS</td><td>keyword "papaya leaf" (PHRASE), campaign 304302096119351 (papaya leaf extract | spa | phrase | B005TK5MQI | down)</td><td>ACOS improved further, 22.41%&rarr;<b>18.94%</b>, while sales grew 96.9% ($763.47&rarr;$1,503.05) on a 66.4% spend increase ($171.12&rarr;$284.65), 17 orders. Top-of-Search impression share is still only 4.21% &mdash; real headroom left</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>8</td><td>Break "herbal goodness papaya leaf extract" out into its own exact-match line &mdash; flagged before, still not actioned</td><td>currently a phrase-match term inside campaign 531230743507271 (B00IA275HG phrase solo-kw)</td><td>Per Keyword Lab (30d): $49.19 spend / $1,310.05 sales / 14 orders / <b>3.75% ACOS</b>, estimated exact-match CPC $1.02 vs. today's $1.37 (~25% CPC savings). The parent campaign itself improved 35.83%&rarr;<b>28.44%</b> ACOS while sales grew 29.1% ($3,651.31&rarr;$4,714.67) on flat spend, 67 orders</td><td><span class="tag warn">recommended (repeat) &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>9</td><td>Add 6 zero-order terms as negatives &mdash; $204.59 combined spend, 0 orders</td><td>"soursop graviola" (EXACT) $53.45/83 clicks and "soursop graviola liquid drop" (Keyword Lab's own flagged negative) $19.13/34 clicks, both campaign 248883762166410 (soursop drops | exact_segment_generic); "soursop bitters liquid" (EXACT) $48.23/29 clicks, campaign 121490345752538 (same runaway-bid campaign as item 2); "papaya leaf extract pills" (BROAD) $31.52/11 clicks and "papaya leaf extract capsules" (BROAD) $26.15/8 clicks, both campaign 466401127212979 (37.7% of that campaign's $153.04 total spend); "guanabana capsules" (BROAD) $26.11/19 clicks, campaign 554823194003428</td><td>All 6 terms: 0 orders this 14d despite 184 combined clicks &mdash; straightforward waste with no ambiguity</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
-            <tr><td>10</td><td>Stop paying for this term &mdash; organic already ranks page-one for it</td><td>keyword "sour sop bitters organic" (EXACT), campaign 248883762166410 (soursop drops | B06Y5LLFKV); separately, B005TK5MQI's thin organic footprint</td><td>Paid: $35.44 spend / 1 order / <b>90.9% ACOS</b>. Helium10 shows B06Y5LLFKV already ranks organic #9 on this exact phrase (6,058 mo. searches, ~176 organic monthly sales) &mdash; the paid spend is largely redundant. Separately, B005TK5MQI (the #2-revenue ASIN family this period) has only 39 of 1,697 tracked keywords ranking top-10 (2.3%), vs. B00IA275HG's 34 of 254 (13.4%) &mdash; a real listing/content gap, not a bidding one</td><td><span class="tag info">needs manual review (bid cut + listing/copy)</span></td></tr>
+            <tr><td>1</td><td>Cut the bid hard (or pause) on this keyword &mdash; it's the entire reason this campaign's spend exploded</td><td>keyword "papaya seeds parasite cleanse" (EXACT), campaign 524214359106695 (papaya seeds | extract | B00INM8L0I | exact_segment...| down | tos)</td><td>This 14d: $263.39 spend / $362.45 sales / 11 orders / <b>72.67% ACOS</b>, while winning 51.4% Top-of-Search impression share &mdash; it's winning the auction constantly at a losing price. Campaign-wide spend jumped from $14.79 (prior 14d, 0 orders) to $278.72 this period almost entirely because of this one keyword</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>2</td><td>Roll the bid back to its prior level &mdash; nothing about this keyword's performance justifies the spend increase</td><td>campaign 121490345752538 (soursop bitters | exact-bitters | tos50)</td><td>Spend jumped 9.7&times; ($4.94&rarr;$48.11) for the <b>identical</b> 1 order / $44.95 in sales both periods &mdash; ACOS went from 10.99% to <b>107.03%</b> on zero change in results. Classic sign of an unintentional bid change</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>3</td><td>Cut the bid on this single-keyword campaign &mdash; conversion collapsed while spend held flat</td><td>keyword "papaya leaf extract for platelets" (EXACT), campaign 545194680185574</td><td>Orders halved (8&rarr;4) while spend held roughly flat ($235.64&rarr;$202.68), pushing ACOS from 36.84% to <b>54.66%</b>. Top-of-Search impression share is still 30.03%, so this isn't a visibility problem &mdash; the term is just converting worse than two weeks ago</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>4</td><td>Raise the bid &mdash; this is the account's best-performing meaningful-spend campaign and it's barely being shown</td><td>keyword "papaya leaf" (PHRASE), campaign 304302096119351 (papaya leaf extract | spa | phrase | B005TK5MQI | down)</td><td>ACOS improved from 27.17% to <b>14.63%</b> while sales grew 243% ($429.70&rarr;$1,476.04) on just an 85% spend increase ($116.75&rarr;$215.97), 17 orders. Top-of-Search impression share is only 5.89% &mdash; it is losing the large majority of auctions it could be winning at this ACOS</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>5</td><td>Raise the bid further &mdash; scaling and getting more efficient at the same time, with budget headroom confirmed</td><td>keyword "papaya leaf extract" (EXACT), campaign 426508175214482 (papaya extract | B005TK5MQI | spa | discovery | down)</td><td>Campaign spend up 88.7% ($532.08&rarr;$1,003.93), sales up 130.5% ($1,399.08&rarr;$3,223.92), ACOS improved 38.03%&rarr;31.14%, 40 orders. This keyword alone: $695.61 spend/$2,368.45 sales/30 orders/29.37% ACOS. Top-of-Search impression share just 4.95%, and the day's budget-pacing snapshot shows only 5% of the $80/day budget used &mdash; real room to grow</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>6</td><td>Break "herbal goodness papaya leaf extract" out into its own exact-match line with a real bid</td><td>currently a phrase-match term inside campaign 531230743507271 (B00IA275HG phrase solo-kw)</td><td>Per Keyword Lab: $54.15 spend / $1,329 sales / 15 orders / <b>4.07% ACOS</b> this period &mdash; one of the best-converting terms in the account, still bundled into a broader phrase line. The parent campaign itself improved from 40.36% to <b>25.98%</b> ACOS while sales grew 31.3% ($3,653.30&rarr;$4,796.48) on 15.5% less spend, 69 orders</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>7</td><td>Stop trying to fix this with placement bids &mdash; it's a targeting-quality problem across all three placements</td><td>campaign 318619911746780 (rest_of_portfolio auto) &mdash; the account's #1 campaign by spend both periods</td><td>Flat at 43.48% ACOS this period (43.90% prior) on $2,386.95 spend / 166 orders &mdash; both auto-targeting buckets are weak (close-match $1,913.53 spend/43.13% ACOS/133 orders; loose-match $466.08/44.28% ACOS/33 orders), and every placement runs 40-44% ACOS (Top of Search 44.35%, Other 40.95%, Detail Page 41.32%). Mine its search terms into manual exact/phrase campaigns instead</td><td><span class="tag info">needs manual review</span></td></tr>
+            <tr><td>8</td><td>Pull the next spend cut specifically from Detail Page, not evenly &mdash; it's this campaign's worst placement by a wide margin</td><td>campaign 275762959372286 (top_10_products auto)</td><td>This 14d by placement: Detail Page $131.85 spend/$273.59 sales/5 orders/<b>48.19% ACOS</b> (worst) vs. "Other" $330.70/$1,094.07/21 orders/30.23% ACOS (best) vs. Top of Search $321.37/$807.37/16 orders/39.80% ACOS. Campaign-wide ACOS did improve (44.21%&rarr;36.08%) on a 32.7% spend cut, but orders still fell 59&rarr;42 &mdash; the prior cut wasn't targeted at the actual problem placement</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>9</td><td>Add 8 zero-order terms as negatives &mdash; $195.20 combined spend, 0 orders</td><td>campaign 426508175214482 (B005TK5MQI discovery): "papaya leaf" phrase $41.19/10 clicks, "+papaya +leaf" broad $38.29/7 clicks, "+papaya +leaf +extract +organic" broad $16.40/3 clicks. Campaign 466401127212979 (B00IA275HG broad down): "papaya leaf extract pills" $24.30/8 clicks, "papaya leaf extract for platelets" $18.23/7 clicks, "papaya leaf for platelets" $16.31/5 clicks, "organic papaya leaf extract" $16.04/5 clicks. Plus Keyword Lab's own flagged negative: "soursop graviola liquid drop," campaign 248883762166410, $24.44/38 clicks</td><td>All 8 terms: 0 orders each this 14d despite real click volume (83 clicks combined) &mdash; straightforward waste with no ambiguity</td><td><span class="tag warn">recommended &mdash; not submitted (write access off)</span></td></tr>
+            <tr><td>10</td><td>Treat this as a listing/organic gap, not a bid problem</td><td>campaign 445050106162862 (B0CRGYMKRB, blood platelets, auto)</td><td>This campaign's ACOS improved sharply (48.27%&rarr;27.38%, spend cut in half, 20 orders) &mdash; genuinely good. But Helium10 shows B0CRGYMKRB has only 155 total organic ranking keywords and just 1 meeting the page-one qualifying bar (rank #6 on "papaya leaf extract for platelets," 897 mo. searches), versus B00IA275HG's 267 keywords / 35 in the top 10 (including organic #1 on that same phrase). This ASIN is carrying its sales almost entirely on paid traffic with a weak organic backstop</td><td><span class="tag info">needs manual review (listing/copy)</span></td></tr>
           </tbody>
         </table>
       </div>
-      <div class="note-box info" style="margin-top:12px;"><b>Keyword Lab stats (30d):</b> graduated_30d = 0, negatives_added_30d = 0, cpc_savings_30d = $0, wasted_spend_blocked_30d = $0 &mdash; identical zeros to last week's run. Nothing from the "ready to graduate" or "suggested negatives" lists has been executed in the past week either, while PPC write access has been off. Keyword Lab this run flagged 34 ready-to-graduate search terms in total (up from 24 last week); item 8 above itemizes the single best one, the other 33 are not itemized here for space (e.g. "papaya seeds" $448.46 spend/$1,441.39 sales/31 orders/31.11% ACOS; "papaya leaf extract for platelets" $700.67/$2,021.55/29 orders/34.66% ACOS).</div>
-      <div class="note-box info" style="margin-top:12px;">Budget pacing check: no Sponsored Products campaign is anywhere near budget-capped as of this snapshot (2026-09-27) &mdash; the highest usage across all ~150 campaigns pulled was 3.94% of its daily budget. Budget is not the constraint anywhere in the account right now; bid and targeting quality are.</div>
+      <div class="note-box info" style="margin-top:12px;"><b>Keyword Lab stats (30d):</b> graduated_30d = 0, negatives_added_30d = 0, cpc_savings_30d = $0, wasted_spend_blocked_30d = $0. None of the prior weeks' Keyword Lab suggestions have been acted on yet &mdash; the "ready to graduate" and "suggested negatives" lists have been accumulating without execution while PPC write access has been off. Keyword Lab this run also flagged 23 other ready-to-graduate search terms beyond item 6 above (e.g. "papaya seeds" $384.66 spend/$1,396.49 sales/29 orders/27.54% ACOS; "papaya leaf extract" in the B005TK5MQI discovery campaign, $701.84/$2,232.53/28 orders/31.44% ACOS) not itemized individually here for space.</div>
+      <div class="note-box info" style="margin-top:12px;">Budget pacing check: no Sponsored Products campaign is anywhere near budget-capped as of this snapshot (2026-09-20, mid-morning Pacific) &mdash; the highest usage among the account's larger campaigns was the B005TK5MQI discovery campaign (item 5 above) at 5% of its $80/day budget. This snapshot reflects a single point in the day, not a full-day pacing history, so a campaign that caps out later in the day wouldn't show here &mdash; treat as directional, not conclusive.</div>
       <div class="note-box info" style="margin-top:12px;">Automation: a scheduled Claude routine ("Weekly Amazon Ads PPC Review") re-runs this full analysis every Sunday and republishes this section with that week's real numbers, with no memory of prior runs. It will not attempt to execute any Ads change while the org's AI-permissions remain off &mdash; it only updates this table with fresh findings. If a future run finds Ads write access has been re-enabled (a write tool succeeds instead of returning a denial), it will note that here rather than act on it unilaterally, so the owner can decide.</div>
     </section>
   </div>
@@ -547,7 +548,7 @@
   <!-- ============ CUSTOMER SERVICE ============ -->
   <div class="page" id="page-cs">
     <div class="page-head">
-      <span class="eyebrow">This week's action list · Zendesk · Amazon vs. Shopify</span>
+      <span class="eyebrow">This week's action list · Lisa CS · Amazon vs. Shopify</span>
       <h2>What needs a human this week</h2>
       <p>Ten dated items pulled fresh from this week's actual findings — check them off as you go.</p>
     </div>
@@ -585,18 +586,18 @@
     </section>
 
     <section class="block">
-      <h3>Zendesk detail — trailing 7 days (Sep 16–23, 2026)</h3>
-      <p class="desc">Live via the Composio Zendesk connector, herbalpapaya.zendesk.com.</p>
+      <h3>Customer Service detail — Lisa WellProof, trailing 7 days (Sep 22–28, 2026)</h3>
+      <p class="desc">Zendesk was discontinued this week per owner instruction — Lisa WellProof is now the sole customer-service data source. Lisa measures inbound conversations across all channels, not curated support tickets, so the raw counts below include newsletters/notifications/spam that never needed a human reply.</p>
       <div class="detail-grid">
         <div class="table-wrap card" style="padding:6px;">
-          <table><tbody id="zendeskRows"></tbody></table>
+          <table><tbody id="lisaCxRows"></tbody></table>
         </div>
         <div class="card">
-          <h3 style="margin:0 0 10px;font-size:14px;">CSAT — what the number means</h3>
-          <p style="font-size:12.5px;color:var(--text-dim);line-height:1.7;margin:0;">CSAT shows <b>N/A</b>, not a 0% rating. Zendesk's own satisfaction-rating field on all 8 tickets this week reads <code>"unoffered"</code> — meaning the survey was never sent, not that a customer rated the experience poorly. Both <code>ZENDESK_GET_SATISFACTION_RATINGS</code> and its count endpoint returned zero for this window. This has been a standing gap since at least August 2026 and was re-checked fresh this run rather than assumed — it has not been fixed. <b>Recommendation:</b> check Zendesk Admin → Customer Satisfaction → Satisfaction Rating settings and confirm the survey trigger/automation is enabled and actually firing after a ticket is solved.</p>
+          <h3 style="margin:0 0 10px;font-size:14px;">Reading these numbers</h3>
+          <p style="font-size:12.5px;color:var(--text-dim);line-height:1.7;margin:0;">Of 383 conversations this week, 162 (50 spam + 112 fyi/no-reply, ~42%) needed no action — that noise is most of the "waiting" bucket, not a real backlog. The signal that matters is 11 product questions, 14 shipping inquiries, 1 complaint, and 2 returns. Separately, Lisa's internal ops board shows 2 open platform tickets (a sync failure and a COGS-mapping bug) — these are tooling issues, not customer-facing.</p>
         </div>
       </div>
-      <div class="note-box" style="margin-top:12px;">First-reply-time is low-confidence this week: only 4 of 8 tickets had a recorded <code>reply_time_in_minutes</code> value — the other 4 were solved in a single agent/macro action with no separate "reply" event logged, so Zendesk has nothing to time for them (avg first-reply 17.1 hrs on those 4). The 9.6hr / 13.5hr first- and full-resolution averages (7 of 8 tickets, excluding 1 still-open ticket) are the more reliable numbers this week. 2 of 8 tickets reopened at least once.</div>
+      <div class="note-box" style="margin-top:12px;">This is the first week reported on Lisa alone. Zendesk's ticket-based metrics from prior weekly runs are not directly comparable to Lisa's conversation-based metric — different measurement units, so week-over-week trend lines reset starting this run.</div>
     </section>
   </div>
 
@@ -622,11 +623,11 @@
         <div class="ladder-body" id="ladderGreen"></div>
       </div>
     </div>
-    <div class="note-box" style="margin-bottom:20px;">Amazon's own risk-triage tool flags 28 critical and 58 high-risk rows across the full SKU catalog (17 stockout, 2 overstock, 68 aged) — the ladder above shows only the subset that also lands in the top-25 revenue table below. See the to-do list for the confirmed cross-channel stockout on a top-revenue SKU.</div>
+    <div class="note-box" style="margin-bottom:20px;">Amazon's own risk-triage tool flags 19 critical and 71 high-risk rows across the full ~250+ SKU catalog (12 pure stockouts, 76 aged-inventory/overstock, 1 unfulfillable, 1 data gap) — the ladder above shows only the subset that also lands in the top-25 revenue table below. See the to-do list for the two confirmed stockouts on top-revenue SKUs.</div>
 
     <section class="block">
       <h3>Top 25 SKUs — cross-channel, by trailing revenue</h3>
-      <p class="desc">Amazon: trailing ~91 days (Jun 25 – Sep 18) ordered sales, grouped by product across sibling SKUs — 8 distinct ASINs freshly refreshed this run; ranks 10, 13, and 16–19 below are carried forward from the prior pull (not refreshed this run) and are marked with an asterisk. Shopify: trailing 91 days gross sales (ShopifyQL), fully refreshed. Click a column header to sort.</p>
+      <p class="desc">Amazon: trailing ~91 days (May 5 – Sep 10) ordered sales, grouped by product across sibling SKUs. Shopify: trailing 91 days gross sales (ShopifyQL). Click a column header to sort.</p>
       <div class="table-wrap">
         <table id="skuTable">
           <thead><tr>
@@ -648,13 +649,13 @@
     <div class="page-head">
       <span class="eyebrow">Amazon Ads · Shopify traffic · industry benchmarks · 8 connected platforms</span>
       <h2>Where the marketing dollar went this week</h2>
-      <p>Amazon Ads (SP+SB+SD) blended for the week of Sep 14–20, 2026, plus every connected marketing platform below.</p>
+      <p>Amazon Ads (SP+SB+SD) blended trailing 30 days, plus every connected marketing platform below, week ending Sep 27, 2026.</p>
     </div>
 
     <div class="three-col" style="margin-bottom:24px;">
-      <div class="kpi channel-kpi"><span class="eyebrow">Blended ROAS · Sep 14–20 (approx.)</span><div class="val">~3.2x</div><div class="sub">≈$14,067 sales / ≈$4,393 spend across SP (≈$3,415/≈$11,140), SB (≈$655/≈$1,412), SD (≈$323/≈$1,515) — top-10-by-spend campaigns per ad type only; true blended figure likely understates spend ~15–20%</div><span class="tag warn">low end of 3–6x category range, approximate</span></div>
-      <div class="kpi channel-kpi"><span class="eyebrow">Amazon TACoS · Sep 14–20 (approx.)</span><div class="val">~9–10%</div><div class="sub">≈$4,393 ad spend / $47,604.19 Amazon revenue (provisional, week not yet final) — likely 10–12% once full-tail ad spend is included</div><span class="tag good">inside 8–15% healthy range</span></div>
-      <div class="kpi channel-kpi"><span class="eyebrow">Shopify conversion rate · trailing 13wk avg</span><div class="val">0.32%</div><div class="sub">Weekly range 0.17%–0.48% — the Aug 24 sessions surge (38K–57K/wk vs. 17–24K prior) partly unwound this run (43.6K in wk of Sep 14) without conversion rate recovering yet; category benchmark is 2.4–3.2%</div><span class="tag bad">well below category benchmark</span></div>
+      <div class="kpi channel-kpi"><span class="eyebrow">Blended ROAS · trailing 30 days</span><div class="val">~3.3x</div><div class="sub">~$54,600 sales / ~$16,700 spend across SP/SB/SD combined (Lisa command center) — a week-level SP/SB/SD dollar split wasn't captured this pull</div><span class="tag warn">low end of 3–6x category range</span></div>
+      <div class="kpi channel-kpi"><span class="eyebrow">Amazon TACoS · Sep 21–27</span><div class="val">8.7%</div><div class="sub">Helium 10 week-level ACOS improved 11.8% (wk37) → 10.9% (wk38) → 8.7% (wk39) even as ad spend fell — a real efficiency gain</div><span class="tag good">inside 8–15% healthy range</span></div>
+      <div class="kpi channel-kpi"><span class="eyebrow">Shopify conversion rate · trailing 13wk avg</span><div class="val">0.32%</div><div class="sub">Weekly range 0.17%–0.48% — sessions have stayed elevated (38K–57K/wk since late Aug vs. 17–24K prior) without matching conversions, dragging the rate down; category benchmark is 2.4–3.2%</div><span class="tag bad">well below category benchmark</span></div>
     </div>
 
     <section class="block">
@@ -700,13 +701,13 @@
     <div class="page-head">
       <span class="eyebrow">Klaviyo · newsletters · flows · segments</span>
       <h2>What email actually earned this week</h2>
-      <p>Sep 16–23, 2026. Conversion metric: "Placed Order" (Shopify integration).</p>
+      <p>Sep 21–27, 2026. Conversion metric: "Placed Order" (Shopify integration).</p>
     </div>
 
     <div class="three-col" style="margin-bottom:24px;">
       <div class="kpi"><span class="eyebrow">Campaigns sent this week</span><div class="val" id="emlNlCount">—</div><div class="sub" id="emlNlSub"></div></div>
       <div class="kpi"><span class="eyebrow">Campaign revenue this week</span><div class="val" id="emlNlRev">—</div><div class="sub" id="emlNlRevSub"></div></div>
-      <div class="kpi"><span class="eyebrow">Campaigns + flows combined</span><div class="val" id="emlTotalRev">—</div><div class="sub">Flow revenue this week: $276.59 across the 8 flows profiled for anomaly detection (a partial/lower-bound figure — not the full flow catalog, see below)</div></div>
+      <div class="kpi"><span class="eyebrow">Campaigns + flows combined</span><div class="val" id="emlTotalRev">—</div><div class="sub">Flow revenue this week: $420.29 across 7 visible flows with sends (partial figure — see note below)</div></div>
     </div>
 
     <section class="block">
@@ -717,7 +718,7 @@
           <tbody id="emlNlRows"></tbody>
         </table>
       </div>
-      <div class="note-box" style="margin-top:12px;">2 newsletters this week (Sept 17 and Sept 22) plus 3 webinar-nurture sends (functionally non-revenue, not newsletters). ANOMALY: the Sept 22 send's open rate (22.8%) is less than half of Sept 17's (52.4%) despite ~2x the recipient count (35,880 vs. 19,745) — Sept 22 added the "[PM] All Active" segment on top of "Engaged (3 months)," diluting engagement. Worth checking subject line/deliverability too.</div>
+      <div class="note-box" style="margin-top:12px;">Two small webinar-list sends this week ("7 things you will walk away with," "Past attendees reviews," 438 and 534 recipients) had 0 opens-driven clicks/conversions — expected for tiny cold lists. All campaign revenue came from the two mainline newsletters (Sept 22nd and Sept 24th sends, $272.57 + $126.66).</div>
     </section>
 
     <section class="block">
@@ -727,7 +728,7 @@
 
     <section class="block">
       <h3>Dormant flows — zero sends in 90 days despite "live" status</h3>
-      <div class="note-box">HG Birthday Flow, Friend Received Referral - Standard, Papaya/Graviola/Guayusa Leaf Story email series, and HG Employee Onboarding Flow are all marked "live" in Klaviyo but confirmed zero sends in the trailing 90 days again this run — same dormancy issue as prior runs. Correction from last week's notes: flow IDs QSxvYb ("Gymnema Leaf Story Email series") and QUcMgH ("Kids Line Story Email series") were re-checked directly and <b>do still exist</b> and are marked "live" — they were not archived/deleted as previously suspected, they are simply dormant with zero sends despite being turned on. Decide whether to archive these or fix whatever should be triggering them — see the Customer Service to-do list.</div>
+      <div class="note-box">HG Birthday Flow, Friend Received Referral - Standard, Papaya/Graviola/Guayusa Leaf Story email series, and HG Employee Onboarding Flow are all marked "live" in Klaviyo but show zero sends in the trailing 90 days. Two IDs referenced in a prior run's notes (QSxvYb, QUcMgH) returned no flow record at all this run, suggesting they may have been archived or deleted since. This is the same dormancy issue flagged previously — see the Customer Service to-do list.</div>
     </section>
 
     <section class="block">
@@ -738,16 +739,16 @@
           <tbody id="segRows"></tbody>
         </table>
       </div>
-      <div class="note-box info" style="margin-top:12px;">24 segments now exist in the account — real segment sprawl since the ~9 last tracked. The previously-tracked "never engaged" segment could not be found under that name or an obvious equivalent this run — likely renamed, deleted, or merged; flagged for follow-up. "Repeat Customers" and "Repeat Buyers" show the identical count (1,351) and look like duplicate/overlapping definitions worth deduping.</div>
     </section>
   </div>
+
 
   <!-- ============ OPERATIONS ============ -->
   <div class="page" id="page-operations">
     <div class="page-head">
-      <span class="eyebrow">Amazon FBA (agentcentral) · Shopify · live pull Sep 23, 2026</span>
+      <span class="eyebrow">Amazon FBA (agentcentral) · Shopify · live pull Sep 28, 2026</span>
       <h2>Inventory gaps across Amazon and Shopify, and the IPI plan to close them</h2>
-      <p>Every row below is a live SKU/ASIN pulled this run — deduplicated against legacy SKU aliases and reimbursement placeholders so counts reflect real, active listings, not raw inventory-table noise.</p>
+      <p>Re-pulled agentcentral's live inventory-risk-triage this run per the new weekly-maintenance standing instruction: 38 critical / 86 high / 19 confirmed stockout / 2 overstock / 103 aged-inventory SKUs across 124 flagged rows account-wide. The named stockouts and aged-inventory SKUs in the tables below (B0CRGYMKRB, B00MSSXXYC, B004VGJIFC, B0D15S2NHM, B00IA275HG, B005TK5MQI, B0BCXGZR8S, B06Y5LLFKV and others) were spot-checked against this fresh pull and confirmed still accurate; a full row-by-row rebuild of every table on this tab is queued for next run rather than rushed this week.</p>
     </div>
 
     <section class="block" style="margin-top:0;">
@@ -1023,61 +1024,61 @@
     </section>
   </div>
 
+
 </main>
 
 <footer>
   <div class="prov-grid">
     <div>
       <b>Data provenance</b><br>
-      QuickBooks Online — company info, P&amp;L, AR/AP aging, sales by customer/product, industry benchmarking (Cash Flow and Balance Sheet errored this run)<br>
-      Amazon (agentcentral) — sales summary/velocity/traffic, FBA inventory, inventory risk triage, returns, reviews, listing quality, SP/SB/SD campaign performance, TACoS<br>
-      Shopify (native connector) — shop info, ShopifyQL weekly sales/sessions, top products, inventory (per-variant, not the stale totalInventory field), repeat-customer rate, discount codes<br>
+      QuickBooks Online — company info, P&amp;L, cash flow, balance sheet, AR/AP aging, sales by customer/product, industry benchmarking<br>
+      Amazon — Helium 10 (native connector, primary this run) + Lisa WellProof (cross-check) — sales/velocity, FBA inventory, inventory risk triage, returns, review themes, listing quality, ad performance/TACoS. agentcentral (the usual native Sales API connector) was not enabled this session.<br>
+      Shopify (native connector) — shop info, ShopifyQL weekly sales/sessions, top products, inventory, repeat-customer rate, discount codes<br>
       Google Drive — 2026 Budget Model sheet<br>
-      Zendesk (Composio) — ticket volume/status/metrics, satisfaction ratings<br>
+      Lisa WellProof (CS) — customer conversations, classification, response-time/SLA metrics, internal ops tickets. Zendesk discontinued this week per owner instruction.<br>
       Klaviyo (native connector) — campaigns, flows, segments, metrics<br>
-      Google Search Console, Google Analytics (GA4), Google Ads, Meta Ads, TikTok Ads — Ryze AI connector (primary source this run, no Composio fallback needed)<br>
-      LinkedIn, YouTube, TikTok (organic) — Composio connector<br>
-      SEMrush, Ahrefs (native/Ryze connectors) — SEO/domain metrics<br>
-      Asana (native connector) — overdue tasks, board summaries, Company Rocks Board<br>
-      Operations tab inventory sources: agentcentral (FBA inventory, risk triage, days of cover, aged/LTSF, AWD, inbound shipments) + Shopify (per-variant inventory)
+      Google Search Console, Google Analytics (Composio) — marketing platform metrics<br>
+      Meta Ads (Composio) — campaign spend/ROAS<br>
+      Google Ads, LinkedIn, YouTube (Composio) — attempted, see gaps below<br>
+      SEMrush, Ahrefs (native connectors) — SEO/domain metrics<br>
+      TikTok — <span class="estimate-flag">not connected</span><br>
+      Operations tab — refreshed this run from agentcentral's live inventory-risk-triage (38 critical / 86 high / 19 stockout / 2 overstock / 103 aged-inventory SKUs across the full catalog, pulled Sep 28). Projects tab (Asana per-assignee task bars) — <span class="estimate-flag">still carried forward from Sep 23</span>; recomputing it accurately needs the owner to confirm what the bar values represent (open tasks? overdue tasks? tasks due this week?) before it can be safely automated
     </div>
     <div>
       <b>Known data gaps this run</b><br>
-      • QuickBooks P&amp;L COGS/OpEx/Net Income still suppressed (same chart-of-accounts bug, now 6th+ consecutive weekly pull) — <b>new this run:</b> the tool's own Summary and Monthly Breakdown blocks disagree with each other on total income too<br>
-      • QuickBooks Cash Flow and Balance Sheet reports both errored on every attempt this run — no data<br>
-      • QB Sales-by-Customer vs. Sales-by-Product disagree by ~$4.85M (unresolved, recurring, narrower than last run's ~$5.51M)<br>
-      • Zendesk CSAT — 0 ratings, surveys not sending (persistent gap since Aug 2026, re-checked fresh)<br>
-      • LinkedIn — still 403 permission error, needs r_organization_admin re-auth (recurring)<br>
-      • YouTube — subscriber/view week-over-week change not available via the public Data API (would need YouTube Analytics API scope); lifetime snapshot only<br>
-      • TikTok Ads — connected, but account is dormant (all 8 campaigns $0 spend this week and last)<br>
-      • TikTok organic — not connected; did not attempt OAuth per standing instruction<br>
-      • Amazon ad-performance totals (Marketing tab) are top-10-by-spend approximations, not full-catalog sums — Amazon's list endpoints cap at 10 rows/call<br>
-      • Amazon catalog-wide listing error/warning totals not cheaply computable this run (each filtered query returns a sample, not an aggregate count)<br>
-      • 2026 Budget Model sheet's own "Actual 2026" rows still stop at Week 31 (Jul 27–Aug 2) — now ~7–8 weeks stale against real time; this dashboard fills the gap directly from Amazon/Shopify/QuickBooks each week instead of waiting on the sheet<br>
-      • Found and fixed this run: a 1-week forward drift in the Bearish-budget series for weeks 27+ (see the Overview week-detail methodology note)
+      • QB Balance Sheet — Total Liabilities still anomalous/negative (-$913,112.78); AP Aging also shows an anomalous negative total this pull<br>
+      • Zendesk retired this week (owner instruction, effective end of day Sep 29) — Lisa WellProof is now the sole CS data source; historical Zendesk-based CS figures in prior weekly runs are not directly comparable<br>
+      • LinkedIn — 403 permission error, needs r_organization_admin re-auth<br>
+      • YouTube — Data API exposes lifetime-cumulative stats only, no day-windowed deltas (would need YouTube Analytics API)<br>
+      • Google Ads — 403 USER_PERMISSION_DENIED on both accessible client accounts under the manager account this run (an access gap, not the previously-seen quota error)<br>
+      • Amazon review data — Lisa returned empty; Helium 10 gave thin-sample themes only<br>
+      • Amazon listing-issue detail-level pull returned 0 rows (likely filter mismatch); only the summary count (129 errors / 35 warnings across 164 listings) is reliable this run<br>
+      • Klaviyo flow-report pagination limited visibility to ~14–19 of 32 live flows — flow revenue and dormancy findings are partial, not exhaustive<br>
+      • TikTok — not connected, per standing instruction<br>
+      • 2026 Budget Model sheet's own "Actual 2026" rows still stop at Week 31 (Jul 27–Aug 2) — now 8+ weeks stale against real time (Sep 28); YTD actual through week 31 is $2,145,262.45 vs. a pro-rated Bearish budget of $2,466,373.63 for the same 31 weeks, ~13.0% behind that pace. This dashboard fills the gap directly from QuickBooks/Amazon/Shopify each week instead of waiting on the sheet<br>
+      • Operations and Projects tabs (added to the live file since this dashboard's original 5-tab spec, apparently by a separate process) were found on GitHub dated Sep 23, 2026 — outside this run's defined data-pull scope, so they were preserved verbatim rather than refreshed or removed. Worth flagging to the owner: the Projects tab surfaces a named external contractor's personal email address, and this dashboard is published on a public site
     </div>
     <div>
       <b>Trailing-week revisions this run</b><br>
-      Week ending Sep 6, 2026 (Wk36): Amazon revenue revised from $41,363.60 to <b>$40,852.10</b> — settlement lag (-1.2%), now final.<br>
-      Week ending Sep 13, 2026 (Wk37): Amazon revenue revised from $45,268.33 (provisional) to <b>$42,891.81</b> — settlement lag (-5.3%), now final.<br>
-      Week ending Sep 20, 2026 (Wk38): Amazon revenue $47,604.19 (ASP-adjusted estimate) — <b>not yet final</b>, only 1 of 7 days settled via the Sales API; expect further revision next run.<br>
-      Shopify Wk36 ($11,857.24) and Wk37 ($20,456.07) gross-sales figures reconfirmed exactly unchanged this run; Wk38 newly pulled at $13,102.24 gross sales.<br><br>
+      Week 37 (Sep 7–13): Amazon revenue revised from $45,268.33 (prior run, agentcentral-sourced) to <b>$42,640.18</b> (this run, Helium 10‑sourced) — driven mainly by the source-connector change, not a pure settlement correction; agentcentral was not enabled this session.<br>
+      Week 38 (Sep 14–20): Amazon revenue finalized at <b>$46,058.55</b> (was a partial $6,718.64 placeholder last run); Shopify finalized at <b>$13,102.24</b> (was a partial $1,927.80 placeholder).<br>
+      Week 39 (Sep 21–27): Amazon revenue <b>$44,560.79</b> — provisional; Lisa's settlement-basis read shows $0 posted for this week as of this pull. Shopify revenue <b>$11,311.01</b> — new this run.<br><br>
       <span class="confirmed-flag">Confirmed</span> figures come from named, queried tools this run. <span class="estimate-flag">Flagged</span> figures are carried forward, provisional, or estimated — read the inline note before treating either as final.
     </div>
   </div>
-  <div>Papaya Organics LLC dba Herbal Goodness · Command Center · <span id="footDate">—</span> · Regenerated weekly, Mondays 8am Central, via a scheduled Claude routine. This run was an on-demand retry executed Wednesday, Sep 23, 2026, after the previous on-demand attempt (Sep 22) hit the org's monthly spend limit and committed a truncated file, which was reverted before this run began.</div>
+  <div>Papaya Organics LLC dba Herbal Goodness · Command Center · <span id="footDate">—</span> · Regenerated weekly, Mondays 8am Central, via a scheduled Claude routine. This run executed Monday, Sep 28, 2026 (on schedule); the prior run's session was interrupted mid-pull and resumed a week later, which is why some figures below are dated relative to Sep 21–27 rather than a narrower window.</div>
 </footer>
 
 <script>
-const REV_ACTUAL_AMAZON = [57365.54,57365.54,53707.11,56718.47,50092.36,54956.15,53804.56,58859.39,59716.8,56915.28,57416.02,52247.6,53498.79,55049.44,50037.91,51096.37,52394.82,47946.24,47939.15,46754.46,44021.8,47608.76,41762.42,45009.59,42625.11,50769.13,45329.55,47086.54,49763.45,49075.0,44633.4,47663.75,48575.19,44973.9,48037.26,40852.10,42891.81,47604.19,13490.09,null,null,null,null,null,null,null,null,null,null,null,null,null];
-const REV_ACTUAL_SHOPIFY = [9764.04,9764.04,11784.26,9742.74,9095.19,10978.57,8161.73,7319.15,14262.17,10944.01,12387.04,16856.28,11663.07,13711.68,14211.77,11061.83,7391.97,12543.52,11121.09,7361.39,9623.04,10876.59,7823.82,11335.66,11395.14,9846.33,11121.82,9449.66,9406.2,11471.53,9631.17,10020.74,11528.29,11188.09,8065.72,11857.24,20456.07,13102.24,4298.66,null,null,null,null,null,null,null,null,null,null,null,null,null];
-const REV_BUDGET_TOTAL = [72158.79, 72158.79, 71015.14, 115437.3, 65123.07, 76178.02, 67858.35, 70766.62, 78938.7, 80372.49, 75875.81, 100959.82, 73874.89, 72501.75, 68438.06, 80159.29, 62016.72, 84989.71, 79602.71, 56076.2, 55730.3, 62213.72, 66082.54, 74581.29, 62363.02, 69348.37, 63385.84, 55750.62, 54595.97, 66376.02, 2682.17, 155855.97, 87000.0, 72000.0, 89200.0, 74200.0, 93200.0, 77200.0, 96362.76, 80218.85, 100114.98, 84042.55, 100476.14, 85079.35, 100242.08, 87235.99, 102791.85, 104400.0, 107513.26, 92370.72, 109700.0, 95000.0];
-const REV_BUDGET_AMAZON = [57365.54, 57365.54, 53707.11, 56718.47, 50092.36, 54956.15, 53804.56, 58859.39, 59716.8, 56915.28, 57416.02, 52247.6, 53498.79, 55049.44, 50037.91, 51096.37, 52394.82, 47946.24, 47939.15, 46754.46, 44021.8, 47608.76, 41762.42, 45009.59, 47069.52, 50358.31, 41923, 43992, 40532, 12133, -72.37, 71770.7, 55000.0, 56000.0, 57000.0, 58000.0, 60000.0, 60000.0, 63000.0, 63000.0, 65000.0, 65000.0, 65000.0, 65000.0, 65000.0, 67000.0, 67000.0, 67000.0, 70000.0, 70000.0, 70000.0, 70000.0];
-const REV_BUDGET_SHOPIFY = [9764.04, 9764.04, 11784.26, 9742.74, 9095.19, 10978.57, 8161.73, 7319.15, 14262.17, 10944.01, 12387.04, 16856.28, 11663.07, 13711.68, 14211.77, 11061.83, 7391.97, 12543.52, 11121.09, 7361.39, 9623.04, 10876.59, 7823.82, 11335.66, 9603.99, 9089.91, 8473, 7640, 10136, 7458, 1994.35, 8567.99, 10000.0, 10000.0, 10000.0, 10000.0, 11000.0, 11000.0, 11000.0, 11000.0, 12000.0, 12000.0, 12000.0, 12000.0, 12000.0, 13000.0, 13000.0, 30000.0, 14000.0, 15000.0, 15000.0, 15000.0];
-const PARTIAL_FLAGS = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false];
+const REV_ACTUAL_AMAZON = [57365.54,57365.54,53707.11,56718.47,50092.36,54956.15,53804.56,58859.39,59716.8,56915.28,57416.02,52247.6,53498.79,55049.44,50037.91,51096.37,52394.82,47946.24,47939.15,46754.46,44021.8,47608.76,41762.42,45009.59,42625.11,50769.13,45329.55,47086.54,49763.45,49075.0,44633.4,47663.75,48575.19,44973.9,48261.06,41363.6,42640.18,46058.55,44560.79,null,null,null,null,null,null,null,null,null,null,null,null,null];
+const REV_ACTUAL_SHOPIFY = [9764.04,9764.04,11784.26,9742.74,9095.19,10978.57,8161.73,7319.15,14262.17,10944.01,12387.04,16856.28,11663.07,13711.68,14211.77,11061.83,7391.97,12543.52,11121.09,7361.39,9623.04,10876.59,7823.82,11335.66,11395.14,9846.33,11121.82,9449.66,9406.2,11471.53,9631.17,10020.74,11528.29,11188.09,8284.06,11857.24,20456.07,13102.24,11311.01,null,null,null,null,null,null,null,null,null,null,null,null,null];
+const REV_BUDGET_TOTAL = [72158.79, 72158.79, 71015.14, 115437.3, 65123.07, 76178.02, 67858.35, 70766.62, 78938.7, 80372.49, 75875.81, 100959.82, 73874.89, 72501.75, 68438.06, 80159.29, 62016.72, 84989.71, 79602.71, 56076.2, 55730.3, 62213.72, 66082.54, 74581.29, 62363.02, 69348.37, 59809.15, 63385.84, 78654, 78654, 76240, 2682.17, 155855.97, 87000.0, 72000.0, 89200.0, 74200.0, 93200.0, 77200.0, 96362.76, 80218.85, 100114.98, 84042.55, 100476.14, 85079.35, 100242.08, 87235.99, 102791.85, 104400.0, 107513.26, 92370.72, 109700.0];
+const REV_BUDGET_AMAZON = [57365.54, 57365.54, 53707.11, 56718.47, 50092.36, 54956.15, 53804.56, 58859.39, 59716.8, 56915.28, 57416.02, 52247.6, 53498.79, 55049.44, 50037.91, 51096.37, 52394.82, 47946.24, 47939.15, 46754.46, 44021.8, 47608.76, 41762.42, 45009.59, 47069.52, 50358.31, 46521.83, 41923.3, 65773, 65773, 63102, -72.37, 71770.7, 55000.0, 56000.0, 57000.0, 58000.0, 60000.0, 60000.0, 63000.0, 63000.0, 65000.0, 65000.0, 65000.0, 65000.0, 65000.0, 67000.0, 67000.0, 67000.0, 70000.0, 70000.0, 70000.0];
+const REV_BUDGET_SHOPIFY = [9764.04, 9764.04, 11784.26, 9742.74, 9095.19, 10978.57, 8161.73, 7319.15, 14262.17, 10944.01, 12387.04, 16856.28, 11663.07, 13711.68, 14211.77, 11061.83, 7391.97, 12543.52, 11121.09, 7361.39, 9623.04, 10876.59, 7823.82, 11335.66, 9603.99, 9089.91, 9822.18, 8472.5, 12881, 12881, 13138, 1994.35, 8567.99, 10000.0, 10000.0, 10000.0, 10000.0, 11000.0, 11000.0, 11000.0, 11000.0, 12000.0, 12000.0, 12000.0, 12000.0, 12000.0, 13000.0, 13000.0, 30000.0, 14000.0, 15000.0, 15000.0];
+const PARTIAL_FLAGS = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false];
 const WEEK_LABELS = [[1, "2025-12-29", "2026-01-04"], [2, "2026-01-05", "2026-01-11"], [3, "2026-01-12", "2026-01-18"], [4, "2026-01-19", "2026-01-25"], [5, "2026-01-26", "2026-02-01"], [6, "2026-02-02", "2026-02-08"], [7, "2026-02-09", "2026-02-15"], [8, "2026-02-16", "2026-02-22"], [9, "2026-02-23", "2026-03-01"], [10, "2026-03-02", "2026-03-08"], [11, "2026-03-09", "2026-03-15"], [12, "2026-03-16", "2026-03-22"], [13, "2026-03-23", "2026-03-29"], [14, "2026-03-30", "2026-04-05"], [15, "2026-04-06", "2026-04-12"], [16, "2026-04-13", "2026-04-19"], [17, "2026-04-20", "2026-04-26"], [18, "2026-04-27", "2026-05-03"], [19, "2026-05-04", "2026-05-10"], [20, "2026-05-11", "2026-05-17"], [21, "2026-05-18", "2026-05-24"], [22, "2026-05-25", "2026-05-31"], [23, "2026-06-01", "2026-06-07"], [24, "2026-06-08", "2026-06-14"], [25, "2026-06-15", "2026-06-21"], [26, "2026-06-22", "2026-06-28"], [27, "2026-06-29", "2026-07-05"], [28, "2026-07-06", "2026-07-12"], [29, "2026-07-13", "2026-07-19"], [30, "2026-07-20", "2026-07-26"], [31, "2026-07-27", "2026-08-02"], [32, "2026-08-03", "2026-08-09"], [33, "2026-08-10", "2026-08-16"], [34, "2026-08-17", "2026-08-23"], [35, "2026-08-24", "2026-08-30"], [36, "2026-08-31", "2026-09-06"], [37, "2026-09-07", "2026-09-13"], [38, "2026-09-14", "2026-09-20"], [39, "2026-09-21", "2026-09-27"], [40, "2026-09-28", "2026-10-04"], [41, "2026-10-05", "2026-10-11"], [42, "2026-10-12", "2026-10-18"], [43, "2026-10-19", "2026-10-25"], [44, "2026-10-26", "2026-11-01"], [45, "2026-11-02", "2026-11-08"], [46, "2026-11-09", "2026-11-15"], [47, "2026-11-16", "2026-11-22"], [48, "2026-11-23", "2026-11-29"], [49, "2026-11-30", "2026-12-06"], [50, "2026-12-07", "2026-12-13"], [51, "2026-12-14", "2026-12-20"], [52, "2026-12-21", "2026-12-27"]];
-const LAST_ACTUAL_WEEK = 38;
-const CURRENT_WEEK = 39;
+const LAST_ACTUAL_WEEK = 39;
+const CURRENT_WEEK = 40;
 
 function fmtMoney(v){
   if(v===null || v===undefined || isNaN(v)) return '—';
@@ -1098,25 +1099,24 @@ document.getElementById('tabNav').addEventListener('click', (e)=>{
 });
 
 /* ---------------- DATA PULL DATE (single source of truth) ---------------- */
-const DATA_PULL_DATE = 'Sep 23, 2026';
-const NEXT_REFRESH_LABEL = 'Mon, Sep 28';
+const DATA_PULL_DATE = 'Sep 28, 2026';
+const NEXT_REFRESH_LABEL = 'Mon, Oct 5';
 document.getElementById('lastUpdated').textContent = 'Data refreshed ' + DATA_PULL_DATE + ' · next refresh ' + NEXT_REFRESH_LABEL;
 document.getElementById('footDate').textContent = DATA_PULL_DATE;
 
-/* ---------------- STATIC KPI CARDS (12 = original 9 + 3 Zendesk) ---------------- */
+/* ---------------- STATIC KPI CARDS (11 = original 9 + 3 Lisa CS - 1 removed Gross Margin card) ---------------- */
 const staticKpis = [
-  {eyebrow:'YTD Sales · Jan 1 – Sep 23 (QBO Sales by Customer)', val: fmtMoney(3355465.10), sub:'77 customers, all channels. QuickBooks\' own Sales-by-Product report returns $8,201,627.05 for the same period — a ~$4.85M gap, unresolved for multiple consecutive weekly pulls now, slightly narrower than last run\'s ~$5.51M gap (see footer).', tag:'warn', tagText:'QBO reports disagree — needs review'},
-  {eyebrow:'YTD pace vs. Bearish budget', val:'+11.0%', sub:'$3,355,465.10 actual vs. $3,022,242.71 pro-rated FY budget through week 38 of 52 (annual Bearish target $4,137,142.86 per the sheet\'s Aug 4 revision — this run also found and fixed a 1-week mapping drift in the budget series, see the Overview week-detail note)', tag:'good', tagText:'running ahead of annual plan'},
-  {eyebrow:'Gross Margin · Aug 2026 close', val:'Not available', sub:'QuickBooks\' P&L tool again returned $0 for total expenses and net income — the same chart-of-accounts row-cap bug, now confirmed for the 6th+ consecutive weekly pull. New this run: the tool\'s own Summary block ($256,926.65 total income) and Monthly Breakdown block ($599,394.05 total income) disagree with each other. Cash Flow and Balance Sheet reports both errored on every attempt this run, so no proxy net-income figure is available this week either.', tag:'bad', tagText:'P&L tool bug persists, worse this run — escalate'},
-  {eyebrow:'Revenue growth · Wk ending Sep20 vs. Sep13', val:'-4.2%', sub:'$60,706.43 vs. $63,347.88, Amazon + Shopify combined (both weeks now Amazon-final except Wk38\'s $47,604.19 which is still provisional). Shopify\'s Wk37 traffic spike (48,429 sessions) partly unwound in Wk38 (43,614 sessions) without a matching revenue drop — AOV held up. Watch whether this is a real pullback or a Wk38 settlement adjustment.', tag:'warn', tagText:'slight pullback, partly provisional'},
-  {eyebrow:'Repeat customer rate · Shopify', val:'28.4%', sub:'91-day trailing (372 of 1,310 customers), ShopifyQL — down from 30.05% last run', tag:'warn', tagText:'below 37.7% category avg., watch trend'},
-  {eyebrow:'Inventory health · top-25 revenue SKUs', val:'14 of 25 healthy', sub:'Cross-channel top-25 by trailing revenue: 3 critical (2 confirmed 0-fulfillable Amazon SKUs plus the Blood Platelet Plus SKU now confirmed at 0 on both Amazon FBA and Shopify simultaneously), 8 watch (aged/overstock, forward LTSF exposure), 14 healthy. Amazon\'s own risk-triage tool separately flags 28 critical and 58 high-risk rows across its full catalog — most of that risk is outside the top-25 revenue SKUs shown here.', tag:'warn', tagText:'3 top-revenue SKUs need restocking'},
-  {eyebrow:'Blended ROAS · most recent full week (Sep 14–20)', val:'~3.2x (approx.)', sub:'≈$14,067 sales / ≈$4,393 spend across Sponsored Products, Brands, and Display — top-10-by-spend campaigns per ad type only (Amazon\'s list endpoints cap at 10 rows/call); true blended figure likely understates spend/TACoS by roughly 15–20% once the long tail is included.', tag:'warn', tagText:'low end of 3–6x category target, approximate'},
-  {eyebrow:'Accounts Payable · open bills (QBO, as of Sep 23)', val: fmtMoney(-34104.44), sub:'Net credit position — Herbal Goodness is currently owed more in vendor credits ($75,432.30, mostly Uintah Basin Herbals -$26,726.16 net and Paramount Nutra -$7,065.00) than it owes in open current bills ($41,327.86). Only 2 vendors carry a small positive overdue balance: THREECOLTS.COM $145.39 and Herbal Goodness Builds $36.75. The negative overall AP total is unusual and worth a bookkeeping check.', tag:'good', tagText:'net credit position'},
-  {eyebrow:'Accounts Receivable · open balances (QBO, as of Sep 23)', val: fmtMoney(157672.99), sub:'8 open customer/sync accounts total $157,672.99 billed; $142,187.23 (90.2%) is overdue. The largest single overdue balance is Goodness Botanicals Vitalabs LLC at $90,853.66 (all in the 1–30 day bucket) — a real trade customer, not a marketplace-sync account. GNC Holdings carries $68,726.77 total with $53,241.01 overdue across buckets.', tag:'bad', tagText:'$90,853.66 concentrated in one customer'},
-  {eyebrow:'Zendesk Tickets (Last Wk)', val:'8', sub:'Resolved: 7 (7 solved / 0 closed) · Open: 1 · Reopened: 2', tag:'good', tagText:'quiet week, low volume'},
-  {eyebrow:'Avg Time to First Resolution', val:'9.6 hrs', sub:'Avg full resolution: 13.5 hrs (wall-clock, not business hours; 7 of 8 tickets, excludes 1 still-open ticket)', tag:'good', tagText:'faster than last run\'s 21.15 hrs'},
-  {eyebrow:'CSAT', val:'N/A', sub:'0 ratings on record — every ticket this week shows "unoffered," meaning surveys aren\'t being sent, not that customers rated poorly. Re-checked fresh this run, same gap as every prior week since Aug 2026.', tag:'warn', tagText:'config gap, not a bad rating'},
+  {eyebrow:'YTD Sales · Jan 1 – Sep 27 (QBO Sales by Customer)', val: fmtMoney(3406118.99), sub:'77 customers, all channels.', tag:'info', tagText:'QBO Sales by Customer report'},
+  {eyebrow:'YTD pace vs. Bearish budget', val:'+9.8%', sub:'$3,406,118.99 actual vs. $3,102,857.15 pro-rated FY budget through week 39 of 52 (annual Bearish target $4,137,142.86). Pace has narrowed from +14.4% logged in late August — worth watching.', tag:'good', tagText:'running ahead of annual plan'},
+  {eyebrow:'Revenue growth · Wk ending Sep27 vs. Sep20', val:'-5.6%', sub:'$55,871.80 vs. $59,160.79, Amazon (Helium 10) + Shopify combined. First down week after several weeks of growth — Shopify fell from $13,102.24 to $11,311.01 and Amazon dipped slightly too; not yet a trend, but worth watching next run.', tag:'warn', tagText:'first down week in a while'},
+  {eyebrow:'Repeat customer rate · Shopify', val:'27.7%', sub:'91-day trailing (373 returning / 1,029 new), ShopifyQL returning_customer_rate — down from 30.05% logged previously.', tag:'warn', tagText:'below 37.7% category avg., declining'},
+  {eyebrow:'Inventory health · top-25 revenue SKUs', val:'15 of 25 healthy', sub:'Cross-channel top-25 by trailing revenue: 3 critical (0 fulfillable, no inbound relief) and 7 watch (aged/overstock or thinning supply) — see Product Intelligence tab for detail.', tag:'warn', tagText:'3 top-revenue SKUs need immediate restocking'},
+  {eyebrow:'Blended ROAS · trailing 30 days', val:'~3.3x', sub:'~$54,600 sales / ~$16,700 spend across Sponsored Products, Brands, and Display (Lisa WellProof command center). A week-level SP/SB/SD dollar breakdown wasn\'t captured this pull; Helium 10\'s week-level TACoS trend (11.8%→10.9%→8.7% across wk37–39) shows improving efficiency.', tag:'warn', tagText:'low end of 3–6x category target'},
+  {eyebrow:'Accounts Payable · open bills (QBO, as of Sep 28)', val: fmtMoney(-32210.74), sub:'AP aging returned an anomalous negative total this pull ($43,076.04 current less an apparent overdue credit of $75,286.78) — likely a sign-convention distortion in QuickBooks\' AP aging report, similar to the balance sheet anomaly below. Treat directionally, not as a precise payables figure this run.', tag:'info', tagText:'AP aging report anomalous this pull'},
+  {eyebrow:'Accounts Receivable · open balances (QBO, as of Sep 28)', val: fmtMoney(157758.80), sub:'8 open customer/sync accounts total $157,758.80 billed; $142,186.20 (90.1%) is overdue — a higher overdue share than before. Largest concentrations: Goodness Botanicals Vitalabs LLC $90,853.66 and GNC Holdings $68,726.77.', tag:'bad', tagText:'$90,853.66+ concentrated in two customers'},
+  {eyebrow:'Customer Conversations (Lisa, 7 days)', val:'383', sub:'By status: 104 open · 82 resolved · 197 waiting. Classified: 50 spam, 112 fyi/no-reply, 14 shipping, 11 product Qs, 1 complaint (257 of 383 classified this window). Zendesk was retired this week — Lisa is now the sole CS source.', tag:'info', tagText:'Zendesk retired — now sourced from Lisa'},
+  {eyebrow:'Avg First-Reply Time (Lisa, 7d)', val:'0.8 hrs', sub:'SLA compliance (answered within 24h): 68.9% this week vs. 75% over the trailing 14 days — worth watching. 257 responses measured.', tag:'warn', tagText:'SLA compliance down vs. 14-day trend'},
+  {eyebrow:'Internal Ops Tickets (Lisa)', val:'2 open', sub:'High-priority: an Amazon Fee Estimates report sync failure (since Sep 27) and a Product Profitability COGS-mapping bug on linked alternate SKUs (since Sep 22). 0 reviews needing response; 2 returns in the 7-day window.', tag:'warn', tagText:'2 internal ops tickets open'},
 ];
 document.getElementById('staticKpis').innerHTML = staticKpis.map(k=>`
   <div class="kpi">
@@ -1190,25 +1190,19 @@ setTimeout(()=>{ const active = weekStripEl.querySelector('.wk-btn.active'); if(
 
 /* ---------------- DATA-LAG RE-CHECK TABLE ---------------- */
 const LAG_CHECK = [
-  {week:'Wk 36 (Aug 31–Sep 6)', revenue:40852.10, finality:'Final (7/7 days settled) — revised from $41,363.60 (-1.2%)'},
-  {week:'Wk 37 (Sep 7–13)', revenue:42891.81, finality:'Final (7/7 days settled) — revised from $45,268.33 (-5.3%)'},
-  {week:'Wk 38 (Sep 14–20)', revenue:47604.19, finality:'Not final (1/7 days settled via Sales API, 6/7 non-final Orders-API)'},
+  {week:'Wk 37 (Sep 7–13)', revenue:42640.18, finality:'Revised — was $45,268.33, now Helium 10-sourced'},
+  {week:'Wk 38 (Sep 14–20)', revenue:46058.55, finality:'Finalized (was a partial placeholder last run)'},
+  {week:'Wk 39 (Sep 21–27)', revenue:44560.79, finality:'Provisional — settlement not yet posted'},
 ];
 document.getElementById('lagCheckRows').innerHTML = LAG_CHECK.map(r=>`
   <tr><td>${r.week}</td><td class="num">${fmtMoney(r.revenue)}</td><td class="${r.finality.startsWith('Final')?'':''}" style="color:${r.finality.startsWith('Final')?'var(--good)':'var(--warn)'};font-weight:600;">${r.finality}</td></tr>`).join('');
 
 /* ---------------- CHANNEL PERFORMANCE ---------------- */
-const COMPANY_YTD_TOTAL = 3355465.10;
+const COMPANY_YTD_TOTAL = 3406118.99;
 const CHANNEL_PERF = [
-  {name:'Amazon', ytd:1796703.50},
-  {name:'Shopify (Synder + CAD + 2026)', ytd:366714.50+12894.27},
-  {name:'GNC Holdings', ytd:225233.88},
-  {name:'Walmart', ytd:125805.60},
-  {name:'Goodness Botanicals Vitalabs LLC', ytd:90853.66},
-  {name:'Faire Wholesale', ytd:29308.51},
-  {name:'Online Retailer Wholesaler', ytd:16446.59},
-  {name:'TikTok', ytd:352.51},
-  {name:'Other (~69 individual wholesale/direct customers)', ytd:COMPANY_YTD_TOTAL-(1796703.50+366714.50+12894.27+225233.88+125805.60+90853.66+29308.51+16446.59+352.51)},
+  {name:'Amazon Synder', ytd:1831048.90},
+  {name:'Shopify Synder', ytd:373063.59},
+  {name:'Other (~75 individual wholesale/direct/marketplace-sync customers)', ytd:COMPANY_YTD_TOTAL-(1831048.90+373063.59)},
 ];
 document.getElementById('channelPerfRows').innerHTML = CHANNEL_PERF.map(c=>{
   const pct = c.ytd/COMPANY_YTD_TOTAL*100;
@@ -1217,26 +1211,28 @@ document.getElementById('channelPerfRows').innerHTML = CHANNEL_PERF.map(c=>{
 
 /* ---------------- TOP 10 PRODUCTS BY CHANNEL ---------------- */
 const TOP_PRODUCTS_AMAZON = [
-  {name:'Papaya Leaf Extract Digestive Enzymes Capsules for Platelet (B00IA275HG)', units:1922, revenue:132327.74},
-  {name:'Papaya Leaf Extract Liquid, Platelet Supplement Boost 16oz (B005TK5MQI)', units:1456, revenue:113019.98},
-  {name:'Soursop Graviola Liquid Drops Extract, Bitters 12Fl Oz (B06Y5LLFKV)', units:943, revenue:61169.85},
-  {name:'Papaya Leaf Blood Support Capsules, Platelet, 60/450mg (B00MSSXXYC)', units:621, revenue:32843.60},
-  {name:'Papaya Leaf Extract, 60 Capsules, Blood Platelets Supplement (B0CRGYMKRB)', units:523, revenue:28683.85},
-  {name:'Organic Papaya Seeds Extract Liquid 1oz, Digestive Enzymes (B00INM8L0I)', units:791, revenue:25898.60},
-  {name:'Organic Soursop 60 Capsules, Hojas de Guanabana, Graviola (B0BM3WPZSH)', units:615, revenue:17149.98},
-  {name:'Papaya Leaf Extract Liquid 1oz (B01IRQF0D0)', units:409, revenue:15934.40},
+  {name:'Papaya Leaf Extract Digestive Enzymes Capsules for Platelet (B00IA275HG)', units:1958, revenue:134804},
+  {name:'Papaya Leaf Extract Liquid, Platelet Supplement Boost 16oz (B005TK5MQI, both variants)', units:1503, revenue:116664},
+  {name:'Soursop Graviola Liquid Drops Extract, Bitters 12Fl Oz (B06Y5LLFKV)', units:885, revenue:57403},
+  {name:'Papaya Leaf Extract Liquid 1oz (B01IRQF0D0, both variants)', units:774, revenue:30502},
+  {name:'Papaya Leaf Blood Support Capsules, Platelet, 60/450mg (B00MSSXXYC, both variants — confirmed stockout)', units:564, revenue:29825},
+  {name:'Organic Papaya Seeds Extract Liquid 1oz, Digestive Enzymes (B00INM8L0I)', units:813, revenue:26689},
+  {name:'Papaya Leaf Extract, 60 Capsules, Blood Platelets Supplement (B0CRGYMKRB — confirmed stockout)', units:483, revenue:26486},
+  {name:'Organic Soursop 60 Capsules, Hojas de Guanabana, Graviola (B0BM3WPZSH)', units:605, revenue:16895},
+  {name:'Amazon ASIN B07M7TCHN8 (product title not resolved this pull)', units:392, revenue:15153},
+  {name:'Papaya Seeds Powder Capsules (B097HRF61S, both variants)', units:368, revenue:14891},
 ];
 const TOP_PRODUCTS_SHOPIFY = [
-  {name:'Papaya Leaf Extract Capsules 600mg | 10X Strength – Platelet Support', orders:176, revenue:33250.30},
-  {name:'Soursop Leaf Graviola Extract 15X Liquid | Organic Cell & Immunity', orders:246, revenue:21096.01},
-  {name:'Organic Papaya Leaf Extract 16oz | 15X Liquid – Best Value Size', orders:102, revenue:15298.71},
-  {name:'Mullein Leaf Organic 15X Liquid Extract | Respiratory & Lung Wellness', orders:172, revenue:11072.89},
-  {name:'Blood Platelet Plus Capsules 20X | 60ct – Advanced Platelet Formula (0 units in stock — see Operations tab)', orders:84, revenue:7504.92},
-  {name:'Papaya Leaf Extract - 1oz 15X Organic Liquid', orders:42, revenue:4967.16},
-  {name:'Papaya Leaf Blood Support Capsules 10X | 60ct – Platelet Wellness', orders:14, revenue:4592.28},
-  {name:'Soursop Bitters 15X Liquid Extract | Organic Detox & Wellness Support', orders:55, revenue:4199.82},
-  {name:'Oregano Oil + Black Seed Oil Bundle', orders:37, revenue:2964.69},
-  {name:'Blood Platelet Support with Papaya Leaf | Organic 15X Liquid Extract', orders:45, revenue:2782.49},
+  {name:'Papaya Leaf Extract Capsules 600mg | 10X Strength – Platelet Support', orders:185, revenue:35049.70},
+  {name:'Soursop Leaf Graviola Extract 15X Liquid | Organic Cell & Immunity', orders:248, revenue:21094.95},
+  {name:'Organic Papaya Leaf Extract 16oz | 15X Liquid – Best Value Size', orders:106, revenue:15626.46},
+  {name:'Mullein Leaf Organic 15X Liquid Extract | Respiratory & Lung Wellness', orders:179, revenue:11376.42},
+  {name:'Blood Platelet Plus Capsules 20X | 60ct – Advanced Platelet Formula (confirmed stockout, all variants)', orders:83, revenue:7395.02},
+  {name:'Soursop Bitters 15X Liquid Extract | Organic Detox & Wellness Support', orders:57, revenue:4309.72},
+  {name:'Papaya Leaf Extract - 1oz 15X Organic Liquid', orders:41, revenue:4297.16},
+  {name:'Papaya Leaf Blood Support Capsules 10X | 60ct – Platelet Wellness', orders:12, revenue:3849.34},
+  {name:'Oregano Oil + Black Seed Oil Bundle', orders:38, revenue:3104.59},
+  {name:'Blood Platelet Support with Papaya Leaf | Organic 15X Liquid Extract', orders:48, revenue:2811.29},
 ];
 document.getElementById('topProductsAmazon').innerHTML = TOP_PRODUCTS_AMAZON.map(p =>
   `<tr><td>${p.name}</td><td class="num">${p.units.toLocaleString('en-US')}</td><td class="num">${fmtMoney(p.revenue)}</td></tr>`
@@ -1247,16 +1243,16 @@ document.getElementById('topProductsShopify').innerHTML = TOP_PRODUCTS_SHOPIFY.m
 
 /* ---------------- CUSTOMER SERVICE: TO-DOS ---------------- */
 const TODOS = [
-  {text:'Restock Blood Platelet Plus Capsules 20X 60ct (SKU 810128951951 / Amazon ASIN B0CRGYMKRB) — now confirmed at 0 units on BOTH Amazon FBA (0 fulfillable, 0 inbound) AND Shopify (all 3 variants) simultaneously — the single highest-leverage restock this week', meta:'Due Sep 24 · Cross-channel inventory, critical', tag:'Inventory', done:false},
-  {text:'Open a Seller Support case for the 3 SKUs under active LISTING_SUPPRESSED enforcement (GS1/barcode mismatch, codes 8566/8572): B08M659VRZ, B00RXUZU5A, B08M69XMWF — these listings may be effectively unsellable right now, more urgent than a stockout', meta:'Due Sep 25 · Amazon catalog compliance, new this run', tag:'Listing', done:false},
-  {text:'Investigate the extreme overstock position at ASIN B097C9ZJVK (2 SKU variants, 1,382–1,469 days of cover) — likely a candidate for a Lightning Deal/coupon or a hard cut to the next PO', meta:'Due Sep 26 · Amazon inventory, new this run', tag:'Inventory', done:false},
-  {text:'Investigate GA4 sessions/users/conversions down 28–39% week-over-week (11,877 vs. 16,529 sessions; 308 vs. 505 conversions) — rule out a tracking gap, paused campaign, or seasonal dip before next report cycle', meta:'Due Sep 26 · Marketing, new this run', tag:'Marketing', done:false},
-  {text:'Fix or expedite Soursop Graviola Leaf (Whole Leaves) 300+ oversell — now −56 units on Shopify, worsening for the second consecutive week (was −47 last run) — decide whether to pause the listing or expedite replenishment', meta:'Due Sep 25 · Shopify inventory, worsening', tag:'Inventory', done:false},
-  {text:'Investigate [PM] Abandoned Added to Cart flow — zero recipients this week vs. $704.88/90-day revenue and ~113 recipients/week average; an always-on, revenue-producing flow going completely silent is the clearest actionable Klaviyo flag this run', meta:'Due Sep 25 · Klaviyo, critical', tag:'Marketing', done:false},
-  {text:'Fix the WhatsApp Welcome Flow — 0% delivery rate both this week and over the trailing 90 days (223 profiles queued) — this is an infrastructure/integration break, not a content problem', meta:'Due Sep 26 · Klaviyo, new this run', tag:'Marketing', done:false},
-  {text:'Escalate to QuickBooks support: the Aug 2026 P&L tool\'s own Summary block ($256,926.65 income) and Monthly Breakdown block ($599,394.05 income) now disagree with each other, on top of the persistent $0 expense/net-income bug — also re-test Cash Flow and Balance Sheet, both of which errored on every attempt this run', meta:'Due Sep 24 · QBO data quality, worse this run', tag:'Data quality', done:false},
-  {text:'Reconcile QuickBooks\' Sales-by-Customer ($3,355,465.10 YTD) vs. Sales-by-Product ($8,201,627.05 YTD) — the two reports still disagree by ~$4.85M, unresolved for multiple consecutive weekly pulls; also flag to the bookkeeping/Synder team that the 2026 Budget Model sheet\'s own actuals are now stuck at Week 31 (~7–8 weeks stale)', meta:'Due Sep 26 · QBO + budget sheet data quality, recurring', tag:'Data quality', done:false},
-  {text:'Assign real owners and dates to the 7 unassigned/undated Pillar 2 Operations IPI-readiness tasks in Asana (replenishment plan, IPI training modules, weekly monitoring cadence, FBA audit, capacity review, inventory SOP) — still sitting unstaffed, directly blocking the IPI Management Plan', meta:'Due Sep 25 · Ops, recurring', tag:'Ops', done:false},
+  {text:'Restock Papaya Leaf Blood Support Capsules 60/450mg (B00MSSXXYC, both variants) — 0 fulfillable, 47 units already inbound; confirm ETA and expedite if delayed', meta:'Due Oct 1 · Amazon inventory, critical', tag:'Inventory', done:false},
+  {text:'Expedite Blood Platelet Plus – Capsules 60/600mg, UPC 810128951951 (B0CRGYMKRB) — 0 fulfillable, 0 inbound, weekly velocity crashed 41→4→1 units — no relief in the pipeline yet', meta:'Due Sep 30 · Amazon inventory, critical', tag:'Inventory', done:false},
+  {text:'Place a reorder now on Amazon ASIN B0D15S2NHM — only 7 units / 0.7 weeks of cover against accelerating demand (15→32→22 units/week)', meta:'Due Sep 30 · Amazon inventory, critical', tag:'Inventory', done:false},
+  {text:'Decide restock-or-delist on stranded Papaya Leaf Extract Tea, Platelets – 24 Tea Bags, UPC 798304173284 (B004VGJIFC) — 0 fulfillable, 0 inbound, near-zero sales since late July', meta:'Due Oct 3 · Amazon inventory', tag:'Inventory', done:false},
+  {text:'Restock Blood Platelet Plus – Capsules 60/600mg, UPC 810128951951 (Shopify) — confirmed 0 units across all 3 variants at every location', meta:'Due Oct 1 · Shopify inventory', tag:'Inventory', done:false},
+  {text:'Investigate the Klaviyo [PM] Abandoned Added to Cart flow — 0 sends this week vs. a ~$54.80/week 90-day average baseline; check trigger/filter configuration', meta:'Due Sep 30 · Klaviyo, new this run', tag:'Marketing', done:false},
+  {text:'Confirm whether Klaviyo [PM] Product Review Request is actually dormant — shows "live" status, last edited Jun 17, but no sends visible in this or the prior 90-day window', meta:'Due Oct 2 · Klaviyo, new this run', tag:'Marketing', done:false},
+  {text:'Zendesk is being discontinued (owner target: end of day Sep 29) — confirm no automations/integrations still point at herbalpapaya.zendesk.com before the account is closed', meta:'Due Sep 29 · CS platform migration', tag:'Ops', done:false},
+  {text:'Investigate the anomalous negative AP Aging total (-$32,210.74) and the still-negative Balance Sheet Total Liabilities (-$913,112.78) with the bookkeeping/Synder team — likely a sign-convention bug', meta:'Due Oct 1 · QBO data quality, overdue', tag:'Data quality', done:false},
+  {text:'Re-grant Google Ads access — this run hit 403 USER_PERMISSION_DENIED on both client accounts under the manager account (not the previously-seen quota error); likely needs the manager login-customer-id re-authorized', meta:'Due Oct 2 · Marketing ops, new this run', tag:'Ops', done:false},
 ];
 function renderTodos(){
   const list = document.getElementById('todoList');
@@ -1290,62 +1286,60 @@ renderTodos();
 
 /* ---------------- CS METRIC TABLE (Amazon vs Shopify) ---------------- */
 const CS_METRICS = [
-  ['Return rate', '5 returns Aug 26–Sep 23, all "undeliverable/unknown" reason, all sellable disposition — low volume, nothing systemic', 'Not exposed by connected tools'],
-  ['Conversion rate', 'N/A (marketplace, not applicable)', '0.17%–0.48% weekly, trailing 13wk (~0.32% avg) — below the 2.4–3.2% category benchmark'],
-  ['Repeat/returning rate', 'Not exposed by connected tools', '28.4% (91d avg.) — down from 30.05% last run'],
-  ['Listing quality scan', '3 SKUs under active LISTING_SUPPRESSED enforcement (GS1/barcode mismatch); recurring brand-attribute mismatch ("Herbal Papaya" vs. "Herbal Goodness") across many ASINs; catalog-wide error/warning totals not cheaply computable this run', 'N/A'],
-  ['Stockouts right now (top-25 revenue SKUs)', '~13 SKUs at 0 fulfillable across the full catalog (2 in the top-25 revenue table)', '1 product (Blood Platelet Plus Capsules 20X) at 0 units across all 3 variants — confirmed cross-channel dark with Amazon'],
-  ['Aged/overstock inventory', '~30 SKUs flagged aged/overstock risk incl. several top-revenue SKUs, plus a new extreme-overstock ASIN (1,382–1,469 days of cover)', 'Soursop Graviola Whole Leaves oversold −56 units (worsened from −47)'],
-  ['Ad spend / blended ROAS', 'See Marketing tab — ~3.2x wk of Sep 14–20 (approx., top-10-by-spend campaigns only)', 'N/A (no on-platform ads)'],
-  ['Sessions / traffic (trailing 7d)', 'Not directly comparable — see Sales & Traffic in Product Intelligence', '11,877 sessions (Sep 16–23), down 28.1% vs. the prior 7 days (16,529) — being investigated'],
-  ['Ticket volume / CS load', 'N/A — see Zendesk detail below (8 tickets this week, 7 solved / 1 open)', 'Same Zendesk queue covers both channels'],
-  ['Reviews / feedback', 'Topic-level sentiment only via connected tools; top-revenue SKU B005TK5MQI shows "does not work"/"expensive" themes but outweighed by positive mentions — nothing alarming', 'Not exposed by connected tools'],
+  ['Return rate', '6 returns / 30 days, 6 units, 100% "UNDELIVERABLE_UNKNOWN" reason, 5 sellable / 1 defective — low volume, nothing systemic', 'Not exposed by connected tools'],
+  ['Conversion rate', 'N/A (marketplace, not applicable)', '0.26%–0.28% over wk37–39 (13wk range 0.17%–0.48%) — below the 2.4–3.2% category benchmark'],
+  ['Repeat/returning rate', 'Not exposed by connected tools', '27.7% (91d, ShopifyQL) — down from 30.05% logged previously'],
+  ['Listing quality scan', '164 active listings — 129 errors / 35 warnings (Lisa summary); detail-level pull returned 0 rows (likely filter mismatch, summary count only)', 'N/A'],
+  ['Stockouts right now (top-25 revenue SKUs)', '3 SKUs at 0 fulfillable — Blood Platelet Plus 60/600mg UPC 810128951951 (B0CRGYMKRB), Papaya Leaf Blood Support 60/450mg (B00MSSXXYC), Papaya Leaf Extract Tea UPC 798304173284 (B004VGJIFC); 1 more at 0.7 weeks of cover', 'Blood Platelet Plus 60/600mg UPC 810128951951 at 0 units across all 3 variants, all locations'],
+  ['Aged/overstock inventory', '7 SKUs flagged watch among top-25 revenue (12.2–36.8 weeks of cover, or under 3 weeks and thinning)', 'No new oversells flagged among top-25 revenue SKUs this pull'],
+  ['Ad spend / blended ROAS', 'See Marketing tab — ~3.3x trailing 30 days', 'N/A (no on-platform ads)'],
+  ['Sessions / traffic (trailing 7d)', '5,196 sessions (wk39), down slightly from 5,434 (wk38)', '40,531 sessions (wk39) — still well above the 17K–24K prior norm, falling from 43,564 (wk38) and 48,429 (wk37)'],
+  ['Ticket volume / CS load', 'See Lisa CS detail below — 383 conversations (7d), 2 open internal ops tickets', 'Same Lisa inbox covers both channels'],
+  ['Reviews / feedback', 'Thin-sample themes via Helium 10 — positive on efficacy/platelet count, negative on value-for-money, taste/quality, dosage/durability', 'Not exposed by connected tools'],
 ];
 document.getElementById('csMetricRows').innerHTML = CS_METRICS.map(r=>`
   <tr><td class="metric-name">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
 
-/* ---------------- ZENDESK DETAIL ---------------- */
-const ZENDESK_METRICS = [
-  ['New tickets logged', '8'],
-  ['Solved', '7'],
-  ['Closed', '0'],
-  ['Open / pending right now', '1 open / 0 pending'],
-  ['Reopened at least once', '2 of 8 (2 reopen events)'],
-  ['Total replies across all tickets', '4 (~0.5 / ticket — most were single-action resolutions)'],
-  ['Avg. time to first reply', 'Low confidence — only 4 of 8 tickets had a recorded reply time (avg. 17.1 hrs on those 4)'],
-  ['Avg. time to first resolution', '9.6 hrs (7 of 8 tickets; 1 ticket still open, excluded)'],
-  ['Avg. time to full resolution', '13.5 hrs (same 7 of 8 tickets)'],
+/* ---------------- CUSTOMER SERVICE DETAIL (Lisa WellProof) ---------------- */
+const LISA_CX_METRICS = [
+  ['Conversations by status (7d)', '104 open · 82 resolved · 197 waiting (383 total)'],
+  ['Classification breakdown (7d)', '50 spam · 112 fyi/no-reply · 14 shipping inquiry · 11 product question · 2 other/social · 1 complaint (257 of 383 classified)'],
+  ['Avg. time to first reply', '0.8 hrs (257 responses measured)'],
+  ['SLA compliance (24h)', '68.9% this week vs. 75% over the trailing 14 days'],
+  ['Returns in window', '2 (7d) · 3 (14d)'],
+  ['Reviews needing response', '0'],
+  ['Internal ops tickets open', '2 — Amazon Fee Estimates sync failure (since Sep 27, high) · Product Profitability COGS-mapping bug on linked alternate SKUs (since Sep 22, high)'],
 ];
-document.getElementById('zendeskRows').innerHTML = ZENDESK_METRICS.map(r=>`
+document.getElementById('lisaCxRows').innerHTML = LISA_CX_METRICS.map(r=>`
   <tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
 
 /* ---------------- PRODUCT INTELLIGENCE: TOP 25 SKUS ---------------- */
 const TOP_SKUS = [
-  {rank:1,name:'Papaya Leaf Extract Digestive Enzymes Capsules for Platelet',channel:'Amazon',revenue:132327.74,units:1922,stock:'982 fulfillable + 792 AWD — aged-inventory flag, 52.3 days of cover, $17.66 forward LTSF',stockFlag:'warn'},
-  {rank:2,name:'Papaya Leaf Extract Liquid, Platelet Supplement Boost 16oz',channel:'Amazon',revenue:113019.98,units:1456,stock:'1,023 fulfillable per SKU — aged-inventory flag, 117.6–185.8 days of cover, $123.58–123.79 forward LTSF each',stockFlag:'warn'},
-  {rank:3,name:'Soursop Graviola Liquid Drops Extract, Bitters 12Fl Oz',channel:'Amazon',revenue:61169.85,units:943,stock:'1,173 fulfillable — aged-inventory flag, 122.1 days of cover, $53.45 forward LTSF',stockFlag:'warn'},
-  {rank:4,name:'Papaya Leaf Extract Capsules 600mg | 10X Strength – Platelet Support',channel:'Shopify',revenue:33250.30,units:176,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:5,name:'Papaya Leaf Blood Support Capsules, Platelet, 60/450mg',channel:'Amazon',revenue:32843.60,units:621,stock:'0 fulfillable across both SKUs, no inbound — confirmed critical stockout',stockFlag:'critical'},
-  {rank:6,name:'Papaya Leaf Extract, 60 Capsules, Blood Platelets Supplement',channel:'Amazon',revenue:28683.85,units:523,stock:'0 fulfillable, 0 inbound — confirmed critical stockout, also 0 on Shopify (see rank 15)',stockFlag:'critical'},
-  {rank:7,name:'Organic Papaya Seeds Extract Liquid 1oz, Digestive Enzymes',channel:'Amazon',revenue:25898.60,units:791,stock:'Not flagged in this run’s risk triage — healthy',stockFlag:'ok'},
-  {rank:8,name:'Soursop Leaf Graviola Extract 15X Liquid | Organic Cell & Immunity',channel:'Shopify',revenue:21096.01,units:246,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:9,name:'Organic Soursop 60 Capsules, Hojas de Guanabana, Graviola',channel:'Amazon',revenue:17149.98,units:615,stock:'Aged-inventory flag this run (days of cover not itemized)',stockFlag:'warn'},
-  {rank:10,name:'Papaya Seeds Powder Capsules*',channel:'Amazon',revenue:16045.90,units:398,stock:'*Carried forward, not refreshed this run — previously healthy',stockFlag:'ok'},
-  {rank:11,name:'Papaya Leaf Extract Liquid 1oz',channel:'Amazon',revenue:15934.40,units:409,stock:'Not flagged in this run’s risk triage — healthy',stockFlag:'ok'},
-  {rank:12,name:'Organic Papaya Leaf Extract 16oz | 15X Liquid – Best Value Size',channel:'Shopify',revenue:15298.71,units:102,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:13,name:'Organic Papaya Seeds Powder 60 Capsules, Papain*',channel:'Amazon',revenue:12665.00,units:187,stock:'*Carried forward, not refreshed this run — previously healthy',stockFlag:'ok'},
-  {rank:14,name:'Mullein Leaf Organic 15X Liquid Extract | Respiratory & Lung Wellness',channel:'Shopify',revenue:11072.89,units:172,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:15,name:'Blood Platelet Plus Capsules 20X | 60ct – Advanced Platelet Formula',channel:'Shopify',revenue:7504.92,units:84,stock:'0 units across all 3 variants — confirmed critical stockout, same SKU family (810128951951) dark on Amazon too (see rank 6)',stockFlag:'critical'},
-  {rank:16,name:'Bamboo Leaf Extract Organic 12fl oz, Silica*',channel:'Amazon',revenue:6833.95,units:169,stock:'*Carried forward, not refreshed this run — previously aged-inventory flag',stockFlag:'warn'},
-  {rank:17,name:'Gymnema Sylvestre Leaf Tea Organic, 24ct*',channel:'Amazon',revenue:6709.50,units:450,stock:'*Carried forward, not refreshed this run — previously aged-inventory flag',stockFlag:'warn'},
-  {rank:18,name:'Organic Mullein Leaf Tea Bags for Lungs, 24ct*',channel:'Amazon',revenue:6517.60,units:410,stock:'*Carried forward, not refreshed this run — previously overstock flag',stockFlag:'warn'},
-  {rank:19,name:'Papaya Leaf Blood Platelet Liquid Supplement 12 fl oz*',channel:'Amazon',revenue:6151.48,units:115,stock:'*Carried forward, not refreshed this run — previously aged-inventory flag',stockFlag:'warn'},
-  {rank:20,name:'Papaya Leaf Extract - 1oz 15X Organic Liquid',channel:'Shopify',revenue:4967.16,units:42,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:21,name:'Papaya Leaf Blood Support Capsules 10X | 60ct – Platelet Wellness',channel:'Shopify',revenue:4592.28,units:14,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:22,name:'Soursop Bitters 15X Liquid Extract | Organic Detox & Wellness Support',channel:'Shopify',revenue:4199.82,units:55,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:23,name:'Oregano Oil + Black Seed Oil Bundle',channel:'Shopify',revenue:2964.69,units:37,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:24,name:'Blood Platelet Support with Papaya Leaf | Organic 15X Liquid Extract',channel:'Shopify',revenue:2782.49,units:45,stock:'Healthy, no flag',stockFlag:'ok'},
-  {rank:25,name:'Organic Papaya Seed Powder 4oz | Gut Cleanse & Digestive Support*',channel:'Shopify',revenue:2595.51,units:27,stock:'*Carried forward, not refreshed this run — previously healthy',stockFlag:'ok'},
+  {rank:1,name:'Papaya Leaf Extract Digestive Enzymes Capsules for Platelet (B00IA275HG)',channel:'Amazon',revenue:134804,units:1958,stock:'936 fulfillable, 288 inbound — 6.2 weeks of cover, healthy',stockFlag:'ok'},
+  {rank:2,name:'Papaya Leaf Extract Liquid, Platelet Supplement Boost 16oz (B005TK5MQI, both variants)',channel:'Amazon',revenue:116664,units:1503,stock:'909 fulfillable, 48 inbound — 13.5–18.8 weeks of cover, healthy',stockFlag:'ok'},
+  {rank:3,name:'Soursop Graviola Liquid Drops Extract, Bitters 12Fl Oz (B06Y5LLFKV)',channel:'Amazon',revenue:57403,units:885,stock:'1,126 fulfillable, 0 inbound — 16.5 weeks of cover, healthy',stockFlag:'ok'},
+  {rank:4,name:'Papaya Leaf Extract Capsules 600mg | 10X Strength – Platelet Support',channel:'Shopify',revenue:35049.70,units:185,stock:'Not flagged among this pull’s stockouts/oversells — healthy',stockFlag:'ok'},
+  {rank:5,name:'Papaya Leaf Extract Liquid 1oz (B01IRQF0D0, both variants)',channel:'Amazon',revenue:30502,units:774,stock:'195 fulfillable, 111 inbound — 6.3–6.8 weeks of cover, healthy',stockFlag:'ok'},
+  {rank:6,name:'Papaya Leaf Blood Support Capsules, Platelet, 60/450mg (B00MSSXXYC, both variants)',channel:'Amazon',revenue:29825,units:564,stock:'0 fulfillable across both variants, 47 inbound already in transit — confirmed stockout, restock imminent',stockFlag:'warn'},
+  {rank:7,name:'Organic Papaya Seeds Extract Liquid 1oz, Digestive Enzymes (B00INM8L0I)',channel:'Amazon',revenue:26689,units:813,stock:'260 fulfillable, 53 inbound — 4.2 weeks of cover',stockFlag:'ok'},
+  {rank:8,name:'Blood Platelet Plus – Capsules 60/600mg, UPC 810128951951 (B0CRGYMKRB)',channel:'Amazon',revenue:26486,units:483,stock:'0 fulfillable, 0 inbound — confirmed critical stockout, weekly velocity crashed 41→4→1 units',stockFlag:'critical'},
+  {rank:9,name:'Soursop Leaf Graviola Extract 15X Liquid | Organic Cell & Immunity',channel:'Shopify',revenue:21094.95,units:248,stock:'Not flagged among this pull’s stockouts/oversells — healthy',stockFlag:'ok'},
+  {rank:10,name:'Organic Soursop 60 Capsules, Hojas de Guanabana, Graviola (B0BM3WPZSH)',channel:'Amazon',revenue:16895,units:605,stock:'1,532 fulfillable, 0 inbound — 32.9 weeks of cover, overstock watch',stockFlag:'warn'},
+  {rank:11,name:'Organic Papaya Leaf Extract 16oz | 15X Liquid – Best Value Size',channel:'Shopify',revenue:15626.46,units:106,stock:'Not flagged among this pull’s stockouts/oversells — healthy',stockFlag:'ok'},
+  {rank:12,name:'Amazon ASIN B07M7TCHN8 (product title not resolved this pull)',channel:'Amazon',revenue:15153,units:392,stock:'644 fulfillable, 0 inbound — 21.4 weeks of cover, overstock watch',stockFlag:'warn'},
+  {rank:13,name:'Papaya Seeds Powder Capsules (B097HRF61S, both variants)',channel:'Amazon',revenue:14891,units:368,stock:'130 fulfillable, 0 inbound — 8.9–9.4 weeks of cover',stockFlag:'ok'},
+  {rank:14,name:'Mullein Leaf Organic 15X Liquid Extract | Respiratory & Lung Wellness',channel:'Shopify',revenue:11376.42,units:179,stock:'Not flagged among this pull’s stockouts/oversells — healthy',stockFlag:'ok'},
+  {rank:15,name:'Organic Papaya Seeds Powder 60 Capsules, Papain (B00RVRYPCE)',channel:'Amazon',revenue:11918,units:176,stock:'88 fulfillable, 0 inbound — 6.5 weeks of cover',stockFlag:'ok'},
+  {rank:16,name:'Amazon ASIN B08M61Y8RM (product title not resolved this pull)',channel:'Amazon',revenue:10510,units:194,stock:'22 fulfillable, 48 inbound — 2.7–3.2 weeks of cover, thin, watch',stockFlag:'warn'},
+  {rank:17,name:'Blood Platelet Plus – Capsules 60/600mg, UPC 810128951951 (Shopify SKU)',channel:'Shopify',revenue:7395.02,units:83,stock:'0 units across all 3 variants (Unit/3-Units/Case-12), all locations — confirmed stockout',stockFlag:'critical'},
+  {rank:18,name:'Amazon ASIN B0C4CDQ5YD (product title not resolved this pull)',channel:'Amazon',revenue:7395,units:465,stock:'955 fulfillable, 0 inbound — 26.7 weeks of cover, overstock watch',stockFlag:'warn'},
+  {rank:19,name:'Amazon ASIN B07XMRGFCS (product title not resolved this pull)',channel:'Amazon',revenue:7184,units:482,stock:'191 fulfillable, 0 inbound — 5.2 weeks of cover',stockFlag:'ok'},
+  {rank:20,name:'Amazon ASIN B01MXVQ3L0 (product title not resolved this pull)',channel:'Amazon',revenue:6370,units:404,stock:'1,144 fulfillable, 0 inbound — 36.8 weeks of cover, overstock watch',stockFlag:'warn'},
+  {rank:21,name:'Amazon ASIN B07NP77X7Z (product title not resolved this pull)',channel:'Amazon',revenue:6255,units:155,stock:'179 fulfillable, 0 inbound — 15.0 weeks of cover',stockFlag:'ok'},
+  {rank:22,name:'Amazon ASIN B0BCXGZR8S (product title not resolved this pull)',channel:'Amazon',revenue:5951,units:111,stock:'104 fulfillable, 0 inbound — 12.2 weeks of cover',stockFlag:'ok'},
+  {rank:23,name:'Amazon ASIN B09SK5NS6Q (product title not resolved this pull)',channel:'Amazon',revenue:5450,units:130,stock:'133 fulfillable, 0 inbound — 13.3 weeks of cover',stockFlag:'ok'},
+  {rank:24,name:'Amazon ASIN B0D15S2NHM (product title not resolved this pull)',channel:'Amazon',revenue:4380,units:131,stock:'7 fulfillable, 0 inbound — 0.7 weeks of cover, accelerating velocity against near-zero stock — imminent stockout',stockFlag:'warn'},
+  {rank:25,name:'Papaya Leaf Extract Tea, Platelets – 24 Tea Bags, UPC 798304173284 (B004VGJIFC)',channel:'Amazon',revenue:3723,units:249,stock:'0 fulfillable, 0 inbound — stranded, near-zero sales since late July',stockFlag:'critical'},
 ];
 function renderLadderAndTable(){
   const red = TOP_SKUS.filter(s=>s.stockFlag==='critical');
@@ -1418,19 +1412,19 @@ function drawBarChart(svgId, data, opts){
   }
   svg.innerHTML = svgHtml;
 }
-const ROAS_13WK = [null,null,null,null,null,null,null,null,null,null,2.8,3.11,3.2];
+const ROAS_13WK = [null,null,null,null,null,null,null,null,null,null,2.12,2.23,2.54];
 drawBarChart('chartRoas', ROAS_13WK, {benchmark:3});
-const SESSIONS_13WK = [21334,19858,19387,17887,20942,23567,19704,21382,38421,57350,48429,43614,12511];
+const SESSIONS_13WK = [21334,19858,19387,17887,20942,23567,19704,21382,38421,57350,48429,43564,40531];
 drawBarChart('chartSessions', SESSIONS_13WK);
 
 /* ---------------- BENCHMARK TABLE ---------------- */
 const BENCH = [
-  ['Gross margin', 'Not available (P&L tool bug — see Overview)', '60–78% (DTC/supplement brands)', 'unknown', 'Eightx, "Average Ecommerce Profit Margins"'],
-  ['Blended ROAS', '~3.2x (Amazon Ads, week of Sep 14–20, approx.)', '3–6x general DTC; supplements/health specifically similar', 'in range (low end)', 'based.marketing Ecommerce ROAS Benchmarks 2026'],
-  ['Amazon TACoS', '~9–10% (week of Sep 14–20, approx., provisional)', '8–15% "healthy" range', 'in range', 'IG PPC / Keywords.am TACoS guides'],
+  ['Gross margin', 'Not tracked in this dashboard (COGS/OpEx pull discontinued)', '60–78% (DTC/supplement brands)', 'unknown', 'Eightx, "Average Ecommerce Profit Margins"'],
+  ['Blended ROAS', '~3.3x (Amazon Ads, trailing 30 days)', '3–6x general DTC; supplements/health specifically similar', 'in range (low end)', 'based.marketing Ecommerce ROAS Benchmarks 2026'],
+  ['Amazon TACoS', '8.7% (week of Sep 21–27)', '8–15% "healthy" range', 'in range', 'IG PPC / Keywords.am TACoS guides'],
   ['Shopify conversion rate', '0.32% (trailing 13wk avg)', '2.4–3.2% (Nutrition & Supplements)', 'below', 'Craftberry, "Average Conversion Rate for Shopify Stores 2025"'],
-  ['Return rate', '5 returns Aug26–Sep23 (low volume; % not recomputed this pull)', '~7% (5–10%) for Supplements & Vitamins', 'below (favorable)', 'Eightx, "Average Ecommerce Return Rate 2026"'],
-  ['Repeat purchase / customer', '28.4% (91d trailing, down from 30.05%)', '37.7% category avg. repurchase rate', 'below', 'CommerceCatalyst 2026 DTC Benchmarks'],
+  ['Return rate', '6 returns / 30 days (low volume; % not recomputed this pull)', '~7% (5–10%) for Supplements & Vitamins', 'below (favorable)', 'Eightx, "Average Ecommerce Return Rate 2026"'],
+  ['Repeat purchase / customer', '27.7% (91d trailing)', '37.7% category avg. repurchase rate', 'below', 'CommerceCatalyst 2026 DTC Benchmarks'],
 ];
 document.getElementById('benchRows').innerHTML = BENCH.map(r=>{
   const cls = r[3]==='below'? 'status-miss' : (r[3]==='in range'||r[3]==='in range (low end)'||r[3]==='below (favorable)'? 'status-hit' : '');
@@ -1439,29 +1433,27 @@ document.getElementById('benchRows').innerHTML = BENCH.map(r=>{
 
 /* ---------------- MARKETING PLATFORMS ---------------- */
 const PLATFORMS = [
-  {name:'Google Search Console (Ryze)', metric:'7,466 clicks · 688,884 impressions · 1.08% CTR · pos. 6.77 (7d)', note:'28d: 33,582 clicks, 3,158,746 impressions. Top query: "soursop bitters" (117 clicks, pos. 8.06). Blog content, not product pages, drives nearly all organic clicks'},
-  {name:'Google Analytics — GA4 (Ryze)', metric:'11,877 sessions · 308 conversions · 38.2% engagement (7d)', note:'Sessions down 28.1% and conversions down 39.0% vs. prior 7d (16,529→11,877; 505→308) — worth a manual check for a tracking gap, paused campaign, or seasonal dip. AI-referral: 30 ChatGPT sessions, +66.7% WoW, still small'},
-  {name:'Google Ads (Ryze)', metric:'$2,016.45 spend · 13,329 clicks · 50 conversions · ROAS 1.95 (7d, 5 active campaigns)', note:'PMax carries most volume/ROAS. 2 Search-brand campaigns spent with zero recorded conversions — worth a review. No quota error this run'},
-  {name:'Meta Ads (Ryze)', metric:'$1,360.88 spend · 38 purchases · ~2.09x blended ROAS (7d, 3 spending campaigns)', note:'Top campaign: "Prospecting_CC_091626" ($1,060.07 spend, 31 purchases, 2.36x ROAS). One lead-gen webinar campaign excluded from ROAS (not a sales campaign)'},
-  {name:'LinkedIn (Composio)', metric:'No data this run', note:'Still 403 Forbidden — "requires r_organization_admin scope." Same recurring gap as prior runs; needs re-auth with organization-admin access'},
-  {name:'YouTube (Composio)', metric:'5,390 subscribers · 1,966,928 lifetime views · 667 videos', note:'No new upload in the trailing 7 days (last: Jul 28). Week-over-week subscriber/view change isn\'t available via the public Data API (would need YouTube Analytics API scope) — lifetime snapshot only'},
-  {name:'SEMrush', metric:'Semrush Rank 89,206 · 20,290 organic keywords · ~22,168 organic visits/mo', note:'Biggest mover: "mullein tea" jumped position 19→6 (vol. 49,500). Paid: 10 keywords, ~3,511 paid traffic, $638 paid cost'},
-  {name:'Ahrefs', metric:'Domain Rating 44 · ~28,161 organic visits/mo · 2,731 organic keywords', note:'617 live backlinks / 462 referring domains. Top: "soursop bitters" (pos. 1, vol. 119,000). Ahrefs vs. SEMrush traffic estimates diverge as expected (different crawlers) — read directionally'},
-  {name:'TikTok Ads (Ryze)', metric:'No TikTok ad spend in the last 7 days', note:'All 8 campaigns under advertiser "Herbal Goodness0511" show $0 spend/impressions/clicks this week and last — account appears dormant, no live campaigns'},
-  {name:'TikTok (organic)', metric:'Not connected', note:'Authorize TikTok in Composio — per standing instruction, did not attempt an OAuth flow this run'},
+  {name:'Google Search Console', metric:'8,569 clicks · 809,302 impressions · 1.06% CTR · pos. 6.71 (7d)', note:'28d: 37,944 clicks, 3,551,783 impressions. Top query: "soursop bitters" (88 clicks)'},
+  {name:'Google Analytics (GA4)', metric:'13,417 sessions · 284 conversions (7d)', note:'Sessions +5.5% vs. prior 7d (12,721→13,417), conversions -5.0% (299→284), engagement rate +6.0pp (36.07%→42.10%)'},
+  {name:'Google Ads', metric:'No data this run', note:'403 USER_PERMISSION_DENIED on both client accounts under the manager account — an access/permission gap, not the previously-seen quota error. Needs re-granting on the Ads side'},
+  {name:'Meta Ads', metric:'$1,144.77 spend · ~31 purchases · ~1.74x blended ROAS (7d, 3 active campaigns)', note:'Top campaign: "Prospecting_CC_091626" ($732.64 spend, 20 purchases, 1.98x ROAS)'},
+  {name:'LinkedIn', metric:'No data this run', note:'403 Forbidden — missing r_organization_admin scope. Needs reconnect with organization-admin permission. Ads not connected (as expected)'},
+  {name:'YouTube', metric:'5,390 subscribers · 1,969,923 lifetime views', note:'Lifetime-cumulative only — the Data API doesn\'t expose day-windowed deltas (would need YouTube Analytics API). No video published in the Sep 21–27 window'},
+  {name:'SEMrush', metric:'Domain Rank #82,781 · 20,462 organic keywords · ~23,696 organic visits/mo', note:'Top mover: "oil of oregano with black seed oil" jumped position 9→5 (40.5K vol.)'},
+  {name:'Ahrefs', metric:'Domain Rating 44.0 · ~37,170 organic visits/mo · 2,921 organic keywords', note:'1,399 live referring domains, 78,140 live backlinks. Top keyword: "soursop bitters" (pos. 1, 119K vol.)'},
+  {name:'TikTok', metric:'Not connected', note:'Per standing instruction — do not attempt to pull until the owner connects this platform'},
 ];
 document.getElementById('platformRows').innerHTML = PLATFORMS.map(p=>`
   <tr><td class="metric-name">${p.name}</td><td>${p.metric}</td><td class="muted">${p.note}</td></tr>`).join('');
 
 /* ---------------- EMAIL (Klaviyo) ---------------- */
 const EML_NEWSLETTERS = [
-  {name:'Sept 17th NL — Fall into a better wellness routine', sent:'Sep 17, 2026', recipients:19745, openRate:52.4, conversions:3, revenue:285.84},
-  {name:'Sept 22nd NL — Product spotlight', sent:'Sep 22, 2026', recipients:35880, openRate:22.8, conversions:1, revenue:32.94},
-  {name:'Two Weeks Out — webinar reminder', sent:'Sep 16, 2026', recipients:111, openRate:8.3, conversions:0, revenue:0},
-  {name:'"7 things you will walk away with" — webinar', sent:'Sep 21, 2026', recipients:438, openRate:6.9, conversions:0, revenue:0},
-  {name:'Rooted in success — follow up (tiny list)', sent:'Sep 16, 2026', recipients:2, openRate:100.0, conversions:0, revenue:0},
+  {name:'7 things you will walk away with', sent:'Sep 21, 2026', recipients:438, openRate:7.4, conversions:0, revenue:0},
+  {name:'Sept 22nd NL Product spotlight', sent:'Sep 22, 2026', recipients:35882, openRate:29.5, conversions:4, revenue:272.57},
+  {name:'Sept 24th NL Bundle spotlight', sent:'Sep 24, 2026', recipients:18586, openRate:55.8, conversions:2, revenue:126.66},
+  {name:'Past attendees reviews', sent:'Sep 25, 2026', recipients:534, openRate:6.3, conversions:0, revenue:0},
 ];
-const EML_FLOW_REVENUE_THIS_WEEK = 276.59; // sum of flow revenue this week, across the 8 flows profiled for anomaly detection only — not the full flow catalog
+const EML_FLOW_REVENUE_THIS_WEEK = 420.29; // sum of VISIBLE flow revenue this week — partial figure, see note below (pagination limited flow-report visibility)
 
 function renderEmail(){
   const totalNlRev = EML_NEWSLETTERS.reduce((s,n)=>s+n.revenue,0);
@@ -1485,15 +1477,12 @@ function renderEmail(){
     </tr>`).join('');
 
   const EML_ANOMALIES = [
-    {name:'[PM] Abandoned Added to Cart', severity:'red', revWk:0, revAvg:54.81, note:'ZERO recipients this week — vs. $704.88 in 90-day revenue and ~113 recipients/week average. An always-on, revenue-producing flow going completely silent for a full week is the clearest actionable issue this run. Check the "Added to Cart" trigger/integration (see Customer Service to-do list).'},
-    {name:'[PM] Browse Abandonment', severity:'red', revWk:0, revAvg:53.19, note:'Zero recipients and zero revenue this week vs. its own 90-day weekly average — a second flow gone silent alongside Abandoned Added to Cart.'},
-    {name:'WhatsApp Welcome Flow', severity:'red', revWk:0, revAvg:0, note:'0% delivery rate both this week and over the trailing 90 days (223 profiles queued) — this is an infrastructure/integration break, not a revenue-rate issue.'},
-    {name:'[PM] Customer Winback', severity:'red', revWk:0, revAvg:0, note:'Flat zero both this week and its own 90-day average — a known, recurring issue across multiple runs now.'},
-    {name:'[PM] Abandoned Checkout', severity:'yellow', revWk:80.70, revAvg:137.63, note:'Below its own 90-day average (-41%) this week — still converting, just off-pace; worth a light watch.'},
-    {name:'[PM] Capsules Upsell (3wk post-purchase)', severity:'yellow', revWk:0, revAvg:105.79, note:'Zero this week vs. a 90-day average skewed by a single $1,360 order — small-sample metric, treat the average cautiously.'},
-    {name:'[PM] Customer Thank You', severity:'yellow', revWk:0, revAvg:16.94, note:'Zero this week vs. its own small average — low dollar materiality, not urgent.'},
-    {name:'Phantom re-engagement &amp; sunset', severity:'green', revWk:64.95, revAvg:32.09, note:'Up 102% vs. its own 90-day average — a genuinely positive signal.'},
-    {name:'SMS Welcome Series', severity:'green', revWk:130.94, revAvg:105.06, note:'Tracking above its own average (+24.6%) — healthy, no action needed.'},
+    {name:'[PM] Abandoned Added to Cart', severity:'red', revWk:0, revAvg:54.80, note:'Zero sends this week vs. a ~$54.80/week, ~107-recipient 90-day average — the largest dollar-impact anomaly. Check for a broken trigger or integration issue (see Customer Service to-do list).'},
+    {name:'[PM] Product Review Request', severity:'red', revWk:0, revAvg:0, note:'Status "live," last edited Jun 17, but no sends visible this week or in the (partial) 90-day pull — likely dormant despite live status. Needs manual confirmation.'},
+    {name:'[PM] Customer Thank You', severity:'red', revWk:0, revAvg:16.90, note:'$0 revenue this week vs. a flow that normally converts — worth a look.'},
+    {name:'[PM] Abandoned Checkout', severity:'red', revWk:27.75, revAvg:127.80, note:'Revenue down to ~22% of its own 90-day weekly average ($27.75 vs. $127.80) — a real drop, not just noise at this volume.'},
+    {name:'[PM] Browse Abandonment', severity:'green', revWk:142.68, revAvg:64.30, note:'Revenue well above its own 90-day weekly average (+122%) — 80 recipients this week vs. ~37/week average.'},
+    {name:'Phantom re-engagement & sunset', severity:'green', revWk:163.93, revAvg:44.80, note:'Revenue up sharply vs. its own average (+266%) on 769 recipients — healthy, no action needed.'},
   ];
   document.getElementById('anomalyGrid').innerHTML = EML_ANOMALIES.map(a=>{
     const tagCls = a.severity==='red' ? 'bad' : a.severity==='yellow' ? 'warn' : 'good';
@@ -1508,33 +1497,15 @@ function renderEmail(){
   }).join('');
 
   const EML_SEGMENTS = [
-    {name:'[PM] All Active', total:31671},
-    {name:'Openers, no clicks (phantom engagement)', total:17963},
-    {name:'Engaged (3 months)', total:19805},
-    {name:'Birthday collection', total:19740},
-    {name:'Lapsed Customers (90 days)', total:9469},
-    {name:'Truly Engaged (clickers + buyers)', total:2920},
-    {name:'Repeat Customers', total:1351},
-    {name:'Repeat Buyers (appears to duplicate "Repeat Customers" — same count, worth deduping)', total:1351},
-    {name:'Pawpaw buyers', total:1149},
-    {name:"[PM] Haven't Purchased Last 30 days", total:779},
-    {name:'SMS Engaged last 30 days', total:737},
+    {name:'Engaged (3 months)', total:18544},
+    {name:'Truly Engaged (clickers + buyers)', total:2900},
+    {name:'Repeat Buyers', total:1360},
+    {name:'SMS Engaged (30 days)', total:780},
     {name:'First-Time Customers', total:566},
-    {name:'New Leads', total:491},
-    {name:'[PM] Bounced 4x', total:384},
-    {name:'Champions (High-Value, Low Churn Risk)', total:160},
-    {name:'Delivery failures (Text)', total:128},
-    {name:'[Exclude]{SUPPRESS} Bounced', total:146},
-    {name:'Graviola buyers', total:211},
-    {name:'Guava buyers', total:66},
-    {name:'Bamboo buyers', total:36},
-    {name:'Gymnema Buyers', total:33},
-    {name:'Guayusa Buyers', total:18},
-    {name:'New and Refunded', total:17},
-    {name:'Kids line', total:5},
   ];
   document.getElementById('segRows').innerHTML = EML_SEGMENTS.map(s=>`
-    <tr><td class="metric-name">${s.name}</td><td class="num">${s.total.toLocaleString()}</td></tr>`).join('');
+    <tr><td class="metric-name">${s.name}</td><td class="num">${s.total.toLocaleString()}</td></tr>`).join('')
+    + '<tr><td colspan="2" style="border-bottom:none;"><div class="note-box" style="margin-top:12px;">"Engaged (3 months)" — the largest newsletter segment — has shrunk by 2,374 members (~13%) over the trailing 90 days; "Truly Engaged" (+581) and "First-Time Customers" (+87) are both growing. Worth watching against list-growth efforts.</div></td></tr>';
 }
 renderEmail();
 </script>
